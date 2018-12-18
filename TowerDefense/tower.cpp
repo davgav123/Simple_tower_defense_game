@@ -1,38 +1,36 @@
 #include "tower.h"
 
-#include <QVector>
+#include <QRectF>
 #include <QPointF>
-#include <QPolygonF>
-#include <QtMath>
+#include <QPainter>
 
-#include <QDebug>
+#include <QtDebug>
 
-Tower::Tower(QGraphicsItem *parent)
-    : range(100), scale_tower(100)
+Tower::Tower(qreal x, qreal y)
+    : m_radius(100.0), m_xPos(x), m_yPos(y)
 {
-    // set tower image
-    QPixmap towerImg = QPixmap(":/images/jigglypuff.png").scaled(scale_tower, scale_tower);
-    setPixmap(towerImg);
+    // setPos(m_xPos, m_yPos);
+}
 
-    // create tower radius
-    int radius_center_x = 0;
-    int radius_center_y = 0;
-    QVector<QPointF> points;
-    int num_of_dots = 100;
-    for (int i = 0; i < num_of_dots; i++) {
-        points.push_back(QPointF(qCos(2 * i * 3.1415926535 / num_of_dots)  * range + radius_center_x,
-                  qSin(2 * i * 3.1415926535 / num_of_dots) * range + radius_center_y));
-    }
-    attack_area = new QGraphicsPolygonItem(QPolygonF(points), this);
+QRectF Tower::boundingRect() const
+{
+    return QRectF(m_xPos - m_radius, m_yPos - m_radius, 2.0 * m_radius, 2.0 * m_radius);
+}
 
-    // move the polygon
-    QPointF poly_center(radius_center_x, radius_center_y);
-    poly_center = mapToScene(poly_center);
+void Tower::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *)
+{
+    QPointF tower_center(m_xPos, m_yPos);
 
-    QPointF tower_center(x() + towerImg.width() / 2.0, y() + towerImg.height() / 2.0);
-    QLineF ln(poly_center,tower_center);
-    attack_area->setPos(x() + ln.dx(), y() + ln.dy());
+    // draw the radius of the tower
+    painter->drawEllipse(tower_center, m_radius, m_radius);
 
+    // draw the tower
+    painter->setBrush(Qt::gray);
+    painter->drawEllipse(tower_center, 30.0, 30.0);
+}
 
-
+void Tower::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    static int i = 0;
+    qDebug() << "clicked" << i++;
 }

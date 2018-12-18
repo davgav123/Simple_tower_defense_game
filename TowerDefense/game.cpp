@@ -1,22 +1,20 @@
 #include "game.h"
-#include <QGraphicsScene>
 #include "tower.h"
 
 Game::Game()
 {
-    // create a scene
+    // create and set the scene
     scene = new QGraphicsScene(this);
-//    scene->setSceneRect(0, 0, 800, 600);
+    scene->setSceneRect(0, 0, 800, 800);
 
-    // set the scene
     setScene(scene);
+    setFixedSize(800, 800);
 
-    // create a tower
-    Tower * t = new Tower();
-    // mem leak
+    // scroll disabled
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    // add the tower to the scene
+    Tower *t = new Tower(400, 400);
     scene->addItem(t);
-
-    setFixedSize(400, 400);
+    // mem leak...
 }

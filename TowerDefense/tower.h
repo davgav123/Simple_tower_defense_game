@@ -1,19 +1,25 @@
 #ifndef TOWER_H
 #define TOWER_H
 
-#include <QGraphicsPixmapItem>
-#include <QGraphicsPolygonItem>
 #include <QGraphicsItem>
 
-class Tower: public QGraphicsPixmapItem
+class Tower : public QGraphicsItem
 {
 public:
-    Tower(QGraphicsItem * parent = 0);
-private:
-    QGraphicsPolygonItem * attack_area;
-    int range;
+    Tower(qreal x = 0, qreal y = 0);
 
-    int scale_tower;
+    QRectF boundingRect() const override;
+
+    void paint(QPainter *painter,
+               const QStyleOptionGraphicsItem *option,
+               QWidget *widget) override;
+
+    void mousePressEvent(QGraphicsSceneMouseEvent * event) override;
+
+private:
+    qreal m_radius;
+    qreal m_xPos;
+    qreal m_yPos;
 };
 
 #endif // TOWER_H
