@@ -2,7 +2,7 @@
 #include "tower.h"
 #include "enemy.h"
 
-Game::Game()
+Game::Game(): QGraphicsView()
 {
     // create and set the scene
     scene = new QGraphicsScene(this);
@@ -15,11 +15,11 @@ Game::Game()
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    Tower *t = new Tower(400, 400);
+    Tower *t = new Tower(30, 120);
     scene->addItem(t);
     // mem leak...
 
-    Tower *t2 = new Tower(800, 200);
+    Tower *t2 = new Tower(30, 330);
     scene->addItem(t2);
 
     Enemy * e = new Enemy();

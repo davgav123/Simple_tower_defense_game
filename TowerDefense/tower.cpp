@@ -1,11 +1,11 @@
 ﻿#include "tower.h"
-
+#include "game.h"
 #include <QRectF>
 #include <QPointF>
 #include <QPainter>
-
+#include <QGraphicsSceneMoveEvent>
 #include <QtDebug>
-
+extern Game * g;
 Tower::Tower(qreal x, qreal y)
     : m_radius(100.0), m_towerSize(30.0)
 {
@@ -43,7 +43,20 @@ void Tower::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     static int i = 0;
     qDebug() << "clicked" << i++;
-    qDebug() << "x: " << x() << " y:" << y();
+    qDebug() << "x: " << event->pos().x() << " y:" << event->pos().y();
 }
 
+void Tower::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    qDebug() << event->pos() << "MOVE";
+
+}
+
+void Tower::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    qDebug() << event->pos() << "RELEASE";
+    qDebug() << "x: " << event->pos().x() << " y:" << event->pos().y();
+    Tower *t = new Tower(event->pos().x() + x(), event->pos().y() + y());
+    g->scene->addItem(t);
+}
 
