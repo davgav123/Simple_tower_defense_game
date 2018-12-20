@@ -1,19 +1,32 @@
 ﻿#include "tower.h"
 #include "game.h"
+#include "bullet.h"
+#include "enemy.h"
 #include <QRectF>
 #include <QPointF>
 #include <QPainter>
 #include <QPixmap>
 #include <QGraphicsSceneMoveEvent>
 #include <QFileInfo>
+#include <QLineF>
+#include <QtDebug>
+#include <QTimer>
+#include <QGraphicsItem>
+#include <QList>
 
 #include <QtDebug>
 
 extern Game * g;
+extern Enemy *enemy;
+
 Tower::Tower(qreal x, qreal y)
-    : m_radius(100.0), m_towerSize(30.0)
+    : QObject(), m_radius(100.0), m_towerCenterX(x), m_towerCenterY(y), m_towerSize(30.0)
 {
      setPos(x, y);
+
+     QTimer * timer = new QTimer();
+     connect(timer, SIGNAL(timeout()),this, SLOT(aquireTarget()));
+     timer->start(1000);
 }
 
 QRectF Tower::boundingRect() const
@@ -67,4 +80,42 @@ void Tower::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     Tower *t = new Tower(event->pos().x() + x(), event->pos().y() + y());
     g->scene->addItem(t);
 }
+
+void Tower::fire()
+{
+    Bullet *bullet = new Bullet();
+    bullet->setPos(m_towerCenterX, m_towerCenterY);
+
+    QLineF ln(QPointF(m_towerCenterX, m_towerCenterY), attackDest);
+    int angle = -1 * ln.angle();
+
+    bullet->setRotation(angle);
+    g->scene->addItem(bullet);
+}
+
+double Tower::distanceTo(QGraphicsItem *item)
+{
+    QLineF ln(pos(),item->pos());
+    return ln.length();
+}
+
+void Tower::aquireTarget()
+{
+    attackDest = enemy->getCurrentDestination();
+
+    QLineF ln(pos(), attackDest);
+    if (ln.length() < 2*m_radius) {
+        fire();
+    }
+}
+
+
+
+
+
+
+
+
+
+
 

@@ -28,12 +28,14 @@ SOURCES += \
         main.cpp \
     tower.cpp \
     game.cpp \
-    enemy.cpp
+    enemy.cpp \
+    bullet.cpp
 
 HEADERS += \
     tower.h \
     game.h \
-    enemy.h
+    enemy.h \
+    bullet.h
 
 FORMS +=
 

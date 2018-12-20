@@ -18,6 +18,8 @@ public:
                const QStyleOptionGraphicsItem *option,
                QWidget *widget) override;
 
+    QPointF getCurrentDestination() const;
+
 private slots:
     void move();
 

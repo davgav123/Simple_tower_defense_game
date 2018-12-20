@@ -42,6 +42,11 @@ void Enemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
     painter->drawEllipse(QPointF(0, 0), m_size, m_size);
 }
 
+QPointF Enemy::getCurrentDestination() const
+{
+    return pos();
+}
+
 void Enemy::move()
 {
     // if  the xs are same, we move by y

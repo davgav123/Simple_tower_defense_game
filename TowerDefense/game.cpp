@@ -2,6 +2,8 @@
 #include "tower.h"
 #include "enemy.h"
 
+Enemy *enemy;
+
 Game::Game(): QGraphicsView()
 {
     // create and set the scene
@@ -22,6 +24,7 @@ Game::Game(): QGraphicsView()
     Tower *t2 = new Tower(30, 330);
     scene->addItem(t2);
 
-    Enemy * e = new Enemy();
-    scene->addItem(e);
+//    Enemy * e = new Enemy();
+    enemy = new Enemy();
+    scene->addItem(enemy);
 }
