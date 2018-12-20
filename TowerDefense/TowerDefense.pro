@@ -27,11 +27,13 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
     tower.cpp \
-    game.cpp
+    game.cpp \
+    enemy.cpp
 
 HEADERS += \
     tower.h \
-    game.h
+    game.h \
+    enemy.h
 
 FORMS +=
 

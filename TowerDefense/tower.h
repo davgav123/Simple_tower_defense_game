@@ -6,7 +6,7 @@
 class Tower : public QGraphicsItem
 {
 public:
-    Tower(qreal x = 0, qreal y = 0);
+    Tower(qreal x, qreal y);
 
     QRectF boundingRect() const override;
 
@@ -18,8 +18,7 @@ public:
 
 private:
     qreal m_radius;
-    qreal m_xPos;
-    qreal m_yPos;
+    qreal m_towerSize;
 };
 
 #endif // TOWER_H
