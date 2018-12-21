@@ -1,7 +1,7 @@
 #include "game.h"
 #include "tower.h"
 #include "enemy.h"
-
+#include <QPainter>
 #include <QDebug>
 
 Game::Game()
@@ -17,9 +17,14 @@ Game::Game()
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    Tower *t = new Tower(30, 120);
+    Tower *t = new Tower(100, 80);
     scene->addItem(t);
     // mem leak...
+
+//    QPixmap pixmap(200,900);
+//    pixmap.fill(Qt::red);
+//    scene->addPixmap(pixmap);
+    scene->addLine(200, 0, 200, 900);
 
     Enemy * e = new Enemy();
 //    enemy = new Enemy();

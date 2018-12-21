@@ -48,7 +48,7 @@ void Tower::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
     QPointF tower_center(0, 0);
 
     // draw the radius of the tower
-    painter->drawEllipse(tower_center, m_radius, m_radius);
+    //painter->drawEllipse(tower_center, m_radius, m_radius);
 
     // draw the tower
     QPixmap pixmap(":/images/tower.png");
@@ -57,7 +57,7 @@ void Tower::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
 //    qDebug()<<"File exists -" << QFileInfo(":/images/tower.png").exists() << " "
 //           << QFileInfo(":/images/tower.png").absoluteFilePath();
 
-//    painter->setBrush(Qt::gray);
+//    painter->setBrush();
 //    painter->drawEllipse(tower_center, m_towerSize, m_towerSize);
 
 
@@ -74,11 +74,15 @@ void Tower::mousePressEvent(QGraphicsSceneMouseEvent *event)
     static int i = 0;
     qDebug() << "clicked" << i++;
     qDebug() << "x: " << event->pos().x() << " y:" << event->pos().y();
+    Tower *t = new Tower(event->pos().x() + x(), event->pos().y() + y());
+    g->scene->addItem(t);
+    g->addTower(t);
 }
 
 void Tower::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
 //    qDebug() << event->pos() << "MOVE";
+    setPos(event->pos().x() + x(), event->pos().y() + y());
 
 }
 
@@ -86,9 +90,9 @@ void Tower::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
 //    qDebug() << event->pos() << "RELEASE";
 //    qDebug() << "x: " << event->pos().x() << " y:" << event->pos().y();
-    Tower *t = new Tower(event->pos().x() + x(), event->pos().y() + y());
-    g->scene->addItem(t);
-    g->addTower(t);
+//    Tower *t = new Tower(event->pos().x() + x(), event->pos().y() + y());
+//    g->scene->addItem(t);
+//    g->addTower(t);
 }
 
 void Tower::fire()
