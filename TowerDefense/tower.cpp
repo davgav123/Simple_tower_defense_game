@@ -51,7 +51,7 @@ void Tower::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
     //painter->drawEllipse(tower_center, m_radius, m_radius);
 
     // draw the tower
-    QPixmap pixmap(":/images/tower.png");
+    QPixmap pixmap(":/images/tower3.png");
 
     painter->drawPixmap(-25, -35, 50, 70, pixmap);
 //    qDebug()<<"File exists -" << QFileInfo(":/images/tower.png").exists() << " "
@@ -66,40 +66,6 @@ void Tower::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
 
 //    painter->setBrush(Qt::red);
 //    painter->drawEllipse(tower_center, m_towerSize / 3.0, m_towerSize / 3.0);
-}
-
-void Tower::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    // this funcion exists only because we want to check does boudRect work
-    static int i = 0;
-    qDebug() << "clicked" << i++;
-    qDebug() << "x: " << event->pos().x() << " y:" << event->pos().y();
-//    Tower *t = new Tower(event->pos().x() + x(), event->pos().y() + y());
-    if (pos().x() > 200) {
-        event->ignore();
-    }
-    Tower *t = new Tower(100, 80);
-    g->scene->addItem(t);
-    g->addTower(t);
-}
-
-void Tower::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
-{
-//    qDebug() << event->pos() << "MOVE";
-    setPos(event->pos().x() + x(), event->pos().y() + y());
-
-}
-
-void Tower::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-//    qDebug() << event->pos() << "RELEASE";
-//    qDebug() << "x: " << event->pos().x() << " y:" << event->pos().y();
-//    Tower *t = new Tower(event->pos().x() + x(), event->pos().y() + y());
-//    g->scene->addItem(t);
-//    g->addTower(t);
-    if (pos().x() < 200) {
-        delete this;
-    }
 }
 
 void Tower::fire()

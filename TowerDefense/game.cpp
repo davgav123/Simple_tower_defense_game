@@ -3,6 +3,7 @@
 #include "enemy.h"
 #include "lives.h"
 #include "score.h"
+#include "towericon.h"
 #include <QPainter>
 #include <QDebug>
 
@@ -19,6 +20,10 @@ Game::Game()
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
+    cursor = nullptr;
+    tower = nullptr;
+    setMouseTracking(true);
+
     m_lives = new Lives();
     m_lives->setPos(20, 650);
     scene->addItem(m_lives);
@@ -26,10 +31,6 @@ Game::Game()
     m_score = new Score();
     m_score->setPos(20, 600);
     scene->addItem(m_score);
-
-    Tower *t = new Tower(100, 80);
-    scene->addItem(t);
-    // mem leak...
 
 //    QPixmap pixmap(200,900);
 //    pixmap.fill(Qt::red);
@@ -40,6 +41,11 @@ Game::Game()
 //    enemy = new Enemy();
     scene->addItem(e);
     addEnemy(e);
+
+
+    TowerIcon * towerIcon = new TowerIcon();
+    scene->addItem(towerIcon);
+
 }
 
 void Game::addTower(Tower *t)
@@ -79,4 +85,40 @@ void Game::increaseScore(int score)
 void Game::decreaseLives()
 {
     m_lives->decrease();
+}
+
+void Game::setCursor(QString filename)
+{
+    if (cursor) {
+        scene->removeItem(cursor);
+        delete cursor;
+    }
+
+    cursor = new QGraphicsPixmapItem();
+    cursor->setPixmap(QPixmap(filename));
+    scene->addItem(cursor);
+}
+
+void Game::mouseMoveEvent(QMouseEvent *event)
+{
+    if (cursor) {
+        cursor->setPos(event->pos());
+    }
+}
+
+void Game::mousePressEvent(QMouseEvent *event)
+{
+    if (tower){
+        if (event->pos().x() < 220) {
+            return;
+        }
+        scene->addItem(tower);
+        tower->setPos(event->pos());
+        delete cursor;
+        cursor = nullptr;
+        tower = nullptr;
+    }
+    else {
+        QGraphicsView::mousePressEvent(event);
+    }
 }

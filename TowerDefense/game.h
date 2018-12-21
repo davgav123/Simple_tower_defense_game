@@ -9,6 +9,8 @@
 #include <QGraphicsScene>
 #include <QVector>
 #include <QLinkedList>
+#include <QGraphicsPixmapItem>
+#include <QMouseEvent>
 
 class Game: public QGraphicsView
 {
@@ -23,7 +25,13 @@ public:
     void increaseScore(int score);
     void decreaseLives();
 
+    void setCursor(QString filename);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+
     QGraphicsScene * scene;
+    QGraphicsPixmapItem * cursor;
+    Tower *tower;
 private:
     QVector<Tower*> m_towers;
     QLinkedList<Enemy*> m_enemies;

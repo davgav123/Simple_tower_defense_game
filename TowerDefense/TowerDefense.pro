@@ -31,7 +31,8 @@ SOURCES += \
     enemy.cpp \
     bullet.cpp \
     score.cpp \
-    lives.cpp
+    lives.cpp \
+    towericon.cpp
 
 HEADERS += \
     tower.h \
@@ -39,7 +40,8 @@ HEADERS += \
     enemy.h \
     bullet.h \
     score.h \
-    lives.h
+    lives.h \
+    towericon.h
 
 FORMS +=
 

@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/images">
         <file>tower.png</file>
+        <file>tower4.png</file>
+        <file>tower3.png</file>
+        <file>tower2.png</file>
     </qresource>
 </RCC>
