@@ -7,7 +7,7 @@ extern Game *g;
 
 TowerIcon::TowerIcon(QGraphicsItem *parent) :QGraphicsPixmapItem(parent)
 {
-    setPixmap(QPixmap(":/images/tower3.png"));
+    setPixmap(QPixmap(":/images/towerStore_1.png"));
 }
 
 void TowerIcon::mousePressEvent(QGraphicsSceneMouseEvent *event)

@@ -5,12 +5,15 @@
 #include "enemy.h"
 #include "lives.h"
 #include "score.h"
+#include "gold.h"
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QVector>
 #include <QLinkedList>
 #include <QGraphicsPixmapItem>
 #include <QMouseEvent>
+#include <QGraphicsPathItem>
+
 
 class Game: public QGraphicsView
 {
@@ -39,6 +42,7 @@ private:
 
     Lives * m_lives;
     Score * m_score;
+    Gold * m_gold;
 };
 
 #endif // GAME_H

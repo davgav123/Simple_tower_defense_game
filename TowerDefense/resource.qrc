@@ -4,5 +4,8 @@
         <file>tower4.png</file>
         <file>tower3.png</file>
         <file>tower2.png</file>
+        <file>towerStore_1.png</file>
+        <file>woodenBoardResized.jpg</file>
+        <file>background.png</file>
     </qresource>
 </RCC>

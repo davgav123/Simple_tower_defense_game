@@ -3,6 +3,7 @@
 #include "enemy.h"
 #include "lives.h"
 #include "score.h"
+#include "gold.h"
 #include "towericon.h"
 #include <QPainter>
 #include <QDebug>
@@ -12,6 +13,9 @@ Game::Game()
     // create and set the scene
     scene = new QGraphicsScene(this);
     scene->setSceneRect(0, 0, 1400, 900);
+
+    QGraphicsRectItem *rect1 = scene->addRect(0, 0, 200, 900);
+    rect1->setBrush(QBrush(QImage(":/images/background.png")));
 
     setScene(scene);
     setFixedSize(1400, 900);
@@ -24,9 +28,12 @@ Game::Game()
     tower = nullptr;
     setMouseTracking(true);
 
+    QGraphicsRectItem *rect2 = scene->addRect(0, 600, 200, 100);
+    rect2->setBrush(QBrush(QImage(":/images/woodenBoardResized.jpg")));
+
     // initialize number of lives
     m_lives = new Lives();
-    m_lives->setPos(20, 650);
+    m_lives->setPos(20, 630);
     scene->addItem(m_lives);
 
     // initialize score
@@ -34,9 +41,10 @@ Game::Game()
     m_score->setPos(20, 600);
     scene->addItem(m_score);
 
-//    QPixmap pixmap(200,900);
-//    pixmap.fill(Qt::red);
-//    scene->addPixmap(pixmap);
+    m_gold = new Gold();
+    m_gold->setPos(20, 660);
+    scene->addItem(m_gold);
+
     scene->addLine(200, 0, 200, 900);
 
     // init enemy, more enemies will be added

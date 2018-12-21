@@ -6,13 +6,12 @@
 #include <QPainter>
 #include <QRectF>
 #include <QLineF>
-
 #include <QDebug>
 
 extern Game *g;
 
 Bullet::Bullet(Enemy * e, qreal towerX, qreal towerY, int damage)
-    : m_size(5.0), m_damage(damage), m_target(std::move(e))
+    : m_size(3.0), m_damage(damage), m_target(std::move(e))
 {
     m_targetPos = QPointF(m_target->x(), m_target->y());
     setPos(towerX, towerY);

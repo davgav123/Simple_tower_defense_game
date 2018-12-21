@@ -6,7 +6,7 @@ Lives::Lives(QGraphicsItem *parent)
 {
     // draw the text
     setPlainText(QString("Lives: ") + QString::number(m_numberOfLives));
-    setDefaultTextColor(Qt::red);
+    setDefaultTextColor(Qt::black);
     setFont(QFont("times", 16));
 }
 
