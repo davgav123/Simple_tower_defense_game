@@ -19,6 +19,7 @@ public:
     void addTower(Tower *t);
     void addEnemy(Enemy *e);
     void removeEnemy(Enemy *e);
+    bool containsEnemy(Enemy *e);
 
     QLinkedList<Enemy*> enemies() const;
 

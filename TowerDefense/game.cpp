@@ -24,10 +24,12 @@ Game::Game()
     tower = nullptr;
     setMouseTracking(true);
 
+    // initialize number of lives
     m_lives = new Lives();
     m_lives->setPos(20, 650);
     scene->addItem(m_lives);
 
+    // initialize score
     m_score = new Score();
     m_score->setPos(20, 600);
     scene->addItem(m_score);
@@ -37,12 +39,13 @@ Game::Game()
 //    scene->addPixmap(pixmap);
     scene->addLine(200, 0, 200, 900);
 
+    // init enemy, more enemies will be added
     Enemy * e = new Enemy();
 //    enemy = new Enemy();
     scene->addItem(e);
     addEnemy(e);
 
-
+    // tower icon, this is where you buy towers
     TowerIcon * towerIcon = new TowerIcon();
     scene->addItem(towerIcon);
 
@@ -70,6 +73,11 @@ void Game::removeEnemy(Enemy *e)
     m_enemies.removeOne(e);
     for (const auto & e: m_enemies)
         qDebug() << e->pos();
+}
+
+bool Game::containsEnemy(Enemy *e)
+{
+    return m_enemies.contains(e);
 }
 
 QLinkedList<Enemy *> Game::enemies() const

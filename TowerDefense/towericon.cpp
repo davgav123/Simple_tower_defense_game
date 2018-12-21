@@ -14,7 +14,6 @@ void TowerIcon::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (!g->tower){
         g->tower = new Tower(event->pos().x(), event->pos().y());
-        g->addTower(g->tower);
         g->setCursor(QString(":/images/tower4.png"));
     }
 }

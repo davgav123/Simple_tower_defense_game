@@ -1,4 +1,5 @@
 #include "bullet.h"
+#include "game.h"
 
 #include <QTimer>
 #include <qmath.h>
@@ -8,9 +9,12 @@
 
 #include <QDebug>
 
+extern Game *g;
+
 Bullet::Bullet(Enemy * e, qreal towerX, qreal towerY, int damage)
-    : m_size(5.0), m_target(std::move(e)), m_damage(damage)
+    : m_size(5.0), m_damage(damage), m_target(std::move(e))
 {
+    m_targetPos = QPointF(m_target->x(), m_target->y());
     setPos(towerX, towerY);
 
     // init distances
@@ -36,7 +40,7 @@ void Bullet::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget 
 
 void Bullet::move()
 {
-    int STEP_SIZE = 80;
+    int STEP_SIZE = 50;
     double theta = rotation(); // degrees
 
     double dy = STEP_SIZE * qSin(qDegreesToRadians(theta));
@@ -45,12 +49,17 @@ void Bullet::move()
     setPos(x()+dx, y()+dy);
 
     m_previousDist = m_currentDist;
-    m_currentDist = QLineF(pos(), m_target->pos()).length();
+    m_currentDist = QLineF(pos(), m_targetPos).length();
 
     // if the distance is increasing, then bullet passed the enemy, so we delete the bullet
     if (m_previousDist < m_currentDist) {
+
+        // if enemy is not destroyed, we destroy it
+        if (m_target != nullptr && g->containsEnemy(m_target)) {
+            m_target->decreaseHealth(m_damage);
+        }
+
         qDebug() << "destroying bullet";
-        m_target->decreaseHealth(m_damage);
         delete this;
     }
 }

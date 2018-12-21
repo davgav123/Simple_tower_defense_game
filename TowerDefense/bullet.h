@@ -22,8 +22,9 @@ private slots:
 
 private:
     qreal m_size;
-    Enemy * m_target;
     int m_damage;
+    Enemy * m_target;
+    QPointF m_targetPos;
 
     qreal m_previousDist;
     qreal m_currentDist;

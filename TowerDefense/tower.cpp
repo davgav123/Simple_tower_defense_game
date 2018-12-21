@@ -45,7 +45,7 @@ QRectF Tower::boundingRect() const
 void Tower::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     // center of the item is (0, 0), or (400, 400) on the scene
-    QPointF tower_center(0, 0);
+//    QPointF tower_center(0, 0);
 
     // draw the radius of the tower
     //painter->drawEllipse(tower_center, m_radius, m_radius);
@@ -54,18 +54,6 @@ void Tower::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
     QPixmap pixmap(":/images/tower3.png");
 
     painter->drawPixmap(-25, -35, 50, 70, pixmap);
-//    qDebug()<<"File exists -" << QFileInfo(":/images/tower.png").exists() << " "
-//           << QFileInfo(":/images/tower.png").absoluteFilePath();
-
-//    painter->setBrush();
-//    painter->drawEllipse(tower_center, m_towerSize, m_towerSize);
-
-
-//    painter->setBrush(Qt::green);
-//    painter->drawEllipse(tower_center, m_towerSize * 2.0 / 3.0, m_towerSize * 2.0 / 3.0);
-
-//    painter->setBrush(Qt::red);
-//    painter->drawEllipse(tower_center, m_towerSize / 3.0, m_towerSize / 3.0);
 }
 
 void Tower::fire()

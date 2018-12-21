@@ -73,6 +73,7 @@ void Enemy::decreaseHealth(int amount)
         g->removeEnemy(this);
         qDebug() << "enemy is deleted";
         g->increaseScore(10);
+        // add gold -> TODO
         delete this;
     }
 }
@@ -97,14 +98,9 @@ void Enemy::move()
         }
     }
 
-//    qDebug() << m_currentFrom;
-//    qDebug() << x() << " " << y();
-//    qDebug() << m_currentDest;
-
     // if we reached current destination, do the the next From/Dest
     if ((int) x() ==  m_currentDest.x() && (int) y() == m_currentDest.y()) {
         qDebug() << "current destination reached";
-//        qDebug() << m_currentFrom << " " << m_currentDest << " " << m_path.size();
 
         // if we reached the end, destroy the enemy
         if (m_currentDestIndex == (m_path.size()-1)) {
