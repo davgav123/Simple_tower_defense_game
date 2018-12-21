@@ -3,7 +3,7 @@
 
 #include "tower.h"
 #include "enemy.h"
-#include "health.h"
+#include "lives.h"
 #include "score.h"
 #include <QGraphicsView>
 #include <QGraphicsScene>
@@ -14,23 +14,22 @@ class Game: public QGraphicsView
 {
 public:
     Game();
-
-    QGraphicsScene * scene;
-
-    Health *health;
-    Score *score;
     void addTower(Tower *t);
     void addEnemy(Enemy *e);
+    void removeEnemy(Enemy *e);
 
-    QVector<Tower*> towers() const;
     QLinkedList<Enemy*> enemies() const;
 
-    void removeEnemy(Enemy *e);
+    void increaseScore(int score);
+    void decreaseLives();
+
+    QGraphicsScene * scene;
 private:
     QVector<Tower*> m_towers;
     QLinkedList<Enemy*> m_enemies;
 
-
+    Lives * m_lives;
+    Score * m_score;
 };
 
 #endif // GAME_H

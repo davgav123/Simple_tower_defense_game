@@ -1,7 +1,7 @@
 #include "game.h"
 #include "tower.h"
 #include "enemy.h"
-#include "health.h"
+#include "lives.h"
 #include "score.h"
 #include <QPainter>
 #include <QDebug>
@@ -19,13 +19,13 @@ Game::Game()
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    health = new Health();
-    health->setPos(20, 650);
-    scene->addItem(health);
+    m_lives = new Lives();
+    m_lives->setPos(20, 650);
+    scene->addItem(m_lives);
 
-    score = new Score();
-    score->setPos(20, 600);
-    scene->addItem(score);
+    m_score = new Score();
+    m_score->setPos(20, 600);
+    scene->addItem(m_score);
 
     Tower *t = new Tower(100, 80);
     scene->addItem(t);
@@ -71,7 +71,12 @@ QLinkedList<Enemy *> Game::enemies() const
     return m_enemies;
 }
 
-QVector<Tower *> Game::towers() const
+void Game::increaseScore(int score)
 {
-    return m_towers;
+    m_score->increase(score);
+}
+
+void Game::decreaseLives()
+{
+    m_lives->decrease();
 }

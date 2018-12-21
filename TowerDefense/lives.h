@@ -3,13 +3,14 @@
 
 #include <QGraphicsTextItem>
 
-class Health: public QGraphicsTextItem{
+class Lives: public QGraphicsTextItem
+{
 public:
-    Health(QGraphicsItem * parent = nullptr);
+    Lives(QGraphicsItem * parent = nullptr);
     void decrease();
     int getHealth();
 private:
-    int health;
+    int m_numberOfLives;
 };
 
 #endif // HEALTH_H

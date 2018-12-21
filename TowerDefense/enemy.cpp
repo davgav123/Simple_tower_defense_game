@@ -70,9 +70,9 @@ void Enemy::decreaseHealth(int amount)
 
     // health is lower then zero (or equal) => enemy is dead
     if (m_currentHealth <= 0) {
-        qDebug() << "enemy is deleted";
-        g->score->increase();
         g->removeEnemy(this);
+        qDebug() << "enemy is deleted";
+        g->increaseScore(10);
         delete this;
     }
 }
@@ -106,11 +106,12 @@ void Enemy::move()
         qDebug() << "current destination reached";
 //        qDebug() << m_currentFrom << " " << m_currentDest << " " << m_path.size();
 
-        // if we reeached the end, destroy the enemy
+        // if we reached the end, destroy the enemy
         if (m_currentDestIndex == (m_path.size()-1)) {
             qDebug() << "enemy reached the end of the path";
 
-            g->health->decrease();
+            // decrease the numberOfLives and delete the enemy
+            g->decreaseLives();
             g->removeEnemy(this);
             delete this;
             return ;
