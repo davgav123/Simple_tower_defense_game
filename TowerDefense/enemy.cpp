@@ -71,6 +71,7 @@ void Enemy::decreaseHealth(int amount)
     // health is lower then zero (or equal) => enemy is dead
     if (m_currentHealth <= 0) {
         qDebug() << "enemy is deleted";
+        g->score->increase();
         g->removeEnemy(this);
         delete this;
     }
@@ -108,7 +109,8 @@ void Enemy::move()
         // if we reeached the end, destroy the enemy
         if (m_currentDestIndex == (m_path.size()-1)) {
             qDebug() << "enemy reached the end of the path";
-            // we can decrease number of lives here -> TODO
+
+            g->health->decrease();
             g->removeEnemy(this);
             delete this;
             return ;

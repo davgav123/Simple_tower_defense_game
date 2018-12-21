@@ -74,7 +74,11 @@ void Tower::mousePressEvent(QGraphicsSceneMouseEvent *event)
     static int i = 0;
     qDebug() << "clicked" << i++;
     qDebug() << "x: " << event->pos().x() << " y:" << event->pos().y();
-    Tower *t = new Tower(event->pos().x() + x(), event->pos().y() + y());
+//    Tower *t = new Tower(event->pos().x() + x(), event->pos().y() + y());
+    if (pos().x() > 200) {
+        event->ignore();
+    }
+    Tower *t = new Tower(100, 80);
     g->scene->addItem(t);
     g->addTower(t);
 }
@@ -93,6 +97,9 @@ void Tower::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 //    Tower *t = new Tower(event->pos().x() + x(), event->pos().y() + y());
 //    g->scene->addItem(t);
 //    g->addTower(t);
+    if (pos().x() < 200) {
+        delete this;
+    }
 }
 
 void Tower::fire()

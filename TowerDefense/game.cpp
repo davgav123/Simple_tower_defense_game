@@ -1,6 +1,8 @@
 #include "game.h"
 #include "tower.h"
 #include "enemy.h"
+#include "health.h"
+#include "score.h"
 #include <QPainter>
 #include <QDebug>
 
@@ -16,6 +18,14 @@ Game::Game()
     // scroll disabled
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    health = new Health();
+    health->setPos(20, 650);
+    scene->addItem(health);
+
+    score = new Score();
+    score->setPos(20, 600);
+    scene->addItem(score);
 
     Tower *t = new Tower(100, 80);
     scene->addItem(t);
