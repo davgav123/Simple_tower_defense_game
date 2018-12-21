@@ -17,22 +17,28 @@
 #include <QtDebug>
 
 extern Game * g;
-extern Enemy *enemy;
 
 Tower::Tower(qreal x, qreal y)
-    : QObject(), m_radius(100.0), m_towerCenterX(x), m_towerCenterY(y), m_towerSize(30.0)
+    : m_radius(100.0), m_towerSize(30.0), m_damage(20)
 {
      setPos(x, y);
 
+     // initialy there is no target
+     m_target = nullptr;
+
      QTimer * timer = new QTimer();
-     connect(timer, SIGNAL(timeout()),this, SLOT(aquireTarget()));
+     connect(timer, SIGNAL(timeout()), this, SLOT(aquireTarget()));
      timer->start(1000);
 }
 
 QRectF Tower::boundingRect() const
 {
     // (0, 0) is the center of the tower
+
+    // this is just for the tower
 //    return QRectF(0 - m_towerSize, 0 - m_towerSize, 2.0 * m_towerSize, 2.0 * m_towerSize);
+
+    // this is for the tower with radius included
     return QRectF(0 - m_radius, 0 - m_radius, 2.0 * m_radius, 2.0 * m_radius);
 }
 
@@ -48,7 +54,9 @@ void Tower::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
     QPixmap pixmap(":/images/tower.png");
 
     painter->drawPixmap(-25, -35, 50, 70, pixmap);
-    qDebug()<<"File exists -"<<QFileInfo(":/images/tower.png").exists()<<" "<<QFileInfo(":/images/tower.png").absoluteFilePath();
+//    qDebug()<<"File exists -" << QFileInfo(":/images/tower.png").exists() << " "
+//           << QFileInfo(":/images/tower.png").absoluteFilePath();
+
 //    painter->setBrush(Qt::gray);
 //    painter->drawEllipse(tower_center, m_towerSize, m_towerSize);
 
@@ -62,6 +70,7 @@ void Tower::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
 
 void Tower::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    // this funcion exists only because we want to check does boudRect work
     static int i = 0;
     qDebug() << "clicked" << i++;
     qDebug() << "x: " << event->pos().x() << " y:" << event->pos().y();
@@ -69,43 +78,51 @@ void Tower::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Tower::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug() << event->pos() << "MOVE";
+//    qDebug() << event->pos() << "MOVE";
 
 }
 
 void Tower::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug() << event->pos() << "RELEASE";
-    qDebug() << "x: " << event->pos().x() << " y:" << event->pos().y();
+//    qDebug() << event->pos() << "RELEASE";
+//    qDebug() << "x: " << event->pos().x() << " y:" << event->pos().y();
     Tower *t = new Tower(event->pos().x() + x(), event->pos().y() + y());
     g->scene->addItem(t);
+    g->addTower(t);
 }
 
 void Tower::fire()
 {
-    Bullet *bullet = new Bullet();
-    bullet->setPos(m_towerCenterX, m_towerCenterY);
+    if (m_target == nullptr)
+        return ;
 
-    QLineF ln(QPointF(m_towerCenterX, m_towerCenterY), attackDest);
-    int angle = -1 * ln.angle();
+    // shooting sounds
+    qDebug() << "pew pew pew";
+
+    // create bullet, and animate shooting
+    Bullet *bullet = new Bullet(m_target, x(), y(), m_damage);
+
+    QLineF ln(QPointF(x(), y()), m_target->pos());
+    qreal angle = -1 * ln.angle();
 
     bullet->setRotation(angle);
     g->scene->addItem(bullet);
 }
 
-double Tower::distanceTo(QGraphicsItem *item)
-{
-    QLineF ln(pos(),item->pos());
-    return ln.length();
-}
-
 void Tower::aquireTarget()
 {
-    attackDest = enemy->getCurrentDestination();
+    // for every target find the closest enemy -> TODO
 
-    QLineF ln(pos(), attackDest);
-    if (ln.length() < 2*m_radius) {
-        fire();
+    // aquire target
+    m_target = nullptr;
+    if (! g->enemies().empty()) {
+        m_target = std::move(g->enemies().takeFirst());
+
+        // if the enemy is in range fire at it
+        QLineF ln(pos(), m_target->pos());
+        if (ln.length() < 1.5*m_radius && m_target != nullptr) {
+            fire();
+        }
     }
 }
 

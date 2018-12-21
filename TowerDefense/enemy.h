@@ -18,14 +18,19 @@ public:
                const QStyleOptionGraphicsItem *option,
                QWidget *widget) override;
 
-    QPointF getCurrentDestination() const;
+    void decreaseHealth(int amount);
 
 private slots:
     void move();
 
 private:
-    qreal m_speed;
     qreal m_size;
+    qreal m_healthBarDistance;
+
+    qreal m_speed;
+    qreal m_maxHealth;
+    qreal m_currentHealth;
+
     QVector<QPoint> m_path;
     int m_currentFromIndex;
     int m_currentDestIndex;

@@ -1,4 +1,5 @@
 #include "enemy.h"
+#include "game.h"
 
 #include <QRectF>
 #include <QTimer>
@@ -6,6 +7,8 @@
 #include <QPointF>
 
 #include <QtDebug>
+
+extern Game *g;
 
 Enemy::Enemy()
 {
@@ -19,9 +22,14 @@ Enemy::Enemy()
     m_currentFrom = m_path[m_currentFromIndex];
     m_currentDest = m_path[m_currentDestIndex];
 
-    // size and speed
+    // size and distance of the health bar from the center
     m_size = 30.0;
+    m_healthBarDistance = 15.0;
+
+    // speed and health
     m_speed = 5.0;
+    m_maxHealth = 100.0;
+    m_currentHealth = m_maxHealth;
 
     setPos(m_currentFrom.x(), m_currentFrom.y());
 
@@ -33,18 +41,39 @@ Enemy::Enemy()
 
 QRectF Enemy::boundingRect() const
 {
-    return QRectF(-m_size, -m_size, 2.0 * m_size, 2.0 * m_size);
+    // rect needs to bound enemy and health bar
+    return QRectF(-m_size, -m_size - m_healthBarDistance,
+                  2.0 * m_size, 2.0 * m_size + m_healthBarDistance);
 }
 
 void Enemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
+    // draw the enemy
     painter->setBrush(Qt::black);
     painter->drawEllipse(QPointF(0, 0), m_size, m_size);
+
+    // draw the health bar
+    painter->setBrush(Qt::white);
+    painter->drawRect(QRectF(-m_size, -m_size - m_healthBarDistance
+                             , 2.0 * m_size, 10.0));
+
+    // scale health from [0, 100] to [0, m_size*2]
+    qreal currentHealthScaled = (m_currentHealth / m_maxHealth) * (2.0 * m_size);
+    painter->setBrush(Qt::red);
+    painter->drawRect(QRectF(-m_size, -m_size - m_healthBarDistance,
+                             currentHealthScaled, 10.0));
 }
 
-QPointF Enemy::getCurrentDestination() const
+void Enemy::decreaseHealth(int amount)
 {
-    return pos();
+    m_currentHealth -= amount;
+
+    // health is lower then zero (or equal) => enemy is dead
+    if (m_currentHealth <= 0) {
+        qDebug() << "enemy is deleted";
+        g->removeEnemy(this);
+        delete this;
+    }
 }
 
 void Enemy::move()
@@ -80,6 +109,7 @@ void Enemy::move()
         if (m_currentDestIndex == (m_path.size()-1)) {
             qDebug() << "enemy reached the end of the path";
             // we can decrease number of lives here -> TODO
+            g->removeEnemy(this);
             delete this;
             return ;
         }

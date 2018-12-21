@@ -22,7 +22,6 @@ public:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 
     void fire();
-    double distanceTo(QGraphicsItem * item);
 
 public slots:
     void aquireTarget();
@@ -30,11 +29,9 @@ public slots:
 private:
     qreal m_radius;
     qreal m_towerSize;
-    qreal m_towerCenterX;
-    qreal m_towerCenterY;
-    QPointF attackDest;
-//    bool hasTarget;
-//    QGraphicsItem *attackArea;
+    int m_damage;
+
+    Enemy * m_target;
 };
 
 #endif // TOWER_H
