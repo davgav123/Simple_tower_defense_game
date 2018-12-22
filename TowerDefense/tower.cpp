@@ -13,22 +13,21 @@
 #include <QTimer>
 #include <QGraphicsItem>
 #include <QList>
-
 #include <QtDebug>
 
 extern Game * g;
 
-Tower::Tower(qreal x, qreal y)
-    : m_radius(100.0), m_towerSize(30.0), m_damage(20), m_price(100)
+Tower::Tower(qreal x, qreal y, int damage, int price)
+    : m_radius(100.0), m_towerSize(30.0), m_damage(damage), m_price(price)
 {
      setPos(x, y);
 
      // initialy there is no target
      m_target = nullptr;
 
-     QTimer * timer = new QTimer();
-     connect(timer, SIGNAL(timeout()), this, SLOT(aquireTarget()));
-     timer->start(1000);
+//     QTimer * timer = new QTimer();
+//     connect(timer, SIGNAL(timeout()), this, SLOT(aquireTarget()));
+//     timer->start(1000);
 }
 
 QRectF Tower::boundingRect() const

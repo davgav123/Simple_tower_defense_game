@@ -32,8 +32,11 @@ SOURCES += \
     bullet.cpp \
     score.cpp \
     lives.cpp \
-    towericon.cpp \
-    gold.cpp
+    gold.cpp \
+    arrowtower.cpp \
+    arrowtowericon.cpp \
+    watchtower.cpp \
+    watchtowericon.cpp
 
 HEADERS += \
     tower.h \
@@ -42,8 +45,11 @@ HEADERS += \
     bullet.h \
     score.h \
     lives.h \
-    towericon.h \
-    gold.h
+    gold.h \
+    arrowtower.h \
+    arrowtowericon.h \
+    watchtower.h \
+    watchtowericon.h
 
 FORMS +=
 

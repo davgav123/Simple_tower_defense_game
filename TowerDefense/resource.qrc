@@ -1,12 +1,15 @@
 <RCC>
     <qresource prefix="/images">
-        <file>tower.png</file>
         <file>tower4.png</file>
         <file>tower3.png</file>
-        <file>tower2.png</file>
         <file>towerStore_1.png</file>
         <file>woodenBoardResized.jpg</file>
         <file>background.png</file>
+        <file>japaneseTowerForScene.png</file>
+        <file>japaneseTowerForCursor.png</file>
+        <file>fireBall.jpg</file>
+        <file>arrowResized.jpg</file>
+        <file>japaneseTowerStore_2.png</file>
     </qresource>
     <qresource prefix="/paths">
         <file>path_1.txt</file>

@@ -5,7 +5,6 @@
 #include <QTimer>
 #include <QPainter>
 #include <QPointF>
-
 #include <QtDebug>
 
 extern Game *g;

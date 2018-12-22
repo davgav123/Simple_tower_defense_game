@@ -26,16 +26,16 @@ Bullet::Bullet(Enemy * e, qreal towerX, qreal towerY, int damage)
     timer->start(50);
 }
 
-QRectF Bullet::boundingRect() const
-{
-    return QRectF(-m_size * 4.0, -m_size, 8.0 * m_size, 2.0 * m_size);
-}
+//QRectF Bullet::boundingRect() const
+//{
+//    return QRectF(-m_size * 4.0, -m_size, 8.0 * m_size, 2.0 * m_size);
+//}
 
-void Bullet::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
-{
-    painter->setBrush(Qt::red);
-    painter->drawEllipse(QPointF(0.0, 0.0), 4.0 * m_size, m_size);
-}
+//void Bullet::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+//{
+//    painter->setBrush(Qt::red);
+//    painter->drawEllipse(QPointF(0.0, 0.0), 4.0 * m_size, m_size);
+//}
 
 void Bullet::move()
 {

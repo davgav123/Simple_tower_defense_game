@@ -45,18 +45,18 @@ public:
     void decreaseGold(int amount);
     int getAmountOfGold() const;
 
-    void setCursor(QString filename);
+    void setCursor(QString filename, qreal x, qreal y);
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
 
-    QGraphicsScene * scene;
-    QGraphicsPixmapItem * cursor;
-    Tower *tower;
     QTimer * spawnTimer;
     int enemiesSpawned;
     int maxNumberOfEnemies;
     QVector<QPoint> path;
 
+    QGraphicsScene * scene;
+    QGraphicsPixmapItem * cursor;
+    Tower *tower;
 public slots:
     void spawn_enemy();
 private:

@@ -4,7 +4,10 @@
 #include "lives.h"
 #include "score.h"
 #include "gold.h"
-#include "towericon.h"
+#include "watchtower.h"
+#include "watchtowericon.h"
+#include "arrowtower.h"
+#include "arrowtowericon.h"
 
 Game::Game(): QGraphicsView()
 {
@@ -38,8 +41,8 @@ Game::Game(): QGraphicsView()
     scene->addItem(m_score);
 
     // tower icon, this is where you buy towers
-    TowerIcon * towerIcon = new TowerIcon();
-    scene->addItem(towerIcon);
+//    TowerIcon * towerIcon = new TowerIcon();
+//    scene->addItem(towerIcon);
 
     scene->addLine(200, 0, 200, 900);
 
@@ -86,6 +89,14 @@ Game::Game(): QGraphicsView()
 //    Enemy * e = new Enemy(path);
 //    scene->addItem(e);
 //    addEnemy(e);
+
+    // tower icon, this is where you buy towers
+    WatchTowerIcon * watchTowerIcon = new WatchTowerIcon();
+    scene->addItem(watchTowerIcon);
+
+    ArrowTowerIcon * arrowTowerIcon = new ArrowTowerIcon();
+    arrowTowerIcon->setPos(arrowTowerIcon->x(), arrowTowerIcon->y()+110);
+    scene->addItem(arrowTowerIcon);
 
 }
 
@@ -168,7 +179,7 @@ int Game::getAmountOfGold() const
     return m_gold->getGold();
 }
 
-void Game::setCursor(QString filename)
+void Game::setCursor(QString filename, qreal x, qreal y)
 {
     if (cursor) {
         scene->removeItem(cursor);
@@ -176,6 +187,7 @@ void Game::setCursor(QString filename)
     }
 
     cursor = new QGraphicsPixmapItem();
+    cursor->setPos(x, y); //ovde menjao
     cursor->setPixmap(QPixmap(filename));
     scene->addItem(cursor);
 }

@@ -9,28 +9,27 @@ class Tower : public QObject, public QGraphicsItem
 {
     Q_OBJECT
 public:
-    Tower(qreal x, qreal y);
+    Tower(qreal x, qreal y, int damage, int price);
 
     QRectF boundingRect() const override;
 
-    void paint(QPainter *painter,
+    virtual void paint(QPainter *painter,
                const QStyleOptionGraphicsItem *option,
-               QWidget *widget) override;
+               QWidget *widget) override = 0;
 
     int price() const;
 
-    void fire();
+    virtual void fire();
 
 public slots:
     void aquireTarget();
-
+protected:
+    Enemy * m_target;
+    int m_damage;
+    int m_price;
 private:
     qreal m_radius;
     qreal m_towerSize;
-    int m_damage;
-    int m_price;
-
-    Enemy * m_target;
 };
 
 #endif // TOWER_H
