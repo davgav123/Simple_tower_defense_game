@@ -10,12 +10,12 @@
 
 extern Game *g;
 
-Enemy::Enemy()
+Enemy::Enemy(QVector<QPoint> path) : m_path(path)
 {
     // create random path
-    m_path << QPoint(300, 0) << QPoint(300, 700) << QPoint(600, 700)
-           << QPoint(600, 400) << QPoint(1000, 400) << QPoint(1000, 900);
 
+//    m_path << QPoint(300, 0) << QPoint(300, 700) << QPoint(600, 700)
+//           << QPoint(600, 400) << QPoint(1000, 400) << QPoint(1000, 900);
     // initial start and destination
     m_currentFromIndex = 0;
     m_currentDestIndex = 1;

@@ -8,4 +8,7 @@
         <file>woodenBoardResized.jpg</file>
         <file>background.png</file>
     </qresource>
+    <qresource prefix="/paths">
+        <file>path_1.txt</file>
+    </qresource>
 </RCC>

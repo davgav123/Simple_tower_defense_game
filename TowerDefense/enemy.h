@@ -10,7 +10,8 @@ class Enemy : public QObject, public QGraphicsItem
 {
     Q_OBJECT
 public:
-    Enemy();
+
+    Enemy(QVector<QPoint> path);
 
     QRectF boundingRect() const override;
 

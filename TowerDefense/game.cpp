@@ -7,6 +7,9 @@
 #include "towericon.h"
 #include <QPainter>
 #include <QDebug>
+#include <QFile>
+#include <QTextStream>
+#include <QStringList>
 
 Game::Game()
 {
@@ -48,7 +51,21 @@ Game::Game()
     scene->addLine(200, 0, 200, 900);
 
     // init enemy, more enemies will be added
-    Enemy * e = new Enemy();
+    QFile file(":/paths/path_1.txt");
+    file.open(QIODevice::ReadOnly);
+    QTextStream in(&file);
+    QVector<QPoint> path;
+    while(!in.atEnd()){
+        QString line = in.readLine();
+        QStringList list = line.split(" ");
+
+        int x = list[0].toInt();
+        int y = list[1].toInt();
+        path << QPoint(x, y);
+        qDebug() << x << "," << y;
+    }
+    file.close();
+    Enemy * e = new Enemy(path);
 //    enemy = new Enemy();
     scene->addItem(e);
     addEnemy(e);
