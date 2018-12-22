@@ -10,12 +10,9 @@
 
 extern Game *g;
 
-Enemy::Enemy(QVector<QPoint> path) : m_path(path)
+Enemy::Enemy(QVector<QPoint> path)
+    : m_path(path)
 {
-    // create random path
-
-//    m_path << QPoint(300, 0) << QPoint(300, 700) << QPoint(600, 700)
-//           << QPoint(600, 400) << QPoint(1000, 400) << QPoint(1000, 900);
     // initial start and destination
     m_currentFromIndex = 0;
     m_currentDestIndex = 1;
@@ -30,6 +27,9 @@ Enemy::Enemy(QVector<QPoint> path) : m_path(path)
     m_speed = 5.0;
     m_maxHealth = 100.0;
     m_currentHealth = m_maxHealth;
+
+    // when you destroy the enemy, the gold increases by this amount
+    m_worthInGold = 50;
 
     setPos(m_currentFrom.x(), m_currentFrom.y());
 
@@ -54,8 +54,8 @@ void Enemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
 
     // draw the health bar
     painter->setBrush(Qt::white);
-    painter->drawRect(QRectF(-m_size, -m_size - m_healthBarDistance
-                             , 2.0 * m_size, 10.0));
+    painter->drawRect(QRectF(-m_size, -m_size - m_healthBarDistance,
+                             2.0 * m_size, 10.0));
 
     // scale health from [0, 100] to [0, m_size*2]
     qreal currentHealthScaled = (m_currentHealth / m_maxHealth) * (2.0 * m_size);
@@ -70,11 +70,9 @@ void Enemy::decreaseHealth(int amount)
 
     // health is lower then zero (or equal) => enemy is dead
     if (m_currentHealth <= 0) {
-        g->removeEnemy(this);
-        qDebug() << "enemy is deleted";
         g->increaseScore(10);
-        // add gold -> TODO
-        delete this;
+        g->increaseGold(m_worthInGold);
+        destroyTheEnemy();
     }
 }
 
@@ -108,8 +106,9 @@ void Enemy::move()
 
             // decrease the numberOfLives and delete the enemy
             g->decreaseLives();
-            g->removeEnemy(this);
-            delete this;
+            destroyTheEnemy();
+
+             // without this return, the program crashes when the enemy reaches the end of the path
             return ;
         }
 
@@ -118,6 +117,14 @@ void Enemy::move()
         m_currentFrom = m_path[m_currentFromIndex];
         m_currentDest = m_path[m_currentDestIndex];
     }
+}
+
+void Enemy::destroyTheEnemy()
+{
+    // remove the enemy from list of the enemies, and then delete it
+    qDebug() << "enemy destroyed";
+    g->removeEnemy(this);
+    delete this;
 }
 
 

@@ -13,15 +13,15 @@
 
 Game::Game()
 {
-    // create and set the scene
+    // create and set the scene and view
     scene = new QGraphicsScene(this);
-    scene->setSceneRect(0, 0, 1400, 900);
+    scene->setSceneRect(0, 0, 1400, 700);
 
-    QGraphicsRectItem *rect1 = scene->addRect(0, 0, 200, 900);
+    QGraphicsRectItem *rect1 = scene->addRect(0, 0, 200, 700);
     rect1->setBrush(QBrush(QImage(":/images/background.png")));
 
     setScene(scene);
-    setFixedSize(1400, 900);
+    setFixedSize(1400, 700);
 
     // scroll disabled
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -44,13 +44,12 @@ Game::Game()
     m_score->setPos(20, 600);
     scene->addItem(m_score);
 
-    m_gold = new Gold();
+    m_gold = new Gold(400);
     m_gold->setPos(20, 660);
     scene->addItem(m_gold);
 
     scene->addLine(200, 0, 200, 900);
 
-    // init enemy, more enemies will be added
     QFile file(":/paths/path_1.txt");
     file.open(QIODevice::ReadOnly);
     QTextStream in(&file);
@@ -65,6 +64,8 @@ Game::Game()
         qDebug() << x << "," << y;
     }
     file.close();
+
+    // init enemy, more enemies will be added
     Enemy * e = new Enemy(path);
 //    enemy = new Enemy();
     scene->addItem(e);
@@ -120,6 +121,21 @@ void Game::decreaseLives()
     m_lives->decrease();
 }
 
+void Game::increaseGold(int amount)
+{
+    m_gold->increaseGold(amount);
+}
+
+void Game::decreaseGold(int amount)
+{
+    m_gold->decreaseGold(amount);
+}
+
+int Game::getAmountOfGold() const
+{
+    return m_gold->getGold();
+}
+
 void Game::setCursor(QString filename)
 {
     if (cursor) {
@@ -141,12 +157,24 @@ void Game::mouseMoveEvent(QMouseEvent *event)
 
 void Game::mousePressEvent(QMouseEvent *event)
 {
-    if (tower){
+    if (tower) {
+        // if the tower is worth more than you have gold, then you cannot build the tower
+        if (getAmountOfGold() < tower->price()) {
+            qDebug() << "not enough gold";
+            return ;
+        }
+
+        decreaseGold(tower->price());
+
         if (event->pos().x() < 220) {
             return;
         }
+
+        // add the tower to the scene and to the list of towers
         scene->addItem(tower);
         tower->setPos(event->pos());
+        addTower(tower);
+
         delete cursor;
         cursor = nullptr;
         tower = nullptr;

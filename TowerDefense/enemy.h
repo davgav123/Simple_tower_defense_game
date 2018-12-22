@@ -32,11 +32,15 @@ private:
     qreal m_maxHealth;
     qreal m_currentHealth;
 
+    int m_worthInGold;
+
     QVector<QPoint> m_path;
     int m_currentFromIndex;
     int m_currentDestIndex;
     QPoint m_currentFrom;
     QPoint m_currentDest;
+
+    void destroyTheEnemy();
 };
 
 #endif // ENEMY_H

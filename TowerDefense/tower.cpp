@@ -19,7 +19,7 @@
 extern Game * g;
 
 Tower::Tower(qreal x, qreal y)
-    : m_radius(100.0), m_towerSize(30.0), m_damage(20)
+    : m_radius(100.0), m_towerSize(30.0), m_damage(20), m_price(100)
 {
      setPos(x, y);
 
@@ -36,16 +36,15 @@ QRectF Tower::boundingRect() const
     // (0, 0) is the center of the tower
 
     // this is just for the tower
-//    return QRectF(0 - m_towerSize, 0 - m_towerSize, 2.0 * m_towerSize, 2.0 * m_towerSize);
+    return QRectF(0 - m_towerSize, 0 - m_towerSize, 2.0 * m_towerSize, 2.0 * m_towerSize);
 
     // this is for the tower with radius included
-    return QRectF(0 - m_radius, 0 - m_radius, 2.0 * m_radius, 2.0 * m_radius);
+//    return QRectF(0 - m_radius, 0 - m_radius, 2.0 * m_radius, 2.0 * m_radius);
 }
 
 void Tower::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     // center of the item is (0, 0), or (400, 400) on the scene
-//    QPointF tower_center(0, 0);
 
     // draw the radius of the tower
     //painter->drawEllipse(tower_center, m_radius, m_radius);
@@ -54,6 +53,11 @@ void Tower::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
     QPixmap pixmap(":/images/tower3.png");
 
     painter->drawPixmap(-25, -35, 50, 70, pixmap);
+}
+
+int Tower::price() const
+{
+    return m_price;
 }
 
 void Tower::fire()

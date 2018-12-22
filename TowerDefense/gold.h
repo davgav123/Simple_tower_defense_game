@@ -6,10 +6,10 @@
 class Gold: public QGraphicsTextItem
 {
 public:
-    Gold();
+    Gold(int initAmount);
     void decreaseGold(int amount);
     void increaseGold(int amount);
-    int getGold();
+    int getGold() const;
 private:
     int m_goldAmount;
 };

@@ -1,8 +1,8 @@
 #include "gold.h"
 #include <QFont>
 
-Gold::Gold()
-    : m_goldAmount(500)
+Gold::Gold(int initAmount)
+    : m_goldAmount(initAmount)
 {
     setPlainText(QString("Gold: ") + QString::number(m_goldAmount));
     setDefaultTextColor(Qt::black);
@@ -21,7 +21,7 @@ void Gold::increaseGold(int amount)
     setPlainText(QString("Gold: ") + QString::number(m_goldAmount));
 }
 
-int Gold::getGold()
+int Gold::getGold() const
 {
     return m_goldAmount;
 }

@@ -28,6 +28,9 @@ public:
 
     void increaseScore(int score);
     void decreaseLives();
+    void increaseGold(int amount);
+    void decreaseGold(int amount);
+    int getAmountOfGold() const;
 
     void setCursor(QString filename);
     void mouseMoveEvent(QMouseEvent *event);

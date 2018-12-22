@@ -17,6 +17,8 @@ public:
                const QStyleOptionGraphicsItem *option,
                QWidget *widget) override;
 
+    int price() const;
+
     void fire();
 
 public slots:
@@ -26,6 +28,7 @@ private:
     qreal m_radius;
     qreal m_towerSize;
     int m_damage;
+    int m_price;
 
     Enemy * m_target;
 };
