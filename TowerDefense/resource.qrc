@@ -10,6 +10,12 @@
         <file>fireBall.jpg</file>
         <file>arrowResized.jpg</file>
         <file>japaneseTowerStore_2.png</file>
+        <file>goblin.png</file>
+        <file>goblin_flipped.png</file>
+        <file>commonKnight.png</file>
+        <file>commonKnightFlipped.png</file>
+        <file>darkKnight.png</file>
+        <file>darkKnightFlipped.png</file>
     </qresource>
     <qresource prefix="/paths">
         <file>path_1.txt</file>

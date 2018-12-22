@@ -1,13 +1,11 @@
 #include "game.h"
 #include "tower.h"
 #include "enemy.h"
-#include "lives.h"
-#include "score.h"
-#include "gold.h"
 #include "watchtower.h"
 #include "watchtowericon.h"
 #include "arrowtower.h"
 #include "arrowtowericon.h"
+#include "enemies.h"
 
 Game::Game(): QGraphicsView()
 {
@@ -40,12 +38,23 @@ Game::Game(): QGraphicsView()
     m_score = new Score();
     scene->addItem(m_score);
 
-    // tower icon, this is where you buy towers
-//    TowerIcon * towerIcon = new TowerIcon();
-//    scene->addItem(towerIcon);
-
     scene->addLine(200, 0, 200, 900);
 
+    // initl level from json file... init waves, initGold etc
+    initializeLevel();
+
+    // tower icon, this is where you buy towers
+    WatchTowerIcon * watchTowerIcon = new WatchTowerIcon();
+    scene->addItem(watchTowerIcon);
+
+    ArrowTowerIcon * arrowTowerIcon = new ArrowTowerIcon();
+    arrowTowerIcon->setPos(arrowTowerIcon->x(), arrowTowerIcon->y()+110);
+    scene->addItem(arrowTowerIcon);
+
+}
+
+void Game::initializeLevel()
+{
     // read json file
     QFile json(":/paths/path_1.json");
     json.open(QIODevice::ReadOnly);
@@ -57,7 +66,6 @@ Game::Game(): QGraphicsView()
     //qDebug() << path_to_file.toString();
 
     QJsonValue gold = set.value(QString("gold"));
-    //qDebug() << gold.toInt();
 
     // initialize gold
     m_gold = new Gold(gold.toInt());
@@ -83,26 +91,11 @@ Game::Game(): QGraphicsView()
     enemiesSpawned = 0;
     maxNumberOfEnemies = 0;
     create_enemies(waves[0].toInt());
-
-
-    // init enemy, more enemies will be added
-//    Enemy * e = new Enemy(path);
-//    scene->addItem(e);
-//    addEnemy(e);
-
-    // tower icon, this is where you buy towers
-    WatchTowerIcon * watchTowerIcon = new WatchTowerIcon();
-    scene->addItem(watchTowerIcon);
-
-    ArrowTowerIcon * arrowTowerIcon = new ArrowTowerIcon();
-    arrowTowerIcon->setPos(arrowTowerIcon->x(), arrowTowerIcon->y()+110);
-    scene->addItem(arrowTowerIcon);
-
 }
 
 void Game::spawn_enemy(){
     // spawn an enemy
-    Enemy * e = new Enemy(path);
+    Enemy * e = new Goblin(path);
     scene->addItem(e);
     addEnemy(e);
     enemiesSpawned += 1;
@@ -111,6 +104,7 @@ void Game::spawn_enemy(){
         spawnTimer->disconnect();
     }
 }
+
 
 void Game::create_enemies(int numberOfEnemies){
     enemiesSpawned = 0;
@@ -140,8 +134,8 @@ void Game::addEnemy(Enemy *e)
 void Game::removeEnemy(Enemy *e)
 {
     m_enemies.removeOne(e);
-    for (const auto & e: m_enemies)
-        qDebug() << e->pos();
+//    for (const auto & e: m_enemies)
+//        qDebug() << e->pos();
 }
 
 bool Game::containsEnemy(Enemy *e)

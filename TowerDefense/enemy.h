@@ -5,13 +5,14 @@
 #include <QObject>
 #include <QVector>
 #include <QPoint>
+#include <QString>
 
 class Enemy : public QObject, public QGraphicsItem
 {
     Q_OBJECT
 public:
 
-    Enemy(QVector<QPoint> path);
+    Enemy(QVector<QPoint> path, qreal speed, int maxHealth, int worth, QString pathToImg, QString pathToFlippedImg);
 
     QRectF boundingRect() const override;
 
@@ -25,20 +26,25 @@ private slots:
     void move();
 
 private:
-    qreal m_size;
-    qreal m_healthBarDistance;
-
-    qreal m_speed;
-    qreal m_maxHealth;
-    qreal m_currentHealth;
-
-    int m_worthInGold;
-
     QVector<QPoint> m_path;
     int m_currentFromIndex;
     int m_currentDestIndex;
     QPoint m_currentFrom;
     QPoint m_currentDest;
+
+    qreal m_size;
+    qreal m_healthBarDistance;
+    // m_speed must be dividable by 10 or 5 or 2
+    qreal m_speed;
+
+    qreal m_maxHealth;
+    qreal m_currentHealth;
+
+    int m_worthInGold;
+
+    QString m_pathToImage;
+    QString m_pathToFlippedImage;
+    QString m_currentImage;
 
     void destroyTheEnemy();
 };

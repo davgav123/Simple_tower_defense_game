@@ -5,12 +5,15 @@
 #include <QTimer>
 #include <QPainter>
 #include <QPointF>
+#include <QPixmap>
+
 #include <QtDebug>
 
 extern Game *g;
 
-Enemy::Enemy(QVector<QPoint> path)
-    : m_path(path)
+Enemy::Enemy(QVector<QPoint> path, qreal speed, int maxHealth, int worth, QString pathToImg, QString pathToFlippedImg)
+    : m_path(path), m_speed(speed), m_maxHealth(maxHealth), m_worthInGold(worth)
+    , m_pathToImage(pathToImg), m_pathToFlippedImage(pathToFlippedImg), m_currentImage(pathToImg)
 {
     // initial start and destination
     m_currentFromIndex = 0;
@@ -22,13 +25,8 @@ Enemy::Enemy(QVector<QPoint> path)
     m_size = 30.0;
     m_healthBarDistance = 15.0;
 
-    // speed and health
-    m_speed = 5.0;
-    m_maxHealth = 100.0;
+    // health
     m_currentHealth = m_maxHealth;
-
-    // when you destroy the enemy, the gold increases by this amount
-    m_worthInGold = 50;
 
     setPos(m_currentFrom.x(), m_currentFrom.y());
 
@@ -49,7 +47,9 @@ void Enemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
 {
     // draw the enemy
     painter->setBrush(Qt::black);
-    painter->drawEllipse(QPointF(0, 0), m_size, m_size);
+//    painter->drawEllipse(QPointF(0, 0), m_size, m_size); // <---- inser IMG
+    painter->drawPixmap(int(-m_size), int(-m_size), int(2*m_size), int(2*m_size),
+                        QPixmap(m_currentImage));
 
     // draw the health bar
     painter->setBrush(Qt::white);
@@ -89,14 +89,18 @@ void Enemy::move()
     // if the ys are same, we move by x
     if (m_currentFrom.y() == m_currentDest.y()) {
         if (m_currentFrom.x() < m_currentDest.x()) {
+            // enemy is moving from left to right
+            m_currentImage = m_pathToImage;
             setPos(x() + m_speed, y());
         } else {
+            // enemy is moving from right to left
+            m_currentImage = m_pathToFlippedImage;
             setPos(x() - m_speed, y());
         }
     }
 
     // if we reached current destination, do the the next From/Dest
-    if ((int) x() ==  m_currentDest.x() && (int) y() == m_currentDest.y()) {
+    if (int(x()) ==  m_currentDest.x() && int(y()) == m_currentDest.y()) {
         qDebug() << "current destination reached";
 
         // if we reached the end, destroy the enemy

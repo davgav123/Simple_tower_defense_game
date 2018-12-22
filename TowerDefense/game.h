@@ -3,9 +3,7 @@
 
 #include "tower.h"
 #include "enemy.h"
-#include "lives.h"
-#include "score.h"
-#include "gold.h"
+#include "resources.h"
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QVector>
@@ -49,10 +47,6 @@ public:
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
 
-    QTimer * spawnTimer;
-    int enemiesSpawned;
-    int maxNumberOfEnemies;
-    QVector<QPoint> path;
 
     QGraphicsScene * scene;
     QGraphicsPixmapItem * cursor;
@@ -66,6 +60,13 @@ private:
     Lives * m_lives;
     Score * m_score;
     Gold * m_gold;
+
+    QTimer * spawnTimer;
+    int enemiesSpawned;
+    int maxNumberOfEnemies;
+    QVector<QPoint> path;
+
+    void initializeLevel();
 };
 
 #endif // GAME_H

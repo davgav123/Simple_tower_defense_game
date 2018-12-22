@@ -30,26 +30,24 @@ SOURCES += \
     game.cpp \
     enemy.cpp \
     bullet.cpp \
-    score.cpp \
-    lives.cpp \
-    gold.cpp \
     arrowtower.cpp \
     arrowtowericon.cpp \
     watchtower.cpp \
-    watchtowericon.cpp
+    watchtowericon.cpp \
+    enemies.cpp \
+    resources.cpp
 
 HEADERS += \
     tower.h \
     game.h \
     enemy.h \
     bullet.h \
-    score.h \
-    lives.h \
-    gold.h \
     arrowtower.h \
     arrowtowericon.h \
     watchtower.h \
-    watchtowericon.h
+    watchtowericon.h \
+    enemies.h \
+    resources.h
 
 FORMS +=
 

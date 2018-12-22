@@ -17,8 +17,8 @@ Bullet::Bullet(Enemy * e, qreal towerX, qreal towerY, int damage)
     setPos(towerX, towerY);
 
     // init distances
-    m_currentDist = INFINITY;
-    m_previousDist = INFINITY;
+    m_currentDist = double(INFINITY);
+    m_previousDist = double(INFINITY);
 
     // create and start the timer
     QTimer *timer = new QTimer();
