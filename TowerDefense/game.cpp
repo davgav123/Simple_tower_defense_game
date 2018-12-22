@@ -5,13 +5,8 @@
 #include "score.h"
 #include "gold.h"
 #include "towericon.h"
-#include <QPainter>
-#include <QDebug>
-#include <QFile>
-#include <QTextStream>
-#include <QStringList>
 
-Game::Game()
+Game::Game(): QGraphicsView()
 {
     // create and set the scene and view
     scene = new QGraphicsScene(this);
@@ -36,46 +31,83 @@ Game::Game()
 
     // initialize number of lives
     m_lives = new Lives();
-    m_lives->setPos(20, 630);
     scene->addItem(m_lives);
 
     // initialize score
     m_score = new Score();
-    m_score->setPos(20, 600);
     scene->addItem(m_score);
-
-    m_gold = new Gold(400);
-    m_gold->setPos(20, 660);
-    scene->addItem(m_gold);
-
-    scene->addLine(200, 0, 200, 900);
-
-    QFile file(":/paths/path_1.txt");
-    file.open(QIODevice::ReadOnly);
-    QTextStream in(&file);
-    QVector<QPoint> path;
-    while(!in.atEnd()){
-        QString line = in.readLine();
-        QStringList list = line.split(" ");
-
-        int x = list[0].toInt();
-        int y = list[1].toInt();
-        path << QPoint(x, y);
-        qDebug() << x << "," << y;
-    }
-    file.close();
-
-    // init enemy, more enemies will be added
-    Enemy * e = new Enemy(path);
-//    enemy = new Enemy();
-    scene->addItem(e);
-    addEnemy(e);
 
     // tower icon, this is where you buy towers
     TowerIcon * towerIcon = new TowerIcon();
     scene->addItem(towerIcon);
 
+    scene->addLine(200, 0, 200, 900);
+
+    // read json file
+    QFile json(":/paths/path_1.json");
+    json.open(QIODevice::ReadOnly);
+    QString val = json.readAll();
+    json.close();
+    QJsonDocument q_json = QJsonDocument::fromJson(val.toUtf8());
+    QJsonObject set = q_json.object();
+    QJsonValue path_to_file = set.value(QString("path_1"));
+    //qDebug() << path_to_file.toString();
+
+    QJsonValue gold = set.value(QString("gold"));
+    //qDebug() << gold.toInt();
+
+    // initialize gold
+    m_gold = new Gold(gold.toInt());
+    scene->addItem(m_gold);
+
+    //enemy's moving path initialize
+    QFile file(path_to_file.toString());
+    file.open(QIODevice::ReadOnly);
+    QTextStream in(&file);
+    while(!in.atEnd()){
+        QString line = in.readLine();
+        QStringList list = line.split(" ");
+        path << QPoint(list[0].toInt(), list[1].toInt());
+            //qDebug() << x << "," << y;
+        }
+    file.close();
+
+    QJsonArray waves = set["waves"].toArray();
+
+    //qDebug() << waves[0];
+    //int size = waves.size();
+    spawnTimer = new QTimer(this);
+    enemiesSpawned = 0;
+    maxNumberOfEnemies = 0;
+    create_enemies(waves[0].toInt());
+
+
+    // init enemy, more enemies will be added
+//    Enemy * e = new Enemy(path);
+//    scene->addItem(e);
+//    addEnemy(e);
+
 }
+
+void Game::spawn_enemy(){
+    // spawn an enemy
+    Enemy * e = new Enemy(path);
+    scene->addItem(e);
+    addEnemy(e);
+    enemiesSpawned += 1;
+
+    if (enemiesSpawned >= maxNumberOfEnemies){
+        spawnTimer->disconnect();
+    }
+}
+
+void Game::create_enemies(int numberOfEnemies){
+    enemiesSpawned = 0;
+    maxNumberOfEnemies = numberOfEnemies;
+    connect(spawnTimer,SIGNAL(timeout()),this,SLOT(spawn_enemy()));
+    spawnTimer->start(1000);
+}
+
 
 void Game::addTower(Tower *t)
 {

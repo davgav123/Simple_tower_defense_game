@@ -10,5 +10,6 @@
     </qresource>
     <qresource prefix="/paths">
         <file>path_1.txt</file>
+        <file>path_1.json</file>
     </qresource>
 </RCC>

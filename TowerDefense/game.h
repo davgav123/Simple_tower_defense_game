@@ -13,16 +13,29 @@
 #include <QGraphicsPixmapItem>
 #include <QMouseEvent>
 #include <QGraphicsPathItem>
+#include <QObject>
+#include <QPainter>
+#include <QDebug>
+#include <QFile>
+#include <QTextStream>
+#include <QStringList>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QJsonArray>
+#include <QTimer>
 
 
 class Game: public QGraphicsView
 {
+    Q_OBJECT
 public:
     Game();
     void addTower(Tower *t);
     void addEnemy(Enemy *e);
     void removeEnemy(Enemy *e);
     bool containsEnemy(Enemy *e);
+    void create_enemies(int numberOfEnemies);
 
     QLinkedList<Enemy*> enemies() const;
 
@@ -39,6 +52,13 @@ public:
     QGraphicsScene * scene;
     QGraphicsPixmapItem * cursor;
     Tower *tower;
+    QTimer * spawnTimer;
+    int enemiesSpawned;
+    int maxNumberOfEnemies;
+    QVector<QPoint> path;
+
+public slots:
+    void spawn_enemy();
 private:
     QVector<Tower*> m_towers;
     QLinkedList<Enemy*> m_enemies;

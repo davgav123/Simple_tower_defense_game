@@ -4,6 +4,7 @@
 Gold::Gold(int initAmount)
     : m_goldAmount(initAmount)
 {
+    setPos(20, 660);
     setPlainText(QString("Gold: ") + QString::number(m_goldAmount));
     setDefaultTextColor(Qt::black);
     setFont(QFont("times", 16));
