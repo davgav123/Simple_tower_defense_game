@@ -1,5 +1,5 @@
 {
     "path_1" 		: ":/paths/path_1.txt" ,
     "gold"   		: 400,
-    "waves"         : [5,7,10]
+    "waves"         : [6,9,13]
 }

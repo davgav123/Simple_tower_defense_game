@@ -104,49 +104,42 @@ void Game::initializeLevel()
     create_enemies(waves[0].toInt());
 }
 
-void Game::spawn_enemy(){
+void Game::spawn_enemy()
+{
     // spawn an enemy
     Enemy * e = new Goblin(path);
     scene->addItem(e);
     addEnemy(e);
     enemiesSpawned += 1;
 
-    if (enemiesSpawned >= maxNumberOfEnemies){
+    if (enemiesSpawned >= maxNumberOfEnemies) {
         spawnTimer->disconnect();
     }
 }
 
 
-void Game::create_enemies(int numberOfEnemies){
+void Game::create_enemies(int numberOfEnemies)
+{
     enemiesSpawned = 0;
     maxNumberOfEnemies = numberOfEnemies;
-    connect(spawnTimer,SIGNAL(timeout()),this,SLOT(spawn_enemy()));
-    spawnTimer->start(1000);
+    connect(spawnTimer, SIGNAL(timeout()), this, SLOT(spawn_enemy()));
+    spawnTimer->start(1300);
 }
 
 
 void Game::addTower(Tower *t)
 {
     m_towers.push_back(std::move(t));
-//    qDebug() << "---- towers";
-//    for (const auto & tower : m_towers)
-//        qDebug() << tower->pos();
 }
 
 void Game::addEnemy(Enemy *e)
 {
     m_enemies.push_back(std::move(e));
-//    qDebug() << "---- enemies";
-//    for (const auto & enemy : m_enemies)
-//        qDebug() << enemy->pos();
 }
-
 
 void Game::removeEnemy(Enemy *e)
 {
     m_enemies.removeOne(e);
-//    for (const auto & e: m_enemies)
-//        qDebug() << e->pos();
 }
 
 bool Game::containsEnemy(Enemy *e)
@@ -192,7 +185,7 @@ void Game::setCursor(QString filename, qreal x, qreal y)
     }
 
     cursor = new QGraphicsPixmapItem();
-    cursor->setPos(x, y); //ovde menjao
+    cursor->setPos(x, y);
     cursor->setPixmap(QPixmap(filename));
     scene->addItem(cursor);
 }

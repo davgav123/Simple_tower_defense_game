@@ -4,19 +4,12 @@
 #include "enemy.h"
 
 #include <QObject>
-#include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
 
 class Bullet: public QObject, public QGraphicsPixmapItem {
     Q_OBJECT
 public:
     Bullet(Enemy * e, qreal towerX, qreal towerY, int damage);
-
-//    QRectF boundingRect() const override;
-
-//    void paint(QPainter *painter,
-//               const QStyleOptionGraphicsItem *option,
-//               QWidget *widget) override;
 
 private slots:
     void move();

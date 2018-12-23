@@ -12,22 +12,17 @@
 #include <QtDebug>
 #include <QTimer>
 #include <QGraphicsItem>
-#include <QList>
 #include <QtDebug>
 
 extern Game * g;
 
 Tower::Tower(qreal x, qreal y, int damage, int price)
-    : m_radius(100.0), m_towerSize(30.0), m_damage(damage), m_price(price)
+    : m_damage(damage), m_price(price), m_radius(100.0), m_towerSize(30.0)
 {
      setPos(x, y);
 
      // initialy there is no target
      m_target = nullptr;
-
-//     QTimer * timer = new QTimer();
-//     connect(timer, SIGNAL(timeout()), this, SLOT(aquireTarget()));
-//     timer->start(1000);
 }
 
 QRectF Tower::boundingRect() const
@@ -79,17 +74,50 @@ void Tower::fire()
 
 void Tower::aquireTarget()
 {
-    // for every target find the closest enemy -> TODO
-
-    // aquire target
-    m_target = nullptr;
+    // there are enemies we can shoot
     if (! g->enemies().empty()) {
-        m_target = std::move(g->enemies().takeFirst());
+        // if the target is not alive, we choose the new one
 
-        // if the enemy is in range fire at it
-        QLineF ln(pos(), m_target->pos());
-        if (ln.length() < 1.5*m_radius && m_target != nullptr) {
+        if (! g->enemies().contains(m_target)) {
+            findClosestEnemy();
+        }
+
+        // distance between the tower and the target
+        qreal dist = QLineF(pos(), m_target->pos()).length();
+
+        if (dist < 1.5*m_radius) {
+            // if the target is in the range, shoot it
             fire();
+        } else {
+            // if it is not, then find new one
+            findClosestEnemy();
+        }
+    }
+
+
+    // this code is taking the first enemy in the list as the target
+//    m_target = nullptr;
+//    if (! g->enemies().empty()) {
+//        m_target = std::move(g->enemies().takeFirst());
+
+//        // if the enemy is in range fire at it
+//        QLineF ln(pos(), m_target->pos());
+//        if (ln.length() < 1.5*m_radius && m_target != nullptr) {
+//            fire();
+//        }
+//    }
+    // --------------------------------------------------------------
+}
+
+void Tower::findClosestEnemy()
+{
+    // this should be faster than it is <- TODO
+    qreal minDist = double(INFINITY);
+    for (auto i = g->enemies().cbegin(); i != g->enemies().cend(); ++i) {
+        qreal currentDist = QLineF(pos(), (*i)->pos()).length();
+        if (minDist > currentDist) {
+            minDist = currentDist;
+            m_target = std::move(*i);
         }
     }
 }

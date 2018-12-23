@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QGraphicsItem>
 #include <QMediaPlayer>
+#include <qmath.h>
 
 class Tower : public QObject, public QGraphicsItem
 {
@@ -32,6 +33,8 @@ protected:
 private:
     qreal m_radius;
     qreal m_towerSize;
+
+    void findClosestEnemy();
 };
 
 #endif // TOWER_H
