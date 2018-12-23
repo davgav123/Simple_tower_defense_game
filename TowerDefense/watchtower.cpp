@@ -11,6 +11,9 @@ WatchTower::WatchTower(qreal x, qreal y) : Tower(x, y, 20, 100)
     QTimer * timer = new QTimer();
     connect(timer, SIGNAL(timeout()), this, SLOT(aquireTarget()));
     timer->start(1000);
+
+    bulletSound = new QMediaPlayer();
+    bulletSound->setMedia(QUrl("qrc:/sounds/bulletSound.mp3"));
 }
 
 void WatchTower::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
@@ -39,6 +42,14 @@ void WatchTower::fire()
     bullet->setRotation(angle);
     bullet->setPixmap(QPixmap(":/images/fireBall.jpg"));
     g->scene->addItem(bullet);
+
+    // play bulletsound
+    if (bulletSound->state() == QMediaPlayer::PlayingState){
+        bulletSound->setPosition(0);
+    }
+    else if (bulletSound->state() == QMediaPlayer::StoppedState){
+        bulletSound->play();
+    }
 }
 
 void WatchTower::aquire_target()

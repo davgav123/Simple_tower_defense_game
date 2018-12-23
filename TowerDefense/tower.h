@@ -4,6 +4,7 @@
 #include "enemy.h"
 #include <QObject>
 #include <QGraphicsItem>
+#include <QMediaPlayer>
 
 class Tower : public QObject, public QGraphicsItem
 {
@@ -27,6 +28,7 @@ protected:
     Enemy * m_target;
     int m_damage;
     int m_price;
+    QMediaPlayer *bulletSound;
 private:
     qreal m_radius;
     qreal m_towerSize;

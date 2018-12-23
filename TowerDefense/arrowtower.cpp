@@ -12,6 +12,9 @@ ArrowTower::ArrowTower(qreal x, qreal y) : Tower(x, y, 35, 150)
     QTimer * timer = new QTimer();
     connect(timer, SIGNAL(timeout()), this, SLOT(aquireTarget()));
     timer->start(1000);
+
+    bulletSound = new QMediaPlayer();
+    bulletSound->setMedia(QUrl("qrc:/sounds/bulletSound.mp3"));
 }
 
 void ArrowTower::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
@@ -40,6 +43,14 @@ void ArrowTower::fire()
     bullet->setRotation(angle);
     bullet->setPixmap(QPixmap(":/images/arrowResized.jpg"));
     g->scene->addItem(bullet);
+
+    // play bulletsound
+    if (bulletSound->state() == QMediaPlayer::PlayingState){
+        bulletSound->setPosition(0);
+    }
+    else if (bulletSound->state() == QMediaPlayer::StoppedState){
+        bulletSound->play();
+    }
 }
 
 void ArrowTower::aquire_target()

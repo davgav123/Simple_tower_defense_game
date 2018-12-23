@@ -21,4 +21,8 @@
         <file>path_1.txt</file>
         <file>path_1.json</file>
     </qresource>
+    <qresource prefix="/sounds">
+        <file>soundtrack.mp3</file>
+        <file>bulletSound.mp3</file>
+    </qresource>
 </RCC>

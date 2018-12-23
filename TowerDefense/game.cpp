@@ -6,18 +6,20 @@
 #include "arrowtower.h"
 #include "arrowtowericon.h"
 #include "enemies.h"
+#include <QMediaPlaylist>
+#include <QMediaPlayer>
 
 Game::Game(): QGraphicsView()
 {
     // create and set the scene and view
     scene = new QGraphicsScene(this);
-    scene->setSceneRect(0, 0, 1400, 700);
+    scene->setSceneRect(0, 0, 1300, 700);
 
     QGraphicsRectItem *rect1 = scene->addRect(0, 0, 200, 700);
     rect1->setBrush(QBrush(QImage(":/images/background.png")));
 
     setScene(scene);
-    setFixedSize(1400, 700);
+    setFixedSize(1300, 700);
 
     // scroll disabled
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -51,6 +53,15 @@ Game::Game(): QGraphicsView()
     arrowTowerIcon->setPos(arrowTowerIcon->x(), arrowTowerIcon->y()+110);
     scene->addItem(arrowTowerIcon);
 
+
+    // play background music
+    QMediaPlaylist *playlist = new QMediaPlaylist();
+    playlist->addMedia(QUrl("qrc:/sounds/soundtrack.mp3"));
+    playlist->setPlaybackMode(QMediaPlaylist::Loop);
+
+    QMediaPlayer * music = new QMediaPlayer();
+    music->setPlaylist(playlist);
+    music->play();
 }
 
 void Game::initializeLevel()
