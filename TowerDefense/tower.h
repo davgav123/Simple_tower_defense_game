@@ -11,17 +11,18 @@ class Tower : public QObject, public QGraphicsItem
 {
     Q_OBJECT
 public:
-    Tower(qreal x, qreal y, int damage, int price, EnemyType type);
+    Tower(qreal x, qreal y, int damage, int price, EnemyType type,
+          QString pathToImg, QString pathToSound, QString pathToBulletImg);
 
     QRectF boundingRect() const override;
 
-    virtual void paint(QPainter *painter,
+    void paint(QPainter *painter,
                const QStyleOptionGraphicsItem *option,
-               QWidget *widget) override = 0;
+               QWidget *widget) override;
 
     int price() const;
 
-    virtual void fire();
+    void fire();
 
 public slots:
     void aquireTarget();
@@ -36,7 +37,11 @@ protected:
     QMediaPlayer *bulletSound;
 private:
     qreal m_radius;
-    qreal m_towerSize;
+    int m_towerSize;
+
+    QString m_pathToImg;
+    QString m_pathToBulletSound;
+    QString m_pathToBulletImg;
 
     void findClosestEnemy();
 };

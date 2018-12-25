@@ -1,5 +1,5 @@
 #include "magetowericon.h"
-#include "magetower.h"
+#include "towers.h"
 #include "game.h"
 #include <QGraphicsPixmapItem>
 

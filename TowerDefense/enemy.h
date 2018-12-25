@@ -10,7 +10,8 @@
 enum EnemyType
 {
     GROUND_ENEMY,
-    FLYING_ENEMY
+    FLYING_ENEMY,
+    BOTH_ENEMIES
 };
 
 class Enemy : public QObject, public QGraphicsItem

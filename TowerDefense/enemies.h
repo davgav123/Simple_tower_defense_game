@@ -34,4 +34,16 @@ public:
     Rocket();
 };
 
+class Dragon : public FlyingEnemy
+{
+public:
+    Dragon();
+};
+
+class ZombieDragon : public FlyingEnemy
+{
+public:
+    ZombieDragon();
+};
+
 #endif // GOBLIN_H

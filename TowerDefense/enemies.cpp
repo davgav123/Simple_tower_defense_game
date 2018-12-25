@@ -29,3 +29,14 @@ Rocket::Rocket()
     : FlyingEnemy(2, 120, 40, ":/images/rocket.png")
 {
 }
+
+Dragon::Dragon()
+    : FlyingEnemy(2, 200, 60, ":/images/Dragon.png")
+{
+}
+
+ZombieDragon::ZombieDragon()
+    : FlyingEnemy(2, 360, 90, ":/images/zombieDragon.png")
+{
+
+}

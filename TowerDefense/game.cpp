@@ -1,9 +1,7 @@
 #include "game.h"
 #include "tower.h"
 #include "enemy.h"
-#include "watchtower.h"
 #include "watchtowericon.h"
-#include "arrowtower.h"
 #include "arrowtowericon.h"
 #include "enemies.h"
 #include "icetowericon.h"
@@ -46,7 +44,7 @@ Game::Game(): QGraphicsView()
 
     scene->addLine(200, 0, 200, 900);
 
-    // tower icon, this is where you buy towers
+    // tower icons, this is where you buy towers
     WatchTowerIcon * watchTowerIcon = new WatchTowerIcon();
     scene->addItem(watchTowerIcon);
 
@@ -66,7 +64,10 @@ Game::Game(): QGraphicsView()
     mageTowerIcon->setPos(mageTowerIcon->x(), mageTowerIcon->y()+440);
     scene->addItem(mageTowerIcon);
     level = 0;
+
     initializeLevel();
+
+    // pressing this button will start new wave
     QPushButton *button = new QPushButton(tr("Start"));
     button->resize(200,50);
     button->move(0,550);
@@ -102,7 +103,8 @@ void Game::initializeLevel()
     QJsonValue gold = set.value(QString("gold"));
 
     // initialize gold
-    m_gold = new Gold(gold.toInt());
+//    m_gold = new Gold(gold.toInt());
+    m_gold = new Gold(1000);
     scene->addItem(m_gold);
 
     //enemy's moving path initialize
@@ -144,7 +146,7 @@ void Game::spawn_enemy()
         zombiesSpawned += 1;
     }
     if(rocketsSpawned < maxNumberOfRockets){
-        Enemy * e2 = new Rocket();
+        Enemy * e2 = new Dragon();
         scene->addItem(e2);
         addEnemy(e2);
         rocketsSpawned += 1;
@@ -221,8 +223,10 @@ QLinkedList<Enemy *> Game::enemiesByType(EnemyType type) const
 {
     if (type == EnemyType::GROUND_ENEMY)
         return groundEnemies();
-    else
+    else if (type == EnemyType::FLYING_ENEMY)
         return flyingEnemies();
+    else
+        return enemies();
 }
 
 void Game::increaseScore(int score)
@@ -278,7 +282,6 @@ void Game::mousePressEvent(QMouseEvent *event)
             qDebug() << "not enough gold";
             return ;
         }
-
 
         if (event->pos().x() < 220 || event->pos().x() > 1280) {
             return;

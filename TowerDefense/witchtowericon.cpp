@@ -1,5 +1,5 @@
 #include "witchtowericon.h"
-#include "witchtower.h"
+#include "towers.h"
 #include "game.h"
 #include <QGraphicsPixmapItem>
 

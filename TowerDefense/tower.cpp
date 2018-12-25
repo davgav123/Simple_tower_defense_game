@@ -17,13 +17,23 @@
 
 extern Game * g;
 
-Tower::Tower(qreal x, qreal y, int damage, int price, EnemyType type)
-    : m_type(type), m_damage(damage), m_price(price), m_radius(100.0), m_towerSize(30.0)
+Tower::Tower(qreal x, qreal y, int damage, int price, EnemyType type, QString pathToImg, QString pathToSound, QString pathToBulletImg)
+    : m_type(type), m_damage(damage), m_price(price), m_radius(100.0)
+    , m_towerSize(60), m_pathToImg(pathToImg), m_pathToBulletSound(pathToSound), m_pathToBulletImg(pathToBulletImg)
 {
      setPos(x, y);
 
      // initialy there is no target
      m_target = nullptr;
+
+     // timer that will allow towers to shoot
+     QTimer * timer = new QTimer();
+     connect(timer, SIGNAL(timeout()), this, SLOT(aquireTarget()));
+     timer->start(1000);
+
+     // bullet sound
+     bulletSound = new QMediaPlayer();
+     bulletSound->setMedia(QUrl((m_pathToBulletSound)));
 }
 
 QRectF Tower::boundingRect() const
@@ -31,7 +41,7 @@ QRectF Tower::boundingRect() const
     // (0, 0) is the center of the tower
 
     // this is just for the tower
-    return QRectF(0 - m_towerSize, 0 - m_towerSize, 2.0 * m_towerSize, 2.0 * m_towerSize);
+    return QRectF(0 - m_towerSize/2, 0 - m_towerSize/1.5, m_towerSize, 1.5 * m_towerSize);
 
     // this is for the tower with radius included
 //    return QRectF(0 - m_radius, 0 - m_radius, 2.0 * m_radius, 2.0 * m_radius);
@@ -42,12 +52,11 @@ void Tower::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
     // center of the item is (0, 0), or (400, 400) on the scene
 
     // draw the radius of the tower
-    //painter->drawEllipse(tower_center, m_radius, m_radius);
+//    painter->drawEllipse(QPointF(0, 0), m_radius, m_radius);
 
     // draw the tower
-    QPixmap pixmap(":/images/tower3.png");
-
-    painter->drawPixmap(-25, -35, 50, 70, pixmap);
+    QPixmap pixmap(m_pathToImg);
+    painter->drawPixmap(-m_towerSize/2, int(-m_towerSize/1.5), m_towerSize, int(1.5*m_towerSize), pixmap);
 }
 
 int Tower::price() const
@@ -67,7 +76,16 @@ void Tower::fire()
     qreal angle = -1 * ln.angle();
 
     bullet->setRotation(angle);
+    bullet->setPixmap(QPixmap(m_pathToBulletImg));
     g->scene->addItem(bullet);
+
+    // play bulletsound
+    if (bulletSound->state() == QMediaPlayer::PlayingState){
+        bulletSound->setPosition(0);
+    }
+    else if (bulletSound->state() == QMediaPlayer::StoppedState){
+        bulletSound->play();
+    }
 }
 
 void Tower::aquireTarget()

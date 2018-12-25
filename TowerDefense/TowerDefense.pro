@@ -31,40 +31,32 @@ SOURCES += \
     game.cpp \
     enemy.cpp \
     bullet.cpp \
-    arrowtower.cpp \
     arrowtowericon.cpp \
-    watchtower.cpp \
     watchtowericon.cpp \
     enemies.cpp \
     resources.cpp \
     groundenemy.cpp \
     flyingenemy.cpp \
-    icetower.cpp \
     icetowericon.cpp \
-    witchtower.cpp \
     witchtowericon.cpp \
-    magetower.cpp \
-    magetowericon.cpp
+    magetowericon.cpp \
+    towers.cpp
 
 HEADERS += \
     tower.h \
     game.h \
     enemy.h \
     bullet.h \
-    arrowtower.h \
     arrowtowericon.h \
-    watchtower.h \
     watchtowericon.h \
     enemies.h \
     resources.h \
     groundenemy.h \
     flyingenemy.h \
-    icetower.h \
     icetowericon.h \
-    witchtower.h \
     witchtowericon.h \
-    magetower.h \
-    magetowericon.h
+    magetowericon.h \
+    towers.h
 
 FORMS +=
 

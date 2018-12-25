@@ -1,7 +1,6 @@
 #include "watchtowericon.h"
 #include "game.h"
-#include "towericon.h"
-#include "watchtower.h"
+#include "towers.h"
 #include <QGraphicsPixmapItem>
 
 extern Game *g;

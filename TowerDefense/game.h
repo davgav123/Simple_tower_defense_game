@@ -4,6 +4,7 @@
 #include "tower.h"
 #include "enemy.h"
 #include "resources.h"
+#include "towers.h"
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QVector>

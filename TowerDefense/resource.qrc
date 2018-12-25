@@ -28,6 +28,8 @@
         <file>blackArrow.png</file>
         <file>arrow.png</file>
         <file>iceTowerForStore.png</file>
+        <file>Dragon.png</file>
+        <file>zombieDragon.png</file>
     </qresource>
     <qresource prefix="/paths">
         <file>path_1.txt</file>
