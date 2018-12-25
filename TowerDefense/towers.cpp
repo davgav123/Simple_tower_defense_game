@@ -18,17 +18,17 @@ ArrowTower::ArrowTower(qreal x, qreal y)
 }
 
 IceTower::IceTower(qreal x, qreal y)
-    : Tower(x, y, 20, 120, EnemyType::FLYING_ENEMY, ":/images/ice.png", "qrc:/sounds/bulletSound.mp3", ":/images/fireBall.jpg")
+    : Tower(x, y, 20, 120, EnemyType::FLYING_ENEMY, ":/images/iceTower.png", "qrc:/sounds/bulletSound.mp3", ":/images/iceTowerBullet.png")
 {
 }
 
 WitchTower::WitchTower(qreal x, qreal y)
-    : Tower(x, y, 35, 170, EnemyType::FLYING_ENEMY, ":/images/witch.png", "qrc:/sounds/bulletSound.mp3", ":/images/fireBall.jpg")
+    : Tower(x, y, 35, 170, EnemyType::FLYING_ENEMY, ":/images/witch.png", "qrc:/sounds/bulletSound.mp3", ":/images/witchTowerBullet.png")
 {
 }
 
 MageTower::MageTower(qreal x, qreal y)
-    : Tower(x, y, 70, 350, EnemyType::BOTH_ENEMIES, ":/images/mage.png", "qrc:/sounds/bulletSound.mp3", ":/images/fireBall.jpg")
+    : Tower(x, y, 70, 350, EnemyType::BOTH_ENEMIES, ":/images/mageTower.png", "qrc:/sounds/bulletSound.mp3", ":/images/mageTowerBullet.png")
 {
 }
 

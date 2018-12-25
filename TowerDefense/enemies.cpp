@@ -31,7 +31,7 @@ Rocket::Rocket()
 }
 
 Dragon::Dragon()
-    : FlyingEnemy(2, 200, 60, ":/images/Dragon.png")
+    : FlyingEnemy(2, 200, 60, ":/images/dragon.png")
 {
 }
 

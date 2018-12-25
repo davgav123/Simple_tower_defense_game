@@ -7,7 +7,7 @@ Gold::Gold(int initAmount)
     setPos(20, 660);
     setPlainText(QString("Gold: ") + QString::number(m_goldAmount));
     setDefaultTextColor(Qt::black);
-    setFont(QFont("times", 16));
+    setFont(QFont("sans serif", 26, QFont::StyleItalic, true));
 }
 
 void Gold::decreaseGold(int amount)
@@ -34,7 +34,7 @@ Score::Score(QGraphicsItem *parent)
     setPos(20, 600);
     setPlainText(QString("Score: ") + QString::number(m_score));
     setDefaultTextColor(Qt::black);
-    setFont(QFont("times",16));
+    setFont(QFont("sans serif", 26, QFont::StyleItalic, true));
 }
 
 void Score::increase(int score)
@@ -55,7 +55,7 @@ Lives::Lives(QGraphicsItem *parent)
     setPos(20, 630);
     setPlainText(QString("Lives: ") + QString::number(m_numberOfLives));
     setDefaultTextColor(Qt::black);
-    setFont(QFont("times", 16));
+    setFont(QFont("sans serif", 26, QFont::StyleItalic, true));
 }
 
 void Lives::decrease()

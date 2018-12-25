@@ -31,16 +31,26 @@ Game::Game(): QGraphicsView()
     tower = nullptr;
     setMouseTracking(true);
 
-    QGraphicsRectItem *rect2 = scene->addRect(0, 600, 200, 100);
-    rect2->setBrush(QBrush(QImage(":/images/woodenBoardResized.jpg")));
+//    QGraphicsRectItem *rect2 = scene->addRect(0, 600, 200, 100);
+//    rect2->setBrush(QBrush(QImage(":/images/woodenBoardResized.jpg")));
 
-    // initialize number of lives
-    m_lives = new Lives();
-    scene->addItem(m_lives);
+    QGraphicsRectItem *rect3 = scene->addRect(0, 650, 1300, 50);
+    rect3->setBrush(QBrush(QImage(":/images/map.jpg")));
+
+//    TODO: set pictures of enemies in the bottom right corner
+//    QWidget *frame = new QWidget(this);
+//    frame->setGeometry(300, 300, 300, 300);
+//    frame->setStyleSheet("background-image: url(:/images/dragon.png)");
 
     // initialize score
     m_score = new Score();
+    m_score->setPos(20, 650);
     scene->addItem(m_score);
+
+    // initialize number of lives
+    m_lives = new Lives();
+    m_lives->setPos(220, 650);
+    scene->addItem(m_lives);
 
     scene->addLine(200, 0, 200, 900);
 
@@ -69,8 +79,10 @@ Game::Game(): QGraphicsView()
 
     // pressing this button will start new wave
     QPushButton *button = new QPushButton(tr("Start"));
-    button->resize(200,50);
-    button->move(0,550);
+    button->resize(90,40);
+    button->move(56,575);
+    button->setStyleSheet("QPushButton {background-color: orange; margin: 3px;"
+                          "color: rgb(57, 19, 19); font-weight: bold; font-size: 24px; font-style: italic;}");
     scene->addWidget(button);
     connect(
             button, &QPushButton::clicked,
@@ -85,7 +97,7 @@ Game::Game(): QGraphicsView()
 
     QMediaPlayer * music = new QMediaPlayer();
     music->setPlaylist(playlist);
-    music->play();
+    //    music->play();
 }
 
 void Game::initializeLevel()
@@ -102,9 +114,10 @@ void Game::initializeLevel()
 
     QJsonValue gold = set.value(QString("gold"));
 
-    // initialize gold
+    // TODO: initialize gold ovo posle odkomentarisati
 //    m_gold = new Gold(gold.toInt());
-    m_gold = new Gold(1000);
+    m_gold = new Gold(2000);
+    m_gold->setPos(400, 650);
     scene->addItem(m_gold);
 
     //enemy's moving path initialize
@@ -301,4 +314,13 @@ void Game::mousePressEvent(QMouseEvent *event)
     else {
         QGraphicsView::mousePressEvent(event);
     }
+}
+
+Game::~Game()
+{
+    delete m_gold;
+    delete m_score;
+    delete m_lives;
+    delete tower;
+    delete cursor;
 }

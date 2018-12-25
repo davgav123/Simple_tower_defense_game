@@ -28,8 +28,14 @@
         <file>blackArrow.png</file>
         <file>arrow.png</file>
         <file>iceTowerForStore.png</file>
-        <file>Dragon.png</file>
         <file>zombieDragon.png</file>
+        <file>witchTowerBullet.png</file>
+        <file>mageTowerBullet.png</file>
+        <file>iceTowerBullet.png</file>
+        <file>iceTower.png</file>
+        <file>mageTower.png</file>
+        <file>dragon.png</file>
+        <file>map.jpg</file>
     </qresource>
     <qresource prefix="/paths">
         <file>path_1.txt</file>
@@ -38,5 +44,8 @@
     <qresource prefix="/sounds">
         <file>soundtrack.mp3</file>
         <file>bulletSound.mp3</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>iceTower.png</file>
     </qresource>
 </RCC>

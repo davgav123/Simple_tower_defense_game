@@ -30,6 +30,7 @@ class Game: public QGraphicsView
     Q_OBJECT
 public:
     Game();
+    ~Game();
     void addTower(Tower *t);
     void addEnemy(Enemy *e);
     void removeEnemy(Enemy *e);
