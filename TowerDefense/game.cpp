@@ -6,6 +6,9 @@
 #include "arrowtower.h"
 #include "arrowtowericon.h"
 #include "enemies.h"
+#include "icetowericon.h"
+#include "magetowericon.h"
+#include "witchtowericon.h"
 #include <QMediaPlaylist>
 #include <QMediaPlayer>
 
@@ -53,6 +56,17 @@ Game::Game(): QGraphicsView()
     arrowTowerIcon->setPos(arrowTowerIcon->x(), arrowTowerIcon->y()+110);
     scene->addItem(arrowTowerIcon);
 
+    IceTowerIcon *iceTowerIcon = new IceTowerIcon();
+    iceTowerIcon->setPos(iceTowerIcon->x(), iceTowerIcon->y()+220);
+    scene->addItem(iceTowerIcon);
+
+    WitchTowerIcon *witchTowerIcon = new WitchTowerIcon();
+    witchTowerIcon->setPos(witchTowerIcon->x(), witchTowerIcon->y()+330);
+    scene->addItem(witchTowerIcon);
+
+    MageTowerIcon *mageTowerIcon = new MageTowerIcon();
+    mageTowerIcon->setPos(mageTowerIcon->x(), mageTowerIcon->y()+440);
+    scene->addItem(mageTowerIcon);
 
     // play background music
     QMediaPlaylist *playlist = new QMediaPlaylist();

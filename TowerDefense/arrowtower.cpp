@@ -41,7 +41,7 @@ void ArrowTower::fire()
     qreal angle = -1 * ln.angle();
 
     bullet->setRotation(angle);
-    bullet->setPixmap(QPixmap(":/images/arrowResized.jpg"));
+    bullet->setPixmap(QPixmap(":images/arrow.png"));
     g->scene->addItem(bullet);
 
     // play bulletsound

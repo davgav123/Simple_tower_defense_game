@@ -38,7 +38,13 @@ SOURCES += \
     enemies.cpp \
     resources.cpp \
     groundenemy.cpp \
-    flyingenemy.cpp
+    flyingenemy.cpp \
+    icetower.cpp \
+    icetowericon.cpp \
+    witchtower.cpp \
+    witchtowericon.cpp \
+    magetower.cpp \
+    magetowericon.cpp
 
 HEADERS += \
     tower.h \
@@ -52,7 +58,13 @@ HEADERS += \
     enemies.h \
     resources.h \
     groundenemy.h \
-    flyingenemy.h
+    flyingenemy.h \
+    icetower.h \
+    icetowericon.h \
+    witchtower.h \
+    witchtowericon.h \
+    magetower.h \
+    magetowericon.h
 
 FORMS +=
 

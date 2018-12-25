@@ -19,6 +19,15 @@
         <file>zombieDinosaur.png</file>
         <file>zombieDinosaurFlipped.png</file>
         <file>rocket.png</file>
+        <file>witchTowerForStore.png</file>
+        <file>witch.png</file>
+        <file>mageTowerForStore.png</file>
+        <file>mage.png</file>
+        <file>ice.png</file>
+        <file>blueBall.png</file>
+        <file>blackArrow.png</file>
+        <file>arrow.png</file>
+        <file>iceTowerForStore.png</file>
     </qresource>
     <qresource prefix="/paths">
         <file>path_1.txt</file>
