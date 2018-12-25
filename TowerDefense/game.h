@@ -35,7 +35,10 @@ public:
     bool containsEnemy(Enemy *e);
     void create_enemies(int numberOfEnemies);
 
+    QLinkedList<Enemy*> groundEnemies() const;
+    QLinkedList<Enemy*> flyingEnemies() const;
     QLinkedList<Enemy*> enemies() const;
+    QLinkedList<Enemy*> enemiesByType(EnemyType type) const;
 
     void increaseScore(int score);
     void decreaseLives();
@@ -55,7 +58,9 @@ public slots:
     void spawn_enemy();
 private:
     QVector<Tower*> m_towers;
-    QLinkedList<Enemy*> m_enemies;
+    QLinkedList<Enemy *> m_groundEnemies;
+    QLinkedList<Enemy *> m_flyingEnemies;
+    QLinkedList<Enemy *> m_enemies;
 
     Lives * m_lives;
     Score * m_score;

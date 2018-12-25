@@ -107,9 +107,14 @@ void Game::initializeLevel()
 void Game::spawn_enemy()
 {
     // spawn an enemy
-    Enemy * e = new Goblin(path);
+    Enemy * e = new ZombieDino(path);
     scene->addItem(e);
     addEnemy(e);
+
+    Enemy * e2 = new Rocket();
+    scene->addItem(e2);
+    addEnemy(e2);
+
     enemiesSpawned += 1;
 
     if (enemiesSpawned >= maxNumberOfEnemies) {
@@ -126,7 +131,6 @@ void Game::create_enemies(int numberOfEnemies)
     spawnTimer->start(1300);
 }
 
-
 void Game::addTower(Tower *t)
 {
     m_towers.push_back(std::move(t));
@@ -134,22 +138,53 @@ void Game::addTower(Tower *t)
 
 void Game::addEnemy(Enemy *e)
 {
+    if (e->enemyType() == EnemyType::GROUND_ENEMY)
+        m_groundEnemies.push_back(std::move(e));
+    else
+        m_flyingEnemies.push_back(std::move(e));
+
     m_enemies.push_back(std::move(e));
 }
 
 void Game::removeEnemy(Enemy *e)
 {
+    if (e->enemyType() == EnemyType::GROUND_ENEMY)
+        m_groundEnemies.removeOne(e);
+    else
+        m_flyingEnemies.removeOne(e);
+
     m_enemies.removeOne(e);
 }
 
 bool Game::containsEnemy(Enemy *e)
 {
-    return m_enemies.contains(e);
+    if (e->enemyType() == EnemyType::GROUND_ENEMY)
+        return m_groundEnemies.contains(e);
+    else
+        return m_flyingEnemies.contains(e);
+}
+
+QLinkedList<Enemy *> Game::groundEnemies() const
+{
+    return m_groundEnemies;
+}
+
+QLinkedList<Enemy *> Game::flyingEnemies() const
+{
+    return m_flyingEnemies;
 }
 
 QLinkedList<Enemy *> Game::enemies() const
 {
     return m_enemies;
+}
+
+QLinkedList<Enemy *> Game::enemiesByType(EnemyType type) const
+{
+    if (type == EnemyType::GROUND_ENEMY)
+        return groundEnemies();
+    else
+        return flyingEnemies();
 }
 
 void Game::increaseScore(int score)
@@ -206,11 +241,12 @@ void Game::mousePressEvent(QMouseEvent *event)
             return ;
         }
 
-        decreaseGold(tower->price());
 
-        if (event->pos().x() < 220) {
+        if (event->pos().x() < 220 || event->pos().x() > 1280) {
             return;
         }
+
+        decreaseGold(tower->price());
 
         // add the tower to the scene and to the list of towers
         scene->addItem(tower);

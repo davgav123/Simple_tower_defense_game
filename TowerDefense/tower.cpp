@@ -13,11 +13,12 @@
 #include <QTimer>
 #include <QGraphicsItem>
 #include <QtDebug>
+#include <QLinkedList>
 
 extern Game * g;
 
-Tower::Tower(qreal x, qreal y, int damage, int price)
-    : m_damage(damage), m_price(price), m_radius(100.0), m_towerSize(30.0)
+Tower::Tower(qreal x, qreal y, int damage, int price, EnemyType type)
+    : m_type(type), m_damage(damage), m_price(price), m_radius(100.0), m_towerSize(30.0)
 {
      setPos(x, y);
 
@@ -56,9 +57,6 @@ int Tower::price() const
 
 void Tower::fire()
 {
-    if (m_target == nullptr)
-        return ;
-
     // shooting sounds
     qDebug() << "pew pew pew";
 
@@ -75,10 +73,10 @@ void Tower::fire()
 void Tower::aquireTarget()
 {
     // there are enemies we can shoot
-    if (! g->enemies().empty()) {
+    if (! g->enemiesByType(m_type).empty()) {
         // if the target is not alive, we choose the new one
 
-        if (! g->enemies().contains(m_target)) {
+        if (! g->enemiesByType(m_type).contains(m_target)) {
             findClosestEnemy();
         }
 
@@ -95,7 +93,7 @@ void Tower::aquireTarget()
     }
 
 
-    // this code is taking the first enemy in the list as the target
+    // this code is taking the first enemy in the list of enemies as the target
 //    m_target = nullptr;
 //    if (! g->enemies().empty()) {
 //        m_target = std::move(g->enemies().takeFirst());
@@ -111,11 +109,10 @@ void Tower::aquireTarget()
 
 void Tower::findClosestEnemy()
 {
-    // this should be faster than it is <- TODO
     qreal minDist = double(INFINITY);
-    for (auto i = g->enemies().cbegin(); i != g->enemies().cend(); ++i) {
+    for (auto i = g->enemiesByType(m_type).cbegin(); i != g->enemiesByType(m_type).cend(); ++i) {
         qreal currentDist = QLineF(pos(), (*i)->pos()).length();
-        if (minDist > currentDist) {
+        if (minDist > currentDist /*&& m_target->enemyType() == m_type*/) {
             minDist = currentDist;
             m_target = std::move(*i);
         }

@@ -7,7 +7,7 @@
 
 extern Game *g;
 
-ArrowTower::ArrowTower(qreal x, qreal y) : Tower(x, y, 35, 150)
+ArrowTower::ArrowTower(qreal x, qreal y) : Tower(x, y, 35, 150, EnemyType::GROUND_ENEMY)
 {
     QTimer * timer = new QTimer();
     connect(timer, SIGNAL(timeout()), this, SLOT(aquireTarget()));

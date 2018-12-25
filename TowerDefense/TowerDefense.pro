@@ -36,7 +36,9 @@ SOURCES += \
     watchtower.cpp \
     watchtowericon.cpp \
     enemies.cpp \
-    resources.cpp
+    resources.cpp \
+    groundenemy.cpp \
+    flyingenemy.cpp
 
 HEADERS += \
     tower.h \
@@ -48,7 +50,9 @@ HEADERS += \
     watchtower.h \
     watchtowericon.h \
     enemies.h \
-    resources.h
+    resources.h \
+    groundenemy.h \
+    flyingenemy.h
 
 FORMS +=
 

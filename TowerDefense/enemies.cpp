@@ -3,16 +3,29 @@
 #include "enemies.h"
 
 Goblin::Goblin(QVector<QPoint> path)
-    : Enemy(path, 5.0, 100, 50, ":/images/goblin.png", ":/images/goblin_flipped.png")
+    : GroundEnemy(path, 5.0, 100, 30,
+                  ":/images/goblin.png", ":/images/goblin_flipped.png")
 {
 }
 
 CommonKnight::CommonKnight(QVector<QPoint> path)
-    : Enemy(path, 5.0, 160, 80, ":/images/commonKnight.png", ":/images/commonKnightFlipped.png")
+    : GroundEnemy(path, 5.0, 160, 50,
+                  ":/images/commonKnight.png", ":/images/commonKnightFlipped.png")
 {
 }
 
 DarkKnight::DarkKnight(QVector<QPoint> path)
-    : Enemy(path, 2.5, 250, 110, ":/images/darkKnight.png", ":/images/darkKnightFlipped.png")
+    : GroundEnemy(path, 2.5, 350, 80,
+            ":/images/darkKnight.png", ":/images/darkKnightFlipped.png")
+{
+}
+
+ZombieDino::ZombieDino(QVector<QPoint> path)
+    : GroundEnemy(path, 2.5, 1000, 260, ":/images/zombieDinosaur.png", ":/images/zombieDinosaurFlipped.png")
+{
+}
+
+Rocket::Rocket()
+    : FlyingEnemy(2, 120, 40, ":/images/rocket.png")
 {
 }

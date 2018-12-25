@@ -16,6 +16,9 @@
         <file>commonKnightFlipped.png</file>
         <file>darkKnight.png</file>
         <file>darkKnightFlipped.png</file>
+        <file>zombieDinosaur.png</file>
+        <file>zombieDinosaurFlipped.png</file>
+        <file>rocket.png</file>
     </qresource>
     <qresource prefix="/paths">
         <file>path_1.txt</file>

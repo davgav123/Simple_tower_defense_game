@@ -6,7 +6,7 @@
 
 extern Game *g;
 
-WatchTower::WatchTower(qreal x, qreal y) : Tower(x, y, 20, 100)
+WatchTower::WatchTower(qreal x, qreal y) : Tower(x, y, 20, 100, EnemyType::GROUND_ENEMY)
 {
     QTimer * timer = new QTimer();
     connect(timer, SIGNAL(timeout()), this, SLOT(aquireTarget()));
