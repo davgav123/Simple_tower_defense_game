@@ -11,6 +11,7 @@
 #include "witchtowericon.h"
 #include <QMediaPlaylist>
 #include <QMediaPlayer>
+#include <QPushButton>
 
 Game::Game(): QGraphicsView()
 {
@@ -45,9 +46,6 @@ Game::Game(): QGraphicsView()
 
     scene->addLine(200, 0, 200, 900);
 
-    // initl level from json file... init waves, initGold etc
-    initializeLevel();
-
     // tower icon, this is where you buy towers
     WatchTowerIcon * watchTowerIcon = new WatchTowerIcon();
     scene->addItem(watchTowerIcon);
@@ -67,6 +65,17 @@ Game::Game(): QGraphicsView()
     MageTowerIcon *mageTowerIcon = new MageTowerIcon();
     mageTowerIcon->setPos(mageTowerIcon->x(), mageTowerIcon->y()+440);
     scene->addItem(mageTowerIcon);
+    level = 0;
+    initializeLevel();
+    QPushButton *button = new QPushButton(tr("Start"));
+    button->resize(200,50);
+    button->move(0,550);
+    scene->addWidget(button);
+    connect(
+            button, &QPushButton::clicked,
+            this  , &Game::playLevel
+        );
+
 
     // play background music
     QMediaPlaylist *playlist = new QMediaPlaylist();
@@ -108,39 +117,54 @@ void Game::initializeLevel()
         }
     file.close();
 
-    QJsonArray waves = set["waves"].toArray();
+    waves = set["waves"].toArray();
 
-    //qDebug() << waves[0];
+
+//    qDebug() << waves[0].toArray().at(0).toInt();
     //int size = waves.size();
+
+}
+
+void Game::playLevel(){
     spawnTimer = new QTimer(this);
     enemiesSpawned = 0;
-    maxNumberOfEnemies = 0;
-    create_enemies(waves[0].toInt());
+    maxNumberOfZombies = 0;
+    maxNumberOfRockets = 0;
+    create_enemies(waves[level].toArray().at(0).toInt(), waves[level].toArray().at(1).toInt());
+    level++;
 }
 
 void Game::spawn_enemy()
 {
     // spawn an enemy
-    Enemy * e = new ZombieDino(path);
-    scene->addItem(e);
-    addEnemy(e);
-
-    Enemy * e2 = new Rocket();
-    scene->addItem(e2);
-    addEnemy(e2);
+    if(zombiesSpawned < maxNumberOfZombies){
+        Enemy * e = new ZombieDino(path);
+        scene->addItem(e);
+        addEnemy(e);
+        zombiesSpawned += 1;
+    }
+    if(rocketsSpawned < maxNumberOfRockets){
+        Enemy * e2 = new Rocket();
+        scene->addItem(e2);
+        addEnemy(e2);
+        rocketsSpawned += 1;
+    }
 
     enemiesSpawned += 1;
 
-    if (enemiesSpawned >= maxNumberOfEnemies) {
+    if (enemiesSpawned >= (maxNumberOfZombies + maxNumberOfRockets)) {
         spawnTimer->disconnect();
     }
 }
 
 
-void Game::create_enemies(int numberOfEnemies)
+void Game::create_enemies(int numberOfZombies, int numberOfRockets)
 {
     enemiesSpawned = 0;
-    maxNumberOfEnemies = numberOfEnemies;
+    rocketsSpawned = 0;
+    zombiesSpawned = 0;
+    maxNumberOfZombies = numberOfZombies;
+    maxNumberOfRockets = numberOfRockets;
     connect(spawnTimer, SIGNAL(timeout()), this, SLOT(spawn_enemy()));
     spawnTimer->start(1300);
 }

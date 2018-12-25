@@ -33,7 +33,7 @@ public:
     void addEnemy(Enemy *e);
     void removeEnemy(Enemy *e);
     bool containsEnemy(Enemy *e);
-    void create_enemies(int numberOfEnemies);
+    void create_enemies(int numberOfZombies, int numberOfRockets);
 
     QLinkedList<Enemy*> groundEnemies() const;
     QLinkedList<Enemy*> flyingEnemies() const;
@@ -50,6 +50,7 @@ public:
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
 
+    void playLevel();
 
     QGraphicsScene * scene;
     QGraphicsPixmapItem * cursor;
@@ -68,7 +69,12 @@ private:
 
     QTimer * spawnTimer;
     int enemiesSpawned;
-    int maxNumberOfEnemies;
+    int maxNumberOfZombies;
+    int maxNumberOfRockets;
+    int level;
+    QJsonArray waves;
+    int rocketsSpawned;
+    int zombiesSpawned;
     QVector<QPoint> path;
 
     void initializeLevel();
