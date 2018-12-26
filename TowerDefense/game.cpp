@@ -10,6 +10,8 @@
 #include <QMediaPlaylist>
 #include <QMediaPlayer>
 #include <QPushButton>
+#include <QApplication>
+#include <QLabel>
 
 Game::Game(): QGraphicsView()
 {
@@ -44,12 +46,12 @@ Game::Game(): QGraphicsView()
 
     // initialize score
     m_score = new Score();
-    m_score->setPos(20, 650);
+    m_score->setPos(10, 650);
     scene->addItem(m_score);
 
     // initialize number of lives
     m_lives = new Lives();
-    m_lives->setPos(220, 650);
+    m_lives->setPos(200, 650);
     scene->addItem(m_lives);
 
     // tower icons, this is where you buy towers
@@ -75,26 +77,39 @@ Game::Game(): QGraphicsView()
     initializeLevel();
 
     // pressing this button will start new wave
-    QPushButton *button = new QPushButton(tr("Start"));
+    QPushButton *button = new QPushButton(tr("Attack"));
     button->resize(90,40);
     button->move(56,575);
     button->setStyleSheet("QPushButton {background-color: orange; margin: 3px;"
                           "color: rgb(57, 19, 19); font-weight: bold; font-size: 24px; font-style: italic;}");
     scene->addWidget(button);
-    connect(
-            button, &QPushButton::clicked,
-            this  , &Game::playLevel
-        );
+    connect(button, &QPushButton::clicked, this, &Game::playLevel);
+
+//    this button will turn off the application
+    QPushButton *exitButton = new QPushButton(tr("Exit"));
+    exitButton->resize(90,40);
+    exitButton->move(1200,655);
+    exitButton->setStyleSheet("QPushButton {background-color: orange; margin: 3px;"
+                          "color: rgb(57, 19, 19); font-weight: bold; font-size: 24px; font-style: italic;}");
+    scene->addWidget(exitButton);
+    connect(exitButton, &QPushButton::clicked, this, &Game::exitGame);
+
+//    esc key exits application
+    QAction *exitKey = new QAction(this);
+    exitKey->setShortcut(Qt::Key_Escape);
+
+    connect(exitKey, SIGNAL(triggered()), this, SLOT(close()));
+    this->addAction(exitKey);
 
 
-    // play background music
+//    play background music
     QMediaPlaylist *playlist = new QMediaPlaylist();
     playlist->addMedia(QUrl("qrc:/sounds/soundtrack.mp3"));
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
 
     QMediaPlayer * music = new QMediaPlayer();
     music->setPlaylist(playlist);
-    //    music->play();
+//    music->play();
 }
 
 void Game::initializeLevel()
@@ -291,21 +306,27 @@ void Game::mouseMoveEvent(QMouseEvent *event)
     if (cursor) {
         cursor->setPos(event->pos());
     }
+
+//  TODO: critical code, if it crashes here to search for bug
+//    if (m_notification)
+//        delete m_notification;
+
+//    m_notification = new Notifications("");
+//    m_notification->setPos(630, 655);
+//    scene->addItem(m_notification);
 }
 
 void Game::mousePressEvent(QMouseEvent *event)
 {
     if (tower) {
-        // this is the shop, we cant bulid there
-        if (event->x() < 220 || event->x() > 1280) {
-            // notify the user about this <- TODO
+        // we cant bulid in the field that represents store or lives/score/gold
+        if (event->x() < 225 || event->x() > 1280 || event->y() > 600) {
+            // notify the user about this
+//            delete m_notification;
+//            m_notification = new Notifications("Can't build there!");
+//            m_notification->setPos(630, 655);
+//            scene->addItem(m_notification);
             return;
-        }
-
-        // this is the panel with score/lives/gold, we cant build there either
-        if (event->y() > 600) {
-            // notify the user about this <- TODO
-            return ;
         }
 
         decreaseGold(tower->price());
@@ -322,6 +343,12 @@ void Game::mousePressEvent(QMouseEvent *event)
     else {
         QGraphicsView::mousePressEvent(event);
     }
+}
+
+
+void Game::exitGame()
+{
+    QApplication::quit();
 }
 
 Game::~Game()

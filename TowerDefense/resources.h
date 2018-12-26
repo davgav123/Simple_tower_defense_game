@@ -34,4 +34,10 @@ private:
     int m_numberOfLives;
 };
 
+class Notifications: public QGraphicsTextItem
+{
+public:
+    Notifications(QString message);
+};
+
 #endif // GOLD_H

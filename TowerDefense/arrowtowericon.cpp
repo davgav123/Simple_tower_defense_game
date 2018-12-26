@@ -1,6 +1,7 @@
 #include "arrowtowericon.h"
 #include "game.h"
 #include "towers.h"
+#include "resources.h"
 #include <QGraphicsPixmapItem>
 #include <QMouseEvent>
 #include <QGraphicsSceneMouseEvent>
@@ -20,6 +21,10 @@ void ArrowTowerIcon::mousePressEvent(QGraphicsSceneMouseEvent *event)
         // if we have the gold to buy the tower, we can buy it
         if (g->getAmountOfGold() < g->tower->price()) {
             // notify the user about this <- TODO
+//            delete g->m_notification;
+//            g->m_notification = new Notifications("Not enough gold!");
+//            g->m_notification->setPos(630, 655);
+//            g->scene->addItem(g->m_notification);
             qDebug() << "not enough gold";
             delete g->tower;
             g->tower = nullptr;

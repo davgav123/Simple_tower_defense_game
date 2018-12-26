@@ -23,7 +23,8 @@
 #include <QJsonValue>
 #include <QJsonArray>
 #include <QTimer>
-
+#include <QKeyEvent>
+#include <QAction>
 
 class Game: public QGraphicsView
 {
@@ -52,6 +53,7 @@ public:
     void mousePressEvent(QMouseEvent *event);
 
     void playLevel();
+    void exitGame();
     void create_enemies(int numberOfZombies, int numberOfRockets);
 
     QGraphicsScene * scene;
@@ -68,6 +70,7 @@ private:
     Lives * m_lives;
     Score * m_score;
     Gold * m_gold;
+    Notifications *m_notification;
 
     QTimer * m_spawnTimer;
     int m_enemiesSpawned;

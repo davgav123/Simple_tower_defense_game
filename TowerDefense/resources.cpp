@@ -1,5 +1,9 @@
 #include "resources.h"
+#include "game.h"
 #include <QFont>
+#include <QLabel>
+
+extern Game *g;
 
 Gold::Gold(int initAmount)
     : m_goldAmount(initAmount)
@@ -52,10 +56,12 @@ Lives::Lives(QGraphicsItem *parent)
     : QGraphicsTextItem(parent), m_numberOfLives(10)
 {
     // draw the text
-    setPos(20, 630);
     setPlainText(QString("Lives: ") + QString::number(m_numberOfLives));
-    setDefaultTextColor(Qt::black);
     setFont(QFont("sans serif", 26, QFont::StyleItalic, true));
+//    QLabel* pLabel = new QLabel;
+//    pLabel->setAutoFillBackground(true);
+//    pLabel->setStyleSheet("QLabel { background-color : red; color : black; }");
+
 }
 
 void Lives::decrease()
@@ -69,3 +75,11 @@ int Lives::getHealth()
     return m_numberOfLives;
 }
 
+
+Notifications::Notifications(QString message)
+{
+    // draw the text
+    setPlainText(message);
+    setDefaultTextColor(Qt::red);
+    setFont(QFont("sans serif", 20, QFont::StyleItalic, true));
+}
