@@ -22,6 +22,9 @@ Game::Game(): QGraphicsView()
     QGraphicsRectItem *rect1 = scene->addRect(0, 0, 200, 700);
     rect1->setBrush(QBrush(QImage(":/images/background.png")));
 
+    QGraphicsRectItem *rect2 = scene->addRect(200, 0, 1100, 650);
+    rect2->setBrush(QBrush(QImage(":/images/grass_1.jpeg")));
+
     setScene(scene);
     setFixedSize(1300, 700);
 
@@ -32,9 +35,6 @@ Game::Game(): QGraphicsView()
     cursor = nullptr;
     tower = nullptr;
     setMouseTracking(true);
-
-//    QGraphicsRectItem *rect2 = scene->addRect(0, 600, 200, 100);
-//    rect2->setBrush(QBrush(QImage(":/images/woodenBoardResized.jpg")));
 
     QGraphicsRectItem *rect3 = scene->addRect(0, 650, 1300, 50);
     rect3->setBrush(QBrush(QImage(":/images/map.jpg")));
@@ -107,9 +107,18 @@ Game::Game(): QGraphicsView()
     playlist->addMedia(QUrl("qrc:/sounds/soundtrack.mp3"));
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
 
-    QMediaPlayer * music = new QMediaPlayer();
+    music = new QMediaPlayer();
     music->setPlaylist(playlist);
-//    music->play();
+    music->play();
+
+//    mute sound
+    QPushButton *muteButton = new QPushButton(tr("Mute"));
+    muteButton->resize(90,40);
+    muteButton->move(1100,655);
+    muteButton->setStyleSheet("QPushButton {background-color: orange; margin: 3px;"
+                          "color: rgb(57, 19, 19); font-weight: bold; font-size: 24px; font-style: italic;}");
+    scene->addWidget(muteButton);
+    connect(muteButton, &QPushButton::clicked, this, &Game::mute);
 }
 
 void Game::initializeLevel()
@@ -349,6 +358,18 @@ void Game::mousePressEvent(QMouseEvent *event)
 void Game::exitGame()
 {
     QApplication::quit();
+}
+
+void Game::mute()
+{
+    if (music->isMuted()) {
+        music->setMuted(false);
+        indicator = true;
+    }
+    else {
+        music->setMuted(true);
+        indicator = false;
+    }
 }
 
 Game::~Game()

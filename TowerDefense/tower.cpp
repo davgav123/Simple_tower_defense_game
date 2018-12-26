@@ -80,11 +80,13 @@ void Tower::fire()
     g->scene->addItem(bullet);
 
     // play bulletsound
-    if (bulletSound->state() == QMediaPlayer::PlayingState){
-        bulletSound->setPosition(0);
-    }
-    else if (bulletSound->state() == QMediaPlayer::StoppedState){
-        bulletSound->play();
+    if (g->indicator) {
+        if (bulletSound->state() == QMediaPlayer::PlayingState){
+            bulletSound->setPosition(0);
+        }
+        else if (bulletSound->state() == QMediaPlayer::StoppedState){
+            bulletSound->play();
+        }
     }
 }
 

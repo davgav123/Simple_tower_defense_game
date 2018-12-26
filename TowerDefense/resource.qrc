@@ -32,10 +32,11 @@
         <file>witchTowerBullet.png</file>
         <file>mageTowerBullet.png</file>
         <file>iceTowerBullet.png</file>
-        <file>iceTower.png</file>
         <file>mageTower.png</file>
         <file>dragon.png</file>
         <file>map.jpg</file>
+        <file>grass_1.jpeg</file>
+        <file>iceTower.png</file>
     </qresource>
     <qresource prefix="/paths">
         <file>path_1.txt</file>
@@ -45,7 +46,5 @@
         <file>soundtrack.mp3</file>
         <file>bulletSound.mp3</file>
     </qresource>
-    <qresource prefix="/">
-        <file>iceTower.png</file>
-    </qresource>
+    <qresource prefix="/"/>
 </RCC>

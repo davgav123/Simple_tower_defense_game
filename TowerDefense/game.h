@@ -54,7 +54,10 @@ public:
 
     void playLevel();
     void exitGame();
+    void mute();
     void create_enemies(int numberOfZombies, int numberOfRockets);
+
+    bool indicator;
 
     QGraphicsScene * scene;
     QGraphicsPixmapItem * cursor;
@@ -70,6 +73,7 @@ private:
     Lives * m_lives;
     Score * m_score;
     Gold * m_gold;
+    QMediaPlayer *music;
     Notifications *m_notification;
 
     QTimer * m_spawnTimer;
