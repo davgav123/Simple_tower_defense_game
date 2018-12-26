@@ -21,6 +21,7 @@ public:
                QWidget *widget) override;
 
     int price() const;
+    int towerSize() const;
 
     void fire();
 

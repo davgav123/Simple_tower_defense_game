@@ -25,6 +25,7 @@
 #include <QTimer>
 #include <QKeyEvent>
 #include <QAction>
+#include <QPolygon>
 
 class Game: public QGraphicsView
 {
@@ -66,6 +67,7 @@ public slots:
     void spawn_enemy();
 private:
     QVector<Tower*> m_towers;
+    QVector<QPointF> m_towerCoords;
     QLinkedList<Enemy *> m_groundEnemies;
     QLinkedList<Enemy *> m_flyingEnemies;
     QLinkedList<Enemy *> m_enemies;
@@ -87,8 +89,10 @@ private:
     int m_rocketsSpawned;
     int m_zombiesSpawned;
     QVector<QPoint> m_path;
+    QPolygon m_polyPath;
 
     void initializeLevel();
+    void drawEnemyPath();
 };
 
 #endif // GAME_H

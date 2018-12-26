@@ -37,6 +37,7 @@
         <file>map.jpg</file>
         <file>grass_1.jpeg</file>
         <file>iceTower.png</file>
+        <file>pavedRoad.jpg</file>
     </qresource>
     <qresource prefix="/paths">
         <file>path_1.txt</file>

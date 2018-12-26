@@ -39,11 +39,6 @@ Game::Game(): QGraphicsView()
     QGraphicsRectItem *rect3 = scene->addRect(0, 650, 1300, 50);
     rect3->setBrush(QBrush(QImage(":/images/map.jpg")));
 
-//    TODO: set pictures of enemies in the bottom right corner
-//    QWidget *frame = new QWidget(this);
-//    frame->setGeometry(300, 300, 300, 300);
-//    frame->setStyleSheet("background-image: url(:/images/dragon.png)");
-
     // initialize score
     m_score = new Score();
     m_score->setPos(10, 650);
@@ -119,6 +114,8 @@ Game::Game(): QGraphicsView()
                           "color: rgb(57, 19, 19); font-weight: bold; font-size: 24px; font-style: italic;}");
     scene->addWidget(muteButton);
     connect(muteButton, &QPushButton::clicked, this, &Game::mute);
+
+    drawEnemyPath();
 }
 
 void Game::initializeLevel()
@@ -162,9 +159,10 @@ void Game::initializeLevel()
     //int size = waves.size();
 }
 
+
 void Game::playLevel()
 {
-    if ((m_waveNumber+1) >=/*==*/ m_numberOfWaves) {
+    if (m_waveNumber >=/*==*/ m_numberOfWaves) {
         // all waves are finished, we should quit or whatever
         qDebug() << "No more waves!";
         return ;
@@ -194,14 +192,18 @@ void Game::create_enemies(int numberOfZombies, int numberOfRockets)
 void Game::spawn_enemy()
 {
     // spawn an enemy
-    if(m_zombiesSpawned < m_maxNumberOfZombies){
-        Enemy * e = new ZombieDino(m_path);
+    if (m_zombiesSpawned < m_maxNumberOfZombies) {
+        Enemy * e = new DarkKnight(m_path);
         scene->addItem(e);
         addEnemy(e);
         m_zombiesSpawned += 1;
+
+        Enemy *e3 = new CommonKnight(m_path);
+        scene->addItem(e3);
+        addEnemy(e3);
     }
-    if(m_rocketsSpawned < m_maxNumberOfRockets){
-        Enemy * e2 = new Dragon();
+    if (m_rocketsSpawned < m_maxNumberOfRockets) {
+        Enemy * e2 = new ZombieDragon();
         scene->addItem(e2);
         addEnemy(e2);
         m_rocketsSpawned += 1;
@@ -214,9 +216,147 @@ void Game::spawn_enemy()
     }
 }
 
+void Game::drawEnemyPath()
+{
+    QVector<QPoint> points;
+    int pathSize = 36;
+
+    // points from the right side of the enemy
+    for (int i = 0; i < m_path.size(); ++i) {
+        QPoint point = m_path[i];
+
+        if (i == 0) {
+            QPoint nextPoint = m_path[i+1];
+            if (nextPoint.y() == point.y()) {
+                point.setY(point.y() + pathSize);
+            } else if (nextPoint.x() == point.x()) {
+                point.setX(point.x() - pathSize);
+            }
+        } else if (i == m_path.size()-1) {
+            QPoint previousPoint = m_path[i-1];
+            if (previousPoint.y() == point.y()) {
+                point.setY(point.y() - pathSize);
+            } else if (previousPoint.x() == point.x()) {
+                point.setX(point.x() - pathSize);
+            }
+        } else {
+            QPoint nextPoint = m_path[i+1];
+            QPoint previousPoint = m_path[i-1];
+
+            if (point.y() == previousPoint.y()) {
+                if (point.x() > previousPoint.x()) {
+                    if (point.y() < nextPoint.y()) {
+                        point.setX(point.x() - pathSize);
+                        point.setY(point.y() + pathSize);
+                    } else if (point.y() > nextPoint.y()) {
+                        point.setX(point.x() + pathSize);
+                        point.setY(point.y() + pathSize);
+                    }
+                } else {
+                    if (point.y() < nextPoint.y()) {
+                        point.setX(point.x() - pathSize);
+                        point.setY(point.y() - pathSize);
+                    } else if (point.y() > nextPoint.y()) {
+                        point.setX(point.x() + pathSize);
+                        point.setY(point.y() - pathSize);
+                    }
+                }
+            } else if (point.x() == previousPoint.x()) {
+                if (point.y() > previousPoint.y()) {
+                    if (point.x() < nextPoint.x()) {
+                        point.setX(point.x() - pathSize);
+                        point.setY(point.y() + pathSize);
+                    } else if (point.x() > nextPoint.x()) {
+                        point.setX(point.x() - pathSize);
+                        point.setY(point.y() - pathSize);
+                    }
+                } else {
+                    if (point.x() < nextPoint.x()) {
+                        point.setX(point.x() + pathSize);
+                        point.setY(point.y() + pathSize);
+                    } else if (point.x() > nextPoint.x()) {
+                        point.setX(point.x() + pathSize);
+                        point.setY(point.y() - pathSize);
+                    }
+                }
+            }
+        }
+
+        points.push_back(point);
+    }
+
+    // points from the left side of the enemy
+    for (int i = m_path.size()-1; i >= 0; --i) {
+        QPoint point = m_path[i];
+
+        if (i == 0) {
+            QPoint nextPoint = m_path[i+1];
+            if (nextPoint.y() == point.y()) {
+                point.setY(point.y() - pathSize);
+            } else if (nextPoint.x() == point.x()) {
+                point.setX(point.x() + pathSize);
+            }
+        } else if (i == m_path.size()-1) {
+            QPoint previousPoint = m_path[i-1];
+            if (previousPoint.y() == point.y()) {
+                point.setY(point.y() + pathSize);
+            } else if (previousPoint.x() == point.x()) {
+                point.setX(point.x() + pathSize);
+            }
+        } else {
+            QPoint nextPoint = m_path[i+1];
+            QPoint previousPoint = m_path[i-1];
+
+            if (point.y() == previousPoint.y()) {
+                if (point.x() > previousPoint.x()) {
+                    if (point.y() < nextPoint.y()) {
+                        point.setX(point.x() + pathSize);
+                        point.setY(point.y() - pathSize);
+                    } else if (point.y() > nextPoint.y()) {
+                        point.setX(point.x() - pathSize);
+                        point.setY(point.y() - pathSize);
+                    }
+                } else {
+                    if (point.y() < nextPoint.y()) {
+                        point.setX(point.x() + pathSize);
+                        point.setY(point.y() + pathSize);
+                    } else if (point.y() > nextPoint.y()) {
+                        point.setX(point.x() - pathSize);
+                        point.setY(point.y() + pathSize);
+                    }
+                }
+            } else if (point.x() == previousPoint.x()) {
+                if (point.y() > previousPoint.y()) {
+                    if (point.x() < nextPoint.x()) {
+                        point.setX(point.x() + pathSize);
+                        point.setY(point.y() - pathSize);
+                    } else if (point.x() > nextPoint.x()) {
+                        point.setX(point.x() + pathSize);
+                        point.setY(point.y() + pathSize);
+                    }
+                } else {
+                    if (point.x() < nextPoint.x()) {
+                        point.setX(point.x() - pathSize);
+                        point.setY(point.y() - pathSize);
+                    } else if (point.x() > nextPoint.x()) {
+                        point.setX(point.x() - pathSize);
+                        point.setY(point.y() + pathSize);
+                    }
+                }
+            }
+        }
+
+        points.push_back(point);
+    }
+
+    m_polyPath = QPolygon(points);
+    scene->addPolygon(m_polyPath, QPen(Qt::black), QBrush(QImage(":/images/pavedRoad.jpg")));
+}
+
 void Game::addTower(Tower *t)
 {
     m_towers.push_back(std::move(t));
+    m_towerCoords.push_back(t->pos());
 }
 
 void Game::addEnemy(Enemy *e)
@@ -338,12 +478,33 @@ void Game::mousePressEvent(QMouseEvent *event)
             return;
         }
 
+        // if you want to build tower on the road, you cant
+        if (m_polyPath.containsPoint(event->pos(), Qt::OddEvenFill)) {
+            // notify
+            qDebug() << "cant build on the road";
+            return ;
+        }
+
+        // if there is already a tower where you want to place new one, you cant
+        for (int i = 0; i < m_towerCoords.size(); ++i) {
+            int size = tower->towerSize();
+            QRect rect(int(m_towerCoords[i].x() - size/2), int(m_towerCoords[i].y() - size/2),
+                       size, size);
+
+            if (rect.contains(event->pos())) {
+                // notify
+                qDebug() << "cant build the tower on the position of the another tower";
+                return ;
+            }
+        }
+
         decreaseGold(tower->price());
 
         // add the tower to the scene and to the list of towers
         scene->addItem(tower);
         tower->setPos(event->pos());
         addTower(tower);
+
 
         delete cursor;
         cursor = nullptr;
@@ -379,4 +540,8 @@ Game::~Game()
     delete m_lives;
     delete tower;
     delete cursor;
+    delete scene;
+    delete music;
+    delete m_notification;
+    delete m_spawnTimer;
 }

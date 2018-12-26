@@ -64,6 +64,11 @@ int Tower::price() const
     return m_price;
 }
 
+int Tower::towerSize() const
+{
+    return m_towerSize;
+}
+
 void Tower::fire()
 {
     // shooting sounds
