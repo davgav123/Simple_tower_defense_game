@@ -52,8 +52,6 @@ Game::Game(): QGraphicsView()
     m_lives->setPos(220, 650);
     scene->addItem(m_lives);
 
-    scene->addLine(200, 0, 200, 900);
-
     // tower icons, this is where you buy towers
     WatchTowerIcon * watchTowerIcon = new WatchTowerIcon();
     scene->addItem(watchTowerIcon);
@@ -73,7 +71,6 @@ Game::Game(): QGraphicsView()
     MageTowerIcon *mageTowerIcon = new MageTowerIcon();
     mageTowerIcon->setPos(mageTowerIcon->x(), mageTowerIcon->y()+440);
     scene->addItem(mageTowerIcon);
-    level = 0;
 
     initializeLevel();
 
@@ -107,13 +104,13 @@ void Game::initializeLevel()
     json.open(QIODevice::ReadOnly);
     QString val = json.readAll();
     json.close();
-    QJsonDocument q_json = QJsonDocument::fromJson(val.toUtf8());
-    QJsonObject set = q_json.object();
-    QJsonValue path_to_file = set.value(QString("path_1"));
+
+    QJsonDocument qJson = QJsonDocument::fromJson(val.toUtf8());
+    QJsonObject set = qJson.object();
+    QJsonValue pathToFile = set.value("enemyPath");
     //qDebug() << path_to_file.toString();
 
     QJsonValue gold = set.value(QString("gold"));
-
     // TODO: initialize gold ovo posle odkomentarisati
 //    m_gold = new Gold(gold.toInt());
     m_gold = new Gold(2000);
@@ -121,67 +118,76 @@ void Game::initializeLevel()
     scene->addItem(m_gold);
 
     //enemy's moving path initialize
-    QFile file(path_to_file.toString());
+    QFile file(pathToFile.toString());
     file.open(QIODevice::ReadOnly);
     QTextStream in(&file);
-    while(!in.atEnd()){
+    while(!in.atEnd()) {
         QString line = in.readLine();
         QStringList list = line.split(" ");
-        path << QPoint(list[0].toInt(), list[1].toInt());
+        m_path << QPoint(list[0].toInt(), list[1].toInt());
             //qDebug() << x << "," << y;
         }
     file.close();
 
-    waves = set["waves"].toArray();
+    m_waves = set["waves"].toArray();
 
+    m_waveNumber = 0;
+    m_numberOfWaves = m_waves.size();
 
 //    qDebug() << waves[0].toArray().at(0).toInt();
     //int size = waves.size();
-
 }
 
-void Game::playLevel(){
-    spawnTimer = new QTimer(this);
-    enemiesSpawned = 0;
-    maxNumberOfZombies = 0;
-    maxNumberOfRockets = 0;
-    create_enemies(waves[level].toArray().at(0).toInt(), waves[level].toArray().at(1).toInt());
-    level++;
+void Game::playLevel()
+{
+    if ((m_waveNumber+1) >=/*==*/ m_numberOfWaves) {
+        // all waves are finished, we should quit or whatever
+        qDebug() << "No more waves!";
+        return ;
+    }
+
+    m_spawnTimer = new QTimer(this);
+    m_enemiesSpawned = 0;
+    m_maxNumberOfZombies = 0;
+    m_maxNumberOfRockets = 0;
+    create_enemies(m_waves[m_waveNumber].toArray().at(0).toInt(),
+                   m_waves[m_waveNumber].toArray().at(1).toInt());
+
+    m_waveNumber++;
+}
+
+void Game::create_enemies(int numberOfZombies, int numberOfRockets)
+{
+    m_enemiesSpawned = 0;
+    m_rocketsSpawned = 0;
+    m_zombiesSpawned = 0;
+    m_maxNumberOfZombies = numberOfZombies;
+    m_maxNumberOfRockets = numberOfRockets;
+    connect(m_spawnTimer, SIGNAL(timeout()), this, SLOT(spawn_enemy()));
+    m_spawnTimer->start(1300);
 }
 
 void Game::spawn_enemy()
 {
     // spawn an enemy
-    if(zombiesSpawned < maxNumberOfZombies){
-        Enemy * e = new ZombieDino(path);
+    if(m_zombiesSpawned < m_maxNumberOfZombies){
+        Enemy * e = new ZombieDino(m_path);
         scene->addItem(e);
         addEnemy(e);
-        zombiesSpawned += 1;
+        m_zombiesSpawned += 1;
     }
-    if(rocketsSpawned < maxNumberOfRockets){
+    if(m_rocketsSpawned < m_maxNumberOfRockets){
         Enemy * e2 = new Dragon();
         scene->addItem(e2);
         addEnemy(e2);
-        rocketsSpawned += 1;
+        m_rocketsSpawned += 1;
     }
 
-    enemiesSpawned += 1;
+    m_enemiesSpawned += 1;
 
-    if (enemiesSpawned >= (maxNumberOfZombies + maxNumberOfRockets)) {
-        spawnTimer->disconnect();
+    if (m_enemiesSpawned >= (m_maxNumberOfZombies + m_maxNumberOfRockets)) {
+        m_spawnTimer->disconnect();
     }
-}
-
-
-void Game::create_enemies(int numberOfZombies, int numberOfRockets)
-{
-    enemiesSpawned = 0;
-    rocketsSpawned = 0;
-    zombiesSpawned = 0;
-    maxNumberOfZombies = numberOfZombies;
-    maxNumberOfRockets = numberOfRockets;
-    connect(spawnTimer, SIGNAL(timeout()), this, SLOT(spawn_enemy()));
-    spawnTimer->start(1300);
 }
 
 void Game::addTower(Tower *t)
@@ -290,14 +296,16 @@ void Game::mouseMoveEvent(QMouseEvent *event)
 void Game::mousePressEvent(QMouseEvent *event)
 {
     if (tower) {
-        // if the tower is worth more than you have gold, then you cannot build the tower
-        if (getAmountOfGold() < tower->price()) {
-            qDebug() << "not enough gold";
-            return ;
+        // this is the shop, we cant bulid there
+        if (event->x() < 220 || event->x() > 1280) {
+            // notify the user about this <- TODO
+            return;
         }
 
-        if (event->pos().x() < 220 || event->pos().x() > 1280) {
-            return;
+        // this is the panel with score/lives/gold, we cant build there either
+        if (event->y() > 600) {
+            // notify the user about this <- TODO
+            return ;
         }
 
         decreaseGold(tower->price());
