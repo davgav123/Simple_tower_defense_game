@@ -36,6 +36,7 @@ Tower::Tower(qreal x, qreal y, int damage, int price, EnemyType type, QString pa
      bulletSound->setMedia(QUrl((m_pathToBulletSound)));
 }
 
+
 QRectF Tower::boundingRect() const
 {
     // (0, 0) is the center of the tower
@@ -57,6 +58,17 @@ void Tower::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
     // draw the tower
     QPixmap pixmap(m_pathToImg);
     painter->drawPixmap(-m_towerSize/2, int(-m_towerSize/1.5), m_towerSize, int(1.5*m_towerSize), pixmap);
+}
+
+void Tower::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+    qDebug() << event->pos();
+    int gold = this->m_price;
+    g->m_towers.remove(g->m_towers.indexOf(this,0));
+    g->m_towerCoords.remove(g->m_towerCoords.indexOf(this->pos(), 0));
+    g->increaseGold(gold);
+
+    delete this;
 }
 
 int Tower::price() const

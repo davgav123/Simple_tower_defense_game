@@ -20,6 +20,7 @@ public:
                const QStyleOptionGraphicsItem *option,
                QWidget *widget) override;
 
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override;
     int price() const;
     int towerSize() const;
 
