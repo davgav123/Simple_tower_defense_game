@@ -17,8 +17,7 @@ void MageTowerIcon::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
         // if we have the gold to buy the tower, we can buy it
         if (g->getAmountOfGold() < g->tower->price()) {
-            // notify the user about this <- TODO
-            qDebug() << "not enough gold";
+            g->m_notification->setMessageAndDisplay("Not enough gold!");
             delete g->tower;
             g->tower = nullptr;
             return ;

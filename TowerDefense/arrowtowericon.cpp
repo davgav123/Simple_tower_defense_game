@@ -20,11 +20,7 @@ void ArrowTowerIcon::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
         // if we have the gold to buy the tower, we can buy it
         if (g->getAmountOfGold() < g->tower->price()) {
-            // notify the user about this <- TODO
-//            delete g->m_notification;
-//            g->m_notification = new Notifications("Not enough gold!");
-//            g->m_notification->setPos(630, 655);
-//            g->scene->addItem(g->m_notification);
+            g->m_notification->setMessageAndDisplay("Not enough gold!");
             qDebug() << "not enough gold";
             delete g->tower;
             g->tower = nullptr;

@@ -116,6 +116,10 @@ Game::Game(): QGraphicsView()
     connect(muteButton, &QPushButton::clicked, this, &Game::mute);
 
     drawEnemyPath();
+
+    m_notification = new Notifications();
+    m_notification->setPos(630, 655);
+    scene->addItem(m_notification);
 }
 
 void Game::initializeLevel()
@@ -455,14 +459,6 @@ void Game::mouseMoveEvent(QMouseEvent *event)
     if (cursor) {
         cursor->setPos(event->pos());
     }
-
-//  TODO: critical code, if it crashes here to search for bug
-//    if (m_notification)
-//        delete m_notification;
-
-//    m_notification = new Notifications("");
-//    m_notification->setPos(630, 655);
-//    scene->addItem(m_notification);
 }
 
 void Game::mousePressEvent(QMouseEvent *event)
@@ -470,18 +466,13 @@ void Game::mousePressEvent(QMouseEvent *event)
     if (tower) {
         // we cant bulid in the field that represents store or lives/score/gold
         if (event->x() < 225 || event->x() > 1280 || event->y() > 600) {
-            // notify the user about this
-//            delete m_notification;
-//            m_notification = new Notifications("Can't build there!");
-//            m_notification->setPos(630, 655);
-//            scene->addItem(m_notification);
+            m_notification->setMessageAndDisplay("Can't build there!");
             return;
         }
 
         // if you want to build tower on the road, you cant
         if (m_polyPath.containsPoint(event->pos(), Qt::OddEvenFill)) {
-            // notify
-            qDebug() << "cant build on the road";
+            m_notification->setMessageAndDisplay("Can't build there!");
             return ;
         }
 
@@ -492,8 +483,7 @@ void Game::mousePressEvent(QMouseEvent *event)
                        size, size);
 
             if (rect.contains(event->pos())) {
-                // notify
-                qDebug() << "cant build the tower on the position of the another tower";
+                m_notification->setMessageAndDisplay("Can't build there!");
                 return ;
             }
         }
@@ -504,7 +494,6 @@ void Game::mousePressEvent(QMouseEvent *event)
         scene->addItem(tower);
         tower->setPos(event->pos());
         addTower(tower);
-
 
         delete cursor;
         cursor = nullptr;

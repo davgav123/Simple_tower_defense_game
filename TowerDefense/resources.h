@@ -2,6 +2,7 @@
 #define GOLD_H
 
 #include <QGraphicsTextItem>
+#include <QObject>
 
 class Gold: public QGraphicsTextItem
 {
@@ -34,10 +35,20 @@ private:
     int m_numberOfLives;
 };
 
-class Notifications: public QGraphicsTextItem
+class Notifications : public QGraphicsTextItem
 {
+    Q_OBJECT
 public:
-    Notifications(QString message);
+    Notifications();
+    ~Notifications();
+
+    void setMessageAndDisplay(QString message);
+public slots:
+    void display();
+private:
+    QTimer *m_displayTimer;
+
+    QString m_message;
 };
 
 #endif // GOLD_H

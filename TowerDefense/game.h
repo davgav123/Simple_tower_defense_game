@@ -63,6 +63,7 @@ public:
     QGraphicsScene * scene;
     QGraphicsPixmapItem * cursor;
     Tower *tower;
+    Notifications *m_notification;
 public slots:
     void spawn_enemy();
 private:
@@ -76,7 +77,6 @@ private:
     Score * m_score;
     Gold * m_gold;
     QMediaPlayer *music;
-    Notifications *m_notification;
 
     QTimer * m_spawnTimer;
     int m_enemiesSpawned;

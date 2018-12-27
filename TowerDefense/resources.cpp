@@ -76,10 +76,41 @@ int Lives::getHealth()
 }
 
 
-Notifications::Notifications(QString message)
+Notifications::Notifications()
 {
     // draw the text
-    setPlainText(message);
+    setPlainText("");
     setDefaultTextColor(Qt::red);
     setFont(QFont("sans serif", 20, QFont::StyleItalic, true));
+
+    m_displayTimer = new QTimer(this);
+    connect(m_displayTimer, SIGNAL(timeout()), this, SLOT(display()));
+}
+
+Notifications::~Notifications()
+{
+    delete m_displayTimer;
+}
+
+void Notifications::setMessageAndDisplay(QString message)
+{
+    m_message = message;
+    setPlainText(m_message);
+    m_displayTimer->start(1000);
+}
+
+void Notifications::display()
+{
+    static int iters = 0;
+    setPlainText(m_message);
+    qDebug() << " --------> " << m_message;
+
+    if (iters >= 2) {
+        m_displayTimer->stop();
+        iters = 0;
+        setPlainText("");
+        return ;
+    }
+
+    iters++;
 }
