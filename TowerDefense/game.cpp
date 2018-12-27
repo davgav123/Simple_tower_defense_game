@@ -23,7 +23,7 @@ Game::Game(): QGraphicsView()
     rect1->setBrush(QBrush(QImage(":/images/background.png")));
 
     QGraphicsRectItem *rect2 = scene->addRect(200, 0, 1100, 650);
-    rect2->setBrush(QBrush(QImage(":/images/grass_1.jpeg")));
+    rect2->setBrush(QBrush(QImage(":/images/grass_6.jpeg")));
 
     setScene(scene);
     setFixedSize(1300, 700);
@@ -46,7 +46,7 @@ Game::Game(): QGraphicsView()
 
     // initialize number of lives
     m_lives = new Lives();
-    m_lives->setPos(200, 650);
+    m_lives->setPos(230, 650);
     scene->addItem(m_lives);
 
     // tower icons, this is where you buy towers
@@ -118,7 +118,7 @@ Game::Game(): QGraphicsView()
     drawEnemyPath();
 
     m_notification = new Notifications();
-    m_notification->setPos(630, 655);
+    m_notification->setPos(680, 655);
     scene->addItem(m_notification);
 }
 
@@ -139,7 +139,7 @@ void Game::initializeLevel()
     // TODO: initialize gold ovo posle odkomentarisati
 //    m_gold = new Gold(gold.toInt());
     m_gold = new Gold(2000);
-    m_gold->setPos(400, 650);
+    m_gold->setPos(410, 650);
     scene->addItem(m_gold);
 
     //enemy's moving path initialize
@@ -354,7 +354,7 @@ void Game::drawEnemyPath()
     }
 
     m_polyPath = QPolygon(points);
-    scene->addPolygon(m_polyPath, QPen(Qt::black), QBrush(QImage(":/images/pavedRoad.jpg")));
+    scene->addPolygon(m_polyPath, QPen(Qt::darkGray), QBrush(QImage(":/images/road_1.jpg")));
 }
 
 void Game::addTower(Tower *t)
