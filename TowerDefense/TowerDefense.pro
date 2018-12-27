@@ -40,7 +40,8 @@ SOURCES += \
     icetowericon.cpp \
     witchtowericon.cpp \
     magetowericon.cpp \
-    towers.cpp
+    towers.cpp \
+    startwindow.cpp
 
 HEADERS += \
     tower.h \
@@ -56,9 +57,11 @@ HEADERS += \
     icetowericon.h \
     witchtowericon.h \
     magetowericon.h \
-    towers.h
+    towers.h \
+    startwindow.h
 
-FORMS +=
+FORMS += \
+    startwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

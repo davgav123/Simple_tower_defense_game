@@ -91,6 +91,7 @@ private:
     int m_maxNumberOfZombieDragons;
     int m_waveNumber;
     int m_numberOfWaves;
+    bool m_waveInProgress;
 
     QJsonArray m_waves;
     int m_rocketsSpawned;

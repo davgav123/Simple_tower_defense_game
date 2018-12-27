@@ -15,6 +15,9 @@
 
 Game::Game(): QGraphicsView()
 {
+    // disable "X" button
+    setWindowFlags(Qt::WindowTitleHint);
+
     // create and set the scene and view
     scene = new QGraphicsScene(this);
     scene->setSceneRect(0, 0, 1300, 700);
@@ -118,14 +121,14 @@ Game::Game(): QGraphicsView()
     drawEnemyPath();
 
     m_notification = new Notifications();
-    m_notification->setPos(680, 655);
+    m_notification->setPos(660, 655);
     scene->addItem(m_notification);
 }
 
 void Game::initializeLevel()
 {
     // read json file
-    QFile json(":/paths/path_1.json");
+    QFile json(":/paths/level_1.json");
     json.open(QIODevice::ReadOnly);
     QString val = json.readAll();
     json.close();
@@ -158,6 +161,7 @@ void Game::initializeLevel()
 
     m_waveNumber = 0;
     m_numberOfWaves = m_waves.size();
+    m_waveInProgress = false;
 
 //    qDebug() << waves[0].toArray().at(0).toInt();
     //int size = waves.size();
@@ -166,8 +170,15 @@ void Game::initializeLevel()
 
 void Game::playLevel()
 {
+    // if there is a wave active, you can't start a new one
+    if (m_waveInProgress) {
+        m_notification->setMessageAndDisplay("Current wave isn't destroyed!");
+        return ;
+    }
+
     if (m_waveNumber >=/*==*/ m_numberOfWaves) {
         // all waves are finished, we should quit or whatever
+        m_notification->setMessageAndDisplay("No more waves!");
         qDebug() << "No more waves!";
         return ;
     }
@@ -189,6 +200,7 @@ void Game::playLevel()
 void Game::createEnemies()
 {
     //m_enemiesSpawned = 0;
+    m_waveInProgress = true;
     connect(m_spawnTimer, SIGNAL(timeout()), this, SLOT(spawn_enemy()));
     m_spawnTimer->start(1300);
 }
@@ -251,6 +263,7 @@ void Game::spawn_enemy()
     if (!m_maxNumberOfGoblins && !m_maxNumberOfCommonKnights && !m_maxNumberOfDarkKnights
             && !m_maxNumberOfZombieDinos && !m_maxNumberOfRockets && !m_maxNumberOfDragons
             && !m_maxNumberOfZombieDragons) {
+        m_waveInProgress = false;
         m_spawnTimer->disconnect();
     }
 }
@@ -542,6 +555,8 @@ void Game::mousePressEvent(QMouseEvent *event)
 
 void Game::exitGame()
 {
+    // if this is active, code crashes... <- TODO
+//    delete this;
     QApplication::quit();
 }
 
