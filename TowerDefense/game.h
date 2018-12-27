@@ -56,7 +56,7 @@ public:
     void playLevel();
     void exitGame();
     void mute();
-    void create_enemies(int numberOfZombies, int numberOfRockets);
+    void createEnemies();
 
     bool indicator;
 
@@ -80,8 +80,13 @@ private:
 
     QTimer * m_spawnTimer;
     int m_enemiesSpawned;
-    int m_maxNumberOfZombies;
+    int m_maxNumberOfGoblins;
+    int m_maxNumberOfCommonKnights;
+    int m_maxNumberOfDarkKnights;
+    int m_maxNumberOfZombieDinos;
     int m_maxNumberOfRockets;
+    int m_maxNumberOfDragons;
+    int m_maxNumberOfZombieDragons;
     int m_waveNumber;
     int m_numberOfWaves;
 

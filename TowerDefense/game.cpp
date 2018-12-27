@@ -174,21 +174,21 @@ void Game::playLevel()
 
     m_spawnTimer = new QTimer(this);
     m_enemiesSpawned = 0;
-    m_maxNumberOfZombies = 0;
-    m_maxNumberOfRockets = 0;
-    create_enemies(m_waves[m_waveNumber].toArray().at(0).toInt(),
-                   m_waves[m_waveNumber].toArray().at(1).toInt());
+    m_maxNumberOfGoblins = m_waves[m_waveNumber].toArray().at(0).toInt();
+    m_maxNumberOfCommonKnights = m_waves[m_waveNumber].toArray().at(1).toInt();
+    m_maxNumberOfDarkKnights = m_waves[m_waveNumber].toArray().at(2).toInt();
+    m_maxNumberOfZombieDinos = m_waves[m_waveNumber].toArray().at(3).toInt();
+    m_maxNumberOfRockets = m_waves[m_waveNumber].toArray().at(4).toInt();
+    m_maxNumberOfDragons = m_waves[m_waveNumber].toArray().at(5).toInt();
+    m_maxNumberOfZombieDragons = m_waves[m_waveNumber].toArray().at(6).toInt();
+    createEnemies();
 
     m_waveNumber++;
 }
 
-void Game::create_enemies(int numberOfZombies, int numberOfRockets)
+void Game::createEnemies()
 {
-    m_enemiesSpawned = 0;
-    m_rocketsSpawned = 0;
-    m_zombiesSpawned = 0;
-    m_maxNumberOfZombies = numberOfZombies;
-    m_maxNumberOfRockets = numberOfRockets;
+    //m_enemiesSpawned = 0;
     connect(m_spawnTimer, SIGNAL(timeout()), this, SLOT(spawn_enemy()));
     m_spawnTimer->start(1300);
 }
@@ -196,26 +196,61 @@ void Game::create_enemies(int numberOfZombies, int numberOfRockets)
 void Game::spawn_enemy()
 {
     // spawn an enemy
-    if (m_zombiesSpawned < m_maxNumberOfZombies) {
+    if (m_maxNumberOfGoblins) {
+        Enemy * e = new Goblin(m_path);
+        scene->addItem(e);
+        addEnemy(e);
+        m_maxNumberOfGoblins--;
+        return;
+    }
+    if (m_maxNumberOfCommonKnights) {
+        Enemy * e = new CommonKnight(m_path);
+        scene->addItem(e);
+        addEnemy(e);
+        m_maxNumberOfCommonKnights--;
+        return;
+    }
+    if (m_maxNumberOfDarkKnights) {
         Enemy * e = new DarkKnight(m_path);
         scene->addItem(e);
         addEnemy(e);
-        m_zombiesSpawned += 1;
-
-        Enemy *e3 = new CommonKnight(m_path);
-        scene->addItem(e3);
-        addEnemy(e3);
+        m_maxNumberOfDarkKnights--;
+        return;
     }
-    if (m_rocketsSpawned < m_maxNumberOfRockets) {
-        Enemy * e2 = new ZombieDragon();
-        scene->addItem(e2);
-        addEnemy(e2);
-        m_rocketsSpawned += 1;
+    if (m_maxNumberOfZombieDinos) {
+        Enemy * e = new ZombieDino(m_path);
+        scene->addItem(e);
+        addEnemy(e);
+        m_maxNumberOfZombieDinos--;
+        return;
+    }
+    if (m_maxNumberOfRockets) {
+        Enemy * e = new Rocket();
+        scene->addItem(e);
+        addEnemy(e);
+        m_maxNumberOfRockets--;
+        return;
+    }
+    if (m_maxNumberOfDragons) {
+        Enemy * e = new Dragon();
+        scene->addItem(e);
+        addEnemy(e);
+        m_maxNumberOfDragons--;
+        return;
+    }
+    if (m_maxNumberOfZombieDragons) {
+        Enemy * e = new ZombieDragon();
+        scene->addItem(e);
+        addEnemy(e);
+        m_maxNumberOfZombieDragons--;
+        return;
     }
 
-    m_enemiesSpawned += 1;
 
-    if (m_enemiesSpawned >= (m_maxNumberOfZombies + m_maxNumberOfRockets)) {
+
+    if (!m_maxNumberOfGoblins && !m_maxNumberOfCommonKnights && !m_maxNumberOfDarkKnights
+            && !m_maxNumberOfZombieDinos && !m_maxNumberOfRockets && !m_maxNumberOfDragons
+            && !m_maxNumberOfZombieDragons) {
         m_spawnTimer->disconnect();
     }
 }
