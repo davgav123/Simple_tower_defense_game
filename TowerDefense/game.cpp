@@ -208,20 +208,6 @@ void Game::createEnemies()
 void Game::spawn_enemy()
 {
     // spawn an enemy
-    if (m_maxNumberOfGoblins) {
-        Enemy * e = new Goblin(m_path);
-        scene->addItem(e);
-        addEnemy(e);
-        m_maxNumberOfGoblins--;
-        return;
-    }
-    if (m_maxNumberOfCommonKnights) {
-        Enemy * e = new CommonKnight(m_path);
-        scene->addItem(e);
-        addEnemy(e);
-        m_maxNumberOfCommonKnights--;
-        return;
-    }
     if (m_maxNumberOfDarkKnights) {
         Enemy * e = new DarkKnight(m_path);
         scene->addItem(e);
@@ -234,6 +220,20 @@ void Game::spawn_enemy()
         scene->addItem(e);
         addEnemy(e);
         m_maxNumberOfZombieDinos--;
+        return;
+    }
+    if (m_maxNumberOfGoblins) {
+        Enemy * e = new Goblin(m_path);
+        scene->addItem(e);
+        addEnemy(e);
+        m_maxNumberOfGoblins--;
+        return;
+    }
+    if (m_maxNumberOfCommonKnights) {
+        Enemy * e = new CommonKnight(m_path);
+        scene->addItem(e);
+        addEnemy(e);
+        m_maxNumberOfCommonKnights--;
         return;
     }
     if (m_maxNumberOfRockets) {

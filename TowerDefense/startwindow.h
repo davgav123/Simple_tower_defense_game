@@ -3,6 +3,8 @@
 
 #include "game.h"
 #include <QMainWindow>
+#include <QPalette>
+#include <QPixmap>
 
 namespace Ui {
 class StartWindow;
