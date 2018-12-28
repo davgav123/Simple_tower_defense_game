@@ -58,7 +58,7 @@ public:
     void mute();
     void createEnemies();
 
-    bool indicator;
+    bool indicator = true;
 
     QGraphicsScene * scene;
     QGraphicsPixmapItem * cursor;
@@ -68,6 +68,7 @@ public:
     QVector<QPointF> m_towerCoords;
 public slots:
     void spawn_enemy();
+    void escExit();
 private:
 
 

@@ -41,6 +41,8 @@
         <file>grass_6.jpeg</file>
         <file>road_1.jpg</file>
         <file>road_2.jpg</file>
+        <file>introImage_2.jpg</file>
+        <file>introImage_1.png</file>
     </qresource>
     <qresource prefix="/paths">
         <file>path_1.txt</file>
@@ -50,6 +52,7 @@
         <file>soundtrack.mp3</file>
         <file>bulletSound.mp3</file>
         <file>bulletSound_1.mp3</file>
+        <file>introMusic.mp3</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

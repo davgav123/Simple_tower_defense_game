@@ -128,20 +128,6 @@ void Tower::aquireTarget()
             findClosestEnemy();
         }
     }
-
-
-    // this code is taking the first enemy in the list of enemies as the target
-//    m_target = nullptr;
-//    if (! g->enemies().empty()) {
-//        m_target = std::move(g->enemies().takeFirst());
-
-//        // if the enemy is in range fire at it
-//        QLineF ln(pos(), m_target->pos());
-//        if (ln.length() < 1.5*m_radius && m_target != nullptr) {
-//            fire();
-//        }
-//    }
-    // --------------------------------------------------------------
 }
 
 void Tower::findClosestEnemy()

@@ -96,7 +96,8 @@ Game::Game(): QGraphicsView()
     QAction *exitKey = new QAction(this);
     exitKey->setShortcut(Qt::Key_Escape);
 
-    connect(exitKey, SIGNAL(triggered()), this, SLOT(close()));
+//    connect(exitKey, SIGNAL(triggered()), this, SLOT(close()));
+    connect(exitKey, SIGNAL(triggered()), this, SLOT(escExit()));
     this->addAction(exitKey);
 
 
@@ -570,6 +571,11 @@ void Game::mute()
         music->setMuted(true);
         indicator = false;
     }
+}
+
+void Game::escExit()
+{
+    QApplication::quit();
 }
 
 Game::~Game()

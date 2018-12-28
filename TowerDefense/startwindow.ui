@@ -17,17 +17,31 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>19</x>
-      <y>9</y>
-      <width>761</width>
-      <height>551</height>
+      <x>290</x>
+      <y>90</y>
+      <width>331</width>
+      <height>321</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QPushButton" name="FirstLevel">
        <property name="text">
-        <string>First level</string>
+        <string>Level 1</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="SecondLevel">
+       <property name="text">
+        <string>Level 2</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="ThirdLevel">
+       <property name="text">
+        <string>Level 3</string>
        </property>
       </widget>
      </item>
