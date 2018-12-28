@@ -37,7 +37,6 @@
         <file>map.jpg</file>
         <file>grass_1.jpeg</file>
         <file>iceTower.png</file>
-        <file>pavedRoad.jpg</file>
         <file>grass_6.jpeg</file>
         <file>road_1.jpg</file>
         <file>road_2.jpg</file>
@@ -47,6 +46,10 @@
     <qresource prefix="/paths">
         <file>path_1.txt</file>
         <file>level_1.json</file>
+        <file>level_2.json</file>
+        <file>path_2.txt</file>
+        <file>level_3.json</file>
+        <file>path_3.txt</file>
     </qresource>
     <qresource prefix="/sounds">
         <file>soundtrack.mp3</file>

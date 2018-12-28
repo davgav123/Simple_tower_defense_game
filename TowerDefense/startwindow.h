@@ -22,6 +22,8 @@ public:
 
 private slots:
     void startLevelOne() const;
+    void startLevelTwo() const;
+    void startLevelThree() const;
     void quitGame();
 
 private:

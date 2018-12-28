@@ -63,7 +63,7 @@ void Tower::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
 void Tower::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     qDebug() << event->pos();
-    int gold = this->m_price;
+    int gold = this->m_price / 2;
     g->m_towers.remove(g->m_towers.indexOf(this,0));
     g->m_towerCoords.remove(g->m_towerCoords.indexOf(this->pos(), 0));
     g->increaseGold(gold);

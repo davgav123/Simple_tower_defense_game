@@ -39,6 +39,8 @@ StartWindow::StartWindow(QWidget *parent) :
 
     // connect buttons to functions
     connect(ui->FirstLevel, SIGNAL(clicked()), SLOT(startLevelOne()));
+    connect(ui->SecondLevel, SIGNAL(clicked()), SLOT(startLevelTwo()));
+    connect(ui->ThirdLevel, SIGNAL(clicked()), SLOT(startLevelThree()));
     connect(ui->Quit, SIGNAL(clicked()), SLOT(quitGame()));
 
 
@@ -63,12 +65,31 @@ void StartWindow::startLevelOne() const
         music->stop();
     }
 
-    g = new Game();
+    g = new Game(":/paths/level_1.json");
+    g->show();
+}
+
+void StartWindow::startLevelTwo() const
+{
+    if (music) {
+        music->stop();
+    }
+
+    g = new Game(":/paths/level_2.json");
+    g->show();
+}
+
+void StartWindow::startLevelThree() const
+{
+    if (music) {
+        music->stop();
+    }
+
+    g = new Game(":/paths/level_3.json");
     g->show();
 }
 
 void StartWindow::quitGame()
 {
-//    delete g; <- TODO
     QApplication::quit();
 }

@@ -13,7 +13,7 @@
 #include <QApplication>
 #include <QLabel>
 
-Game::Game(): QGraphicsView()
+Game::Game(QString pathToJson): QGraphicsView()
 {
     // disable "X" button
     setWindowFlags(Qt::WindowTitleHint);
@@ -72,7 +72,7 @@ Game::Game(): QGraphicsView()
     mageTowerIcon->setPos(mageTowerIcon->x(), mageTowerIcon->y()+440);
     scene->addItem(mageTowerIcon);
 
-    initializeLevel();
+    initializeLevel(pathToJson);
 
     // pressing this button will start new wave
     QPushButton *button = new QPushButton(tr("Attack"));
@@ -100,7 +100,6 @@ Game::Game(): QGraphicsView()
     connect(exitKey, SIGNAL(triggered()), this, SLOT(escExit()));
     this->addAction(exitKey);
 
-
 //    play background music
     QMediaPlaylist *playlist = new QMediaPlaylist();
     playlist->addMedia(QUrl("qrc:/sounds/soundtrack.mp3"));
@@ -126,10 +125,10 @@ Game::Game(): QGraphicsView()
     scene->addItem(m_notification);
 }
 
-void Game::initializeLevel()
+void Game::initializeLevel(QString path)
 {
     // read json file
-    QFile json(":/paths/level_1.json");
+    QFile json(path/*":/paths/level_1.json"*/);
     json.open(QIODevice::ReadOnly);
     QString val = json.readAll();
     json.close();
@@ -519,22 +518,9 @@ void Game::mousePressEvent(QMouseEvent *event)
             return;
         }
 
-        // if you want to build tower on the road, you cant
-        if (m_polyPath.containsPoint(event->pos(), Qt::OddEvenFill)) {
+        if (dropTowerCheck(event)) {
             m_notification->setMessageAndDisplay("Can't build there!");
             return ;
-        }
-
-        // if there is already a tower where you want to place new one, you cant
-        for (int i = 0; i < m_towerCoords.size(); ++i) {
-            int size = tower->towerSize();
-            QRect rect(int(m_towerCoords[i].x() - size/2), int(m_towerCoords[i].y() - size/2),
-                       size, size);
-
-            if (rect.contains(event->pos())) {
-                m_notification->setMessageAndDisplay("Can't build there!");
-                return ;
-            }
         }
 
         decreaseGold(tower->price());
@@ -553,11 +539,38 @@ void Game::mousePressEvent(QMouseEvent *event)
     }
 }
 
+bool Game::dropTowerCheck(QMouseEvent *event)
+{
+    // creating a vector of points that bounds event point
+    QVector<QPoint> bound {QPoint(event->x() - 20, event->y()),
+                QPoint(event->x() + 20, event->y()),
+                QPoint(event->x(), event->y() + 35),
+                QPoint(event->x(), event->y() - 20)};
+
+    // if you want to build tower on the road, you cant
+    for (int i = 0; i < bound.size(); ++i) {
+        if (m_polyPath.containsPoint(bound[i], Qt::OddEvenFill)) {
+            return true;
+        }
+    }
+
+    // if there is already a tower where you want to place new one, you cant
+    for (int i = 0; i < m_towerCoords.size(); ++i) {
+        int size = tower->towerSize();
+        QRect rect(int(m_towerCoords[i].x() - size/2), int(m_towerCoords[i].y() - size/2),
+                   size, size);
+
+        if (rect.contains(event->pos())) {
+            return true;
+        }
+    }
+
+    // you can place the tower where you want to
+    return false;
+}
 
 void Game::exitGame()
 {
-    // if this is active, code crashes... <- TODO
-//    delete this;
     QApplication::quit();
 }
 

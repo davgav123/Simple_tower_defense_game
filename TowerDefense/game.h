@@ -31,7 +31,7 @@ class Game: public QGraphicsView
 {
     Q_OBJECT
 public:
-    Game();
+    Game(QString pathToJson);
     ~Game();
     void addTower(Tower *t);
     void addEnemy(Enemy *e);
@@ -100,8 +100,9 @@ private:
     QVector<QPoint> m_path;
     QPolygon m_polyPath;
 
-    void initializeLevel();
+    void initializeLevel(QString path);
     void drawEnemyPath();
+    bool dropTowerCheck(QMouseEvent *event);
 };
 
 #endif // GAME_H
