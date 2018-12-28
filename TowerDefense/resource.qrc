@@ -40,8 +40,10 @@
         <file>grass_6.jpeg</file>
         <file>road_1.jpg</file>
         <file>road_2.jpg</file>
-        <file>introImage_2.jpg</file>
-        <file>introImage_1.png</file>
+        <file>introMap_1.png</file>
+        <file>introMap_2.png</file>
+        <file>introMap_3.jpg</file>
+        <file>introMap_1_changed.png</file>
     </qresource>
     <qresource prefix="/paths">
         <file>path_1.txt</file>
