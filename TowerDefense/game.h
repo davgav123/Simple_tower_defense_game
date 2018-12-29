@@ -32,7 +32,7 @@ class Game: public QGraphicsView
 {
     Q_OBJECT
 public:
-    Game(QString pathToJson);
+    Game(QString pathToJson, QString pathToBackground, QString pathToRoadImage);
     ~Game();
     void addTower(Tower *t);
     void addEnemy(Enemy *e);
@@ -103,7 +103,7 @@ private:
     QPolygon m_polyPath;
 
     void initializeLevel(QString path);
-    void drawEnemyPath();
+    void drawEnemyPath(QString pathToRoadImage);
     bool dropTowerCheck(QMouseEvent *event);
 };
 

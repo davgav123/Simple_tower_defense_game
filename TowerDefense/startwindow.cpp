@@ -60,7 +60,7 @@ void StartWindow::startLevelOne()
         music->stop();
     }
 
-    g = new Game(":/paths/level_1.json");
+    g = new Game(":/paths/level_1.json", "grass_6.jpeg", "road_1.jpg");
     g->show();
 
     hide();
@@ -72,7 +72,7 @@ void StartWindow::startLevelTwo()
         music->stop();
     }
 
-    g = new Game(":/paths/level_2.json");
+    g = new Game(":/paths/level_2.json", "forest_1.jpg", "forestRoad_2.jpg");
     g->show();
 
     hide();
@@ -84,7 +84,7 @@ void StartWindow::startLevelThree()
         music->stop();
     }
 
-    g = new Game(":/paths/level_3.json");
+    g = new Game(":/paths/level_3.json", "forest_1.jpg", "forestRoad_2.jpg");
     g->show();
 
     hide();

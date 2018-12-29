@@ -13,7 +13,7 @@
 #include <QApplication>
 #include <QLabel>
 
-Game::Game(QString pathToJson): QGraphicsView()
+Game::Game(QString pathToJson, QString pathToBackground, QString pathToRoadImage): QGraphicsView()
 {
     // disable "X" button
     setWindowFlags(Qt::WindowTitleHint);
@@ -26,7 +26,8 @@ Game::Game(QString pathToJson): QGraphicsView()
     rect1->setBrush(QBrush(QImage(":/images/background.png")));
 
     QGraphicsRectItem *rect2 = scene->addRect(200, 0, 1100, 650);
-    rect2->setBrush(QBrush(QImage(":/images/grass_6.jpeg")));
+//    rect2->setBrush(QBrush(QImage(":/images/grass_6.jpeg")));
+    rect2->setBrush(QBrush(QImage(":/images/" + pathToBackground)));
 
     setScene(scene);
     setFixedSize(1300, 700);
@@ -118,7 +119,7 @@ Game::Game(QString pathToJson): QGraphicsView()
     scene->addWidget(muteButton);
     connect(muteButton, &QPushButton::clicked, this, &Game::mute);
 
-    drawEnemyPath();
+    drawEnemyPath(pathToRoadImage);
 
     m_notification = new Notifications();
     m_notification->setPos(660, 655);
@@ -317,7 +318,7 @@ void Game::spawn_enemy()
     }
 }
 
-void Game::drawEnemyPath()
+void Game::drawEnemyPath(QString pathToRoadImage)
 {
     QVector<QPoint> points;
     int pathSize = 25;
@@ -451,7 +452,8 @@ void Game::drawEnemyPath()
     }
 
     m_polyPath = QPolygon(points);
-    scene->addPolygon(m_polyPath, QPen(Qt::darkGray), QBrush(QImage(":/images/road_1.jpg")));
+//    scene->addPolygon(m_polyPath, QPen(Qt::darkGray), QBrush(QImage(":/images/road_1.jpg")));
+    scene->addPolygon(m_polyPath, QPen(Qt::darkGray), QBrush(QImage(":/images/" + pathToRoadImage)));
 }
 
 void Game::addTower(Tower *t)
