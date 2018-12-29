@@ -182,14 +182,8 @@ void Game::playLevel()
 //        qDebug() << m_waveNumber;
 //        qDebug() << m_numberOfWaves;
 
-        GameOver *go = new GameOver();
         int result = score() + lives() * gold();
-        go->setText("Congratulations!", result);
-        go->show();
-
-        // hide game
-        hide();
-        music->setMuted(true);
+        gameIsOver(result);
 
         return ;
     }
@@ -220,6 +214,21 @@ void Game::createEnemies()
     m_waveInProgress = true;
     connect(m_spawnTimer, SIGNAL(timeout()), this, SLOT(spawn_enemy()));
     m_spawnTimer->start(1100);
+}
+
+void Game::gameIsOver(int result)
+{
+    GameOver *go = new GameOver();
+    // int result = g->score() + g->lives() * g->gold();
+    go->setText("GAME OVER!", result);
+    go->show();
+
+    // game is over, delete remaining units
+    deleteTowers();
+
+    // hide the scene and mute music
+    music->setMuted(true);
+    hide();
 }
 
 int Game::score() const
@@ -483,12 +492,24 @@ void Game::removeEnemy(Enemy *e)
     m_enemies.removeOne(e);
 }
 
+void Game::removeTower(Tower *t)
+{
+    m_towers.removeOne(t);
+    m_towerCoords.removeOne(t->pos());
+}
+
 bool Game::containsEnemy(Enemy *e)
 {
     if (e->enemyType() == EnemyType::GROUND_ENEMY)
         return m_groundEnemies.contains(e);
     else
         return m_flyingEnemies.contains(e);
+}
+
+void Game::deleteTowers()
+{
+    for (auto & t : m_towers)
+        delete t;
 }
 
 QLinkedList<Enemy *> Game::groundEnemies() const

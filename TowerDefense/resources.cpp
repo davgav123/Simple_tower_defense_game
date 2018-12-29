@@ -63,14 +63,7 @@ void Lives::decrease()
     m_numberOfLives--;
 
     if (m_numberOfLives == 0) {
-        GameOver *go = new GameOver();
-        // int result = g->score() + g->lives() * g->gold();
-        go->setText("GAME OVER!", g->score());
-        go->show();
-
-        // hide the scene
-        g->music->setMuted(true);
-        g->hide();
+        g->gameIsOver(g->score());
     }
 
     setPlainText(QString("Lives: ") + QString::number(m_numberOfLives));

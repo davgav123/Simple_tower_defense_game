@@ -37,7 +37,9 @@ public:
     void addTower(Tower *t);
     void addEnemy(Enemy *e);
     void removeEnemy(Enemy *e);
+    void removeTower(Tower *t);
     bool containsEnemy(Enemy *e);
+    void deleteTowers();
 
     QLinkedList<Enemy*> groundEnemies() const;
     QLinkedList<Enemy*> flyingEnemies() const;
@@ -58,6 +60,7 @@ public:
     void exitGame();
     void mute();
     void createEnemies();
+    void gameIsOver(int result);
 
     int score() const;
     int lives() const;
@@ -67,10 +70,8 @@ public:
     QMediaPlayer *music;
     QGraphicsScene * scene;
     QGraphicsPixmapItem * cursor;
-    Tower *tower;
     Notifications *m_notification;
-    QVector<Tower*> m_towers;
-    QVector<QPointF> m_towerCoords;
+    Tower *tower;
 
 public slots:
     void spawn_enemy();
@@ -80,6 +81,8 @@ private:
     QLinkedList<Enemy *> m_groundEnemies;
     QLinkedList<Enemy *> m_flyingEnemies;
     QLinkedList<Enemy *> m_enemies;
+    QVector<Tower*> m_towers;
+    QVector<QPointF> m_towerCoords;
 
     Lives * m_lives;
     Score * m_score;

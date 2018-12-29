@@ -64,8 +64,7 @@ void Tower::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *)
 {
 //    qDebug() << event->pos();
     int gold = this->m_price / 2;
-    g->m_towers.remove(g->m_towers.indexOf(this,0));
-    g->m_towerCoords.remove(g->m_towerCoords.indexOf(this->pos(), 0));
+    g->removeTower(this);
     g->increaseGold(gold);
 
     delete this;
