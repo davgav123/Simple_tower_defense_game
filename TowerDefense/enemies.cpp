@@ -25,8 +25,8 @@ ZombieDino::ZombieDino(QVector<QPoint> path)
 {
 }
 
-Rocket::Rocket()
-    : FlyingEnemy(2, 140, 40, ":/images/rocket.png")
+Moth::Moth()
+    : FlyingEnemy(2, 140, 40, ":/images/moth.png")
 {
 }
 

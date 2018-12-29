@@ -5,6 +5,7 @@
 #include "enemy.h"
 #include "resources.h"
 #include "towers.h"
+#include "gameover.h"
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QVector>
@@ -58,20 +59,23 @@ public:
     void mute();
     void createEnemies();
 
-    bool indicator = true;
+    int score() const;
+    int lives() const;
+    int gold() const;
 
+    bool indicator = true;
     QGraphicsScene * scene;
     QGraphicsPixmapItem * cursor;
     Tower *tower;
     Notifications *m_notification;
     QVector<Tower*> m_towers;
     QVector<QPointF> m_towerCoords;
+
 public slots:
     void spawn_enemy();
     void escExit();
+
 private:
-
-
     QLinkedList<Enemy *> m_groundEnemies;
     QLinkedList<Enemy *> m_flyingEnemies;
     QLinkedList<Enemy *> m_enemies;
@@ -87,7 +91,7 @@ private:
     int m_maxNumberOfCommonKnights;
     int m_maxNumberOfDarkKnights;
     int m_maxNumberOfZombieDinos;
-    int m_maxNumberOfRockets;
+    int m_maxNumberOfMoths;
     int m_maxNumberOfDragons;
     int m_maxNumberOfZombieDragons;
     int m_waveNumber;
@@ -95,8 +99,6 @@ private:
     bool m_waveInProgress;
 
     QJsonArray m_waves;
-    int m_rocketsSpawned;
-    int m_zombiesSpawned;
     QVector<QPoint> m_path;
     QPolygon m_polyPath;
 

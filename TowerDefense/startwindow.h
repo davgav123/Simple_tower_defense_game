@@ -5,6 +5,8 @@
 #include <QMainWindow>
 #include <QPalette>
 #include <QPixmap>
+#include <QMediaPlaylist>
+#include <QMediaPlayer>
 
 namespace Ui {
 class StartWindow;
@@ -21,9 +23,9 @@ public:
     ~StartWindow();
 
 private slots:
-    void startLevelOne() const;
-    void startLevelTwo() const;
-    void startLevelThree() const;
+    void startLevelOne();
+    void startLevelTwo();
+    void startLevelThree();
     void quitGame();
 
 private:

@@ -1,8 +1,11 @@
 #ifndef GOLD_H
 #define GOLD_H
 
+#include "gameover.h"
 #include <QGraphicsTextItem>
 #include <QObject>
+#include <QFont>
+#include <QLabel>
 
 class Gold: public QGraphicsTextItem
 {

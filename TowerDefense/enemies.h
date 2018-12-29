@@ -28,10 +28,10 @@ public:
     ZombieDino(QVector<QPoint> path);
 };
 
-class Rocket : public FlyingEnemy
+class Moth : public FlyingEnemy
 {
 public:
-    Rocket();
+    Moth();
 };
 
 class Dragon : public FlyingEnemy

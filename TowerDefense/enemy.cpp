@@ -11,11 +11,11 @@
 
 extern Game *g;
 
-Enemy::Enemy(qreal speed, int maxHealth, int worth, QString currentImage, EnemyType type)
+Enemy::Enemy(qreal speed, qreal maxHealth, int worth, QString currentImage, EnemyType type)
     : m_speed(speed), m_maxHealth(maxHealth), m_worthInGold(worth), m_currentImage(currentImage), m_type(type)
 {
     // size and distance of the health bar from the center
-    m_size = 30.0;
+    m_size = 20.0;
     m_healthBarDistance = 15.0;
 
     // health
@@ -64,6 +64,17 @@ void Enemy::decreaseHealth(int amount)
         g->increaseGold(m_worthInGold);
         destroyTheEnemy();
     }
+}
+
+void Enemy::setMaxHealth(int newValue)
+{
+    m_maxHealth = newValue;
+    m_currentHealth = m_maxHealth;
+}
+
+qreal Enemy::maxHealth() const
+{
+    return m_maxHealth;
 }
 
 void Enemy::destroyTheEnemy()

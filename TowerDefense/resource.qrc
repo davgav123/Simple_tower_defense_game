@@ -18,7 +18,6 @@
         <file>darkKnightFlipped.png</file>
         <file>zombieDinosaur.png</file>
         <file>zombieDinosaurFlipped.png</file>
-        <file>rocket.png</file>
         <file>witchTowerForStore.png</file>
         <file>witch.png</file>
         <file>mageTowerForStore.png</file>
@@ -44,6 +43,7 @@
         <file>introMap_2.png</file>
         <file>introMap_3.jpg</file>
         <file>introMap_1_changed.png</file>
+        <file>moth.png</file>
     </qresource>
     <qresource prefix="/paths">
         <file>path_1.txt</file>

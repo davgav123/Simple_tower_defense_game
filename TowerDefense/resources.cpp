@@ -1,7 +1,5 @@
 #include "resources.h"
 #include "game.h"
-#include <QFont>
-#include <QLabel>
 
 extern Game *g;
 
@@ -58,15 +56,22 @@ Lives::Lives(QGraphicsItem *parent)
     // draw the text
     setPlainText(QString("Lives: ") + QString::number(m_numberOfLives));
     setFont(QFont("sans serif", 26, QFont::StyleItalic, true));
-//    QLabel* pLabel = new QLabel;
-//    pLabel->setAutoFillBackground(true);
-//    pLabel->setStyleSheet("QLabel { background-color : red; color : black; }");
-
 }
 
 void Lives::decrease()
 {
     m_numberOfLives--;
+
+    if (m_numberOfLives == 0) {
+        GameOver *go = new GameOver();
+        // int result = g->score() + g->lives() * g->gold();
+        go->setText("GAME OVER!", g->score());
+        go->show();
+
+        // hide the scene
+        g->hide();
+    }
+
     setPlainText(QString("Lives: ") + QString::number(m_numberOfLives));
 }
 

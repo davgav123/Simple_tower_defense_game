@@ -14,9 +14,6 @@ int main(int argc, char *argv[])
     StartWindow startWindow;
     startWindow.show();
 
-//    g = new Game();
-//    g->show();
-
     return app.exec();
 }
 

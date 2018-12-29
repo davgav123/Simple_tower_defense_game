@@ -18,7 +18,7 @@ class Enemy : public QObject, public QGraphicsItem
 {
     Q_OBJECT
 public:
-    Enemy(qreal speed, int maxHealth, int worth, QString currentImage, EnemyType type);
+    Enemy(qreal speed, qreal maxHealth, int worth, QString currentImage, EnemyType type);
 
     QRectF boundingRect() const override;
 
@@ -27,6 +27,8 @@ public:
                QWidget *widget) override;
 
     void decreaseHealth(int amount);
+    void setMaxHealth(int newValue);
+    qreal maxHealth() const;
     void destroyTheEnemy();
 
     EnemyType enemyType() const;

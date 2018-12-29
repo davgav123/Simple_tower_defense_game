@@ -176,10 +176,25 @@ void Game::playLevel()
         return ;
     }
 
+    // if all of the waves are finished, and there are no enemies, you won!
+    if (m_waveNumber >= m_numberOfWaves && m_enemies.empty()) {
+        qDebug() << m_waveNumber;
+        qDebug() << m_numberOfWaves;
+
+        GameOver *go = new GameOver();
+        int result = score() + lives() * gold();
+        go->setText("Congratulations!", result);
+        go->show();
+
+        // hide game
+        hide();
+
+        return ;
+    }
+
     if (m_waveNumber >=/*==*/ m_numberOfWaves) {
-        // all waves are finished, we should quit or whatever
-        m_notification->setMessageAndDisplay("No more waves!");
-        qDebug() << "No more waves!";
+        // we want to wait until all of the enemies are destroyed
+        // in the last wave
         return ;
     }
 
@@ -189,7 +204,7 @@ void Game::playLevel()
     m_maxNumberOfCommonKnights = m_waves[m_waveNumber].toArray().at(1).toInt();
     m_maxNumberOfDarkKnights = m_waves[m_waveNumber].toArray().at(2).toInt();
     m_maxNumberOfZombieDinos = m_waves[m_waveNumber].toArray().at(3).toInt();
-    m_maxNumberOfRockets = m_waves[m_waveNumber].toArray().at(4).toInt();
+    m_maxNumberOfMoths = m_waves[m_waveNumber].toArray().at(4).toInt();
     m_maxNumberOfDragons = m_waves[m_waveNumber].toArray().at(5).toInt();
     m_maxNumberOfZombieDragons = m_waves[m_waveNumber].toArray().at(6).toInt();
     createEnemies();
@@ -202,14 +217,38 @@ void Game::createEnemies()
     //m_enemiesSpawned = 0;
     m_waveInProgress = true;
     connect(m_spawnTimer, SIGNAL(timeout()), this, SLOT(spawn_enemy()));
-    m_spawnTimer->start(1300);
+    m_spawnTimer->start(1100);
+}
+
+int Game::score() const
+{
+    return m_score->getScore();
+}
+
+int Game::lives() const
+{
+    return m_lives->getHealth();
+}
+
+int Game::gold() const
+{
+    return m_gold->getGold();
 }
 
 void Game::spawn_enemy()
 {
+    // we are multiply enemy health with this value
+    qreal multiplier = 1.0;
+    // after the tenth wave, we want our enemies to be stronger
+    if (m_waveNumber >= 10) {
+        multiplier = 1.7;
+    }
+
     // spawn an enemy
     if (m_maxNumberOfDarkKnights) {
         Enemy * e = new DarkKnight(m_path);
+        e->setMaxHealth(int(e->maxHealth() * multiplier));
+
         scene->addItem(e);
         addEnemy(e);
         m_maxNumberOfDarkKnights--;
@@ -217,6 +256,8 @@ void Game::spawn_enemy()
     }
     if (m_maxNumberOfZombieDinos) {
         Enemy * e = new ZombieDino(m_path);
+        e->setMaxHealth(int(e->maxHealth() * multiplier));
+
         scene->addItem(e);
         addEnemy(e);
         m_maxNumberOfZombieDinos--;
@@ -224,6 +265,8 @@ void Game::spawn_enemy()
     }
     if (m_maxNumberOfGoblins) {
         Enemy * e = new Goblin(m_path);
+        e->setMaxHealth(int(e->maxHealth() * multiplier));
+
         scene->addItem(e);
         addEnemy(e);
         m_maxNumberOfGoblins--;
@@ -231,20 +274,26 @@ void Game::spawn_enemy()
     }
     if (m_maxNumberOfCommonKnights) {
         Enemy * e = new CommonKnight(m_path);
+        e->setMaxHealth(int(e->maxHealth() * multiplier));
+
         scene->addItem(e);
         addEnemy(e);
         m_maxNumberOfCommonKnights--;
         return;
     }
-    if (m_maxNumberOfRockets) {
-        Enemy * e = new Rocket();
+    if (m_maxNumberOfMoths) {
+        Enemy * e = new Moth();
+        e->setMaxHealth(int(e->maxHealth() * multiplier));
+
         scene->addItem(e);
         addEnemy(e);
-        m_maxNumberOfRockets--;
+        m_maxNumberOfMoths--;
         return;
     }
     if (m_maxNumberOfDragons) {
         Enemy * e = new Dragon();
+        e->setMaxHealth(int(e->maxHealth() * multiplier));
+
         scene->addItem(e);
         addEnemy(e);
         m_maxNumberOfDragons--;
@@ -252,16 +301,16 @@ void Game::spawn_enemy()
     }
     if (m_maxNumberOfZombieDragons) {
         Enemy * e = new ZombieDragon();
+        e->setMaxHealth(int(e->maxHealth() * multiplier));
+
         scene->addItem(e);
         addEnemy(e);
         m_maxNumberOfZombieDragons--;
         return;
     }
 
-
-
     if (!m_maxNumberOfGoblins && !m_maxNumberOfCommonKnights && !m_maxNumberOfDarkKnights
-            && !m_maxNumberOfZombieDinos && !m_maxNumberOfRockets && !m_maxNumberOfDragons
+            && !m_maxNumberOfZombieDinos && !m_maxNumberOfMoths && !m_maxNumberOfDragons
             && !m_maxNumberOfZombieDragons) {
         m_waveInProgress = false;
         m_spawnTimer->disconnect();
@@ -271,7 +320,7 @@ void Game::spawn_enemy()
 void Game::drawEnemyPath()
 {
     QVector<QPoint> points;
-    int pathSize = 36;
+    int pathSize = 25;
 
     // points from the right side of the enemy
     for (int i = 0; i < m_path.size(); ++i) {

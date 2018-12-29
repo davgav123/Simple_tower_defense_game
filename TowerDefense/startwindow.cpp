@@ -1,7 +1,5 @@
 #include "startwindow.h"
 #include "ui_startwindow.h"
-#include <QMediaPlaylist>
-#include <QMediaPlayer>
 
 StartWindow::StartWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -12,8 +10,8 @@ StartWindow::StartWindow(QWidget *parent) :
     setWindowTitle("Start screen");
 
     this->setFixedSize(900, 550);
-    // set background
 
+    // set background
 //    QPixmap backgroundImg(":/images/introMap_3.jpg");
 //    QPixmap backgroundImg(":/images/introMap_1.png");
     QPixmap backgroundImg(":/images/introMap_1_changed.png");
@@ -21,9 +19,6 @@ StartWindow::StartWindow(QWidget *parent) :
     QPalette palette;
     palette.setBrush(QPalette::Background, backgroundImg);
     setPalette(palette);
-
-//    this->setStyleSheet("#centralWidget {background-image: url(:/images/pavedRoad.jpg);"
-//                        "background-position: center;}");
 
     // set button styles
     ui->FirstLevel->setStyleSheet("QPushButton {background-color: rgb(180, 124, 30); margin: 3px;"
@@ -38,13 +33,11 @@ StartWindow::StartWindow(QWidget *parent) :
     ui->Quit->setStyleSheet("QPushButton {background-color: rgb(180, 124, 30); margin: 3px;"
                             "color: rgb(57, 19, 19); font-weight: bold; font-size: 24px; font-style: italic;}");
 
-
     // connect buttons to functions
     connect(ui->FirstLevel, SIGNAL(clicked()), SLOT(startLevelOne()));
     connect(ui->SecondLevel, SIGNAL(clicked()), SLOT(startLevelTwo()));
     connect(ui->ThirdLevel, SIGNAL(clicked()), SLOT(startLevelThree()));
     connect(ui->Quit, SIGNAL(clicked()), SLOT(quitGame()));
-
 
 //    play music
     QMediaPlaylist *playlist = new QMediaPlaylist();
@@ -61,7 +54,7 @@ StartWindow::~StartWindow()
     delete ui;
 }
 
-void StartWindow::startLevelOne() const
+void StartWindow::startLevelOne()
 {
     if (music) {
         music->stop();
@@ -69,9 +62,11 @@ void StartWindow::startLevelOne() const
 
     g = new Game(":/paths/level_1.json");
     g->show();
+
+    hide();
 }
 
-void StartWindow::startLevelTwo() const
+void StartWindow::startLevelTwo()
 {
     if (music) {
         music->stop();
@@ -79,9 +74,11 @@ void StartWindow::startLevelTwo() const
 
     g = new Game(":/paths/level_2.json");
     g->show();
+
+    hide();
 }
 
-void StartWindow::startLevelThree() const
+void StartWindow::startLevelThree()
 {
     if (music) {
         music->stop();
@@ -89,6 +86,8 @@ void StartWindow::startLevelThree() const
 
     g = new Game(":/paths/level_3.json");
     g->show();
+
+    hide();
 }
 
 void StartWindow::quitGame()
