@@ -6,7 +6,6 @@
 #include <QPainter>
 #include <QRectF>
 #include <QLineF>
-#include <QDebug>
 
 extern Game *g;
 
@@ -47,7 +46,7 @@ void Bullet::move()
             m_target->decreaseHealth(m_damage);
         }
 
-        qDebug() << "destroying bullet";
+//        qDebug() << "destroying bullet";
         delete this;
     }
 }

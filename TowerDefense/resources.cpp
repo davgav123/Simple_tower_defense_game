@@ -69,6 +69,7 @@ void Lives::decrease()
         go->show();
 
         // hide the scene
+        g->music->setMuted(true);
         g->hide();
     }
 
@@ -108,7 +109,6 @@ void Notifications::display()
 {
     static int iters = 0;
     setPlainText(m_message);
-    qDebug() << " --------> " << m_message;
 
     if (iters >= 2) {
         m_displayTimer->stop();

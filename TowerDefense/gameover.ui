@@ -13,17 +13,17 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QPushButton" name="ok">
+  <widget class="QPushButton" name="exit">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>120</y>
+     <x>290</x>
+     <y>110</y>
      <width>141</width>
      <height>41</height>
     </rect>
    </property>
    <property name="text">
-    <string>OK</string>
+    <string>exit</string>
    </property>
   </widget>
   <widget class="QLabel" name="score">
@@ -47,6 +47,25 @@
    </property>
    <property name="text">
     <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="newGame">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>110</y>
+     <width>141</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>141</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>New Game</string>
    </property>
   </widget>
  </widget>

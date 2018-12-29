@@ -60,9 +60,9 @@ void Tower::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
     painter->drawPixmap(-m_towerSize/2, int(-m_towerSize/1.5), m_towerSize, int(1.5*m_towerSize), pixmap);
 }
 
-void Tower::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+void Tower::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *)
 {
-    qDebug() << event->pos();
+//    qDebug() << event->pos();
     int gold = this->m_price / 2;
     g->m_towers.remove(g->m_towers.indexOf(this,0));
     g->m_towerCoords.remove(g->m_towerCoords.indexOf(this->pos(), 0));
@@ -84,7 +84,7 @@ int Tower::towerSize() const
 void Tower::fire()
 {
     // shooting sounds
-    qDebug() << "pew pew pew";
+//    qDebug() << "pew pew pew";
 
     // create bullet, and animate shooting
     Bullet *bullet = new Bullet(m_target, x(), y(), m_damage);

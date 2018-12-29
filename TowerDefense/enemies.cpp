@@ -3,7 +3,7 @@
 #include "enemies.h"
 
 Goblin::Goblin(QVector<QPoint> path)
-    : GroundEnemy(path, 5.0, 120, 30,
+    : GroundEnemy(path, 5.0, 110, 30,
                   ":/images/goblin.png", ":/images/goblin_flipped.png")
 {
 }
@@ -15,7 +15,7 @@ CommonKnight::CommonKnight(QVector<QPoint> path)
 }
 
 DarkKnight::DarkKnight(QVector<QPoint> path)
-    : GroundEnemy(path, 2.5, 370, 80,
+    : GroundEnemy(path, 2.5, 410, 80,
             ":/images/darkKnight.png", ":/images/darkKnightFlipped.png")
 {
 }

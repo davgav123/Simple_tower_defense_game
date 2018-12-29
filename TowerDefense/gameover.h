@@ -19,7 +19,8 @@ public:
     void setText(QString msg, int value);
 
 private slots:
-    void cancelOnOk();
+    void exitOnClick();
+    void startNewGame();
 
 private:
     Ui::GameOver *ui;

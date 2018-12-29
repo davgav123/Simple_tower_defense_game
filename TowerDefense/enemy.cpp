@@ -7,8 +7,6 @@
 #include <QPointF>
 #include <QPixmap>
 
-#include <QtDebug>
-
 extern Game *g;
 
 Enemy::Enemy(qreal speed, qreal maxHealth, int worth, QString currentImage, EnemyType type)
@@ -80,7 +78,7 @@ qreal Enemy::maxHealth() const
 void Enemy::destroyTheEnemy()
 {
     // remove the enemy from list of the enemies, and then delete it
-    qDebug() << "enemy destroyed";
+//    qDebug() << "enemy destroyed";
     g->scene->removeItem(this);
     g->removeEnemy(this);
     delete this;

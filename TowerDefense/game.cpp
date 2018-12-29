@@ -141,8 +141,8 @@ void Game::initializeLevel(QString path)
 
     QJsonValue gold = set.value(QString("gold"));
     // TODO: initialize gold ovo posle odkomentarisati
-//    m_gold = new Gold(gold.toInt());
-    m_gold = new Gold(2000);
+    m_gold = new Gold(gold.toInt());
+//    m_gold = new Gold(2000);
     m_gold->setPos(410, 650);
     scene->addItem(m_gold);
 
@@ -179,8 +179,8 @@ void Game::playLevel()
 
     // if all of the waves are finished, and there are no enemies, you won!
     if (m_waveNumber >= m_numberOfWaves && m_enemies.empty()) {
-        qDebug() << m_waveNumber;
-        qDebug() << m_numberOfWaves;
+//        qDebug() << m_waveNumber;
+//        qDebug() << m_numberOfWaves;
 
         GameOver *go = new GameOver();
         int result = score() + lives() * gold();
@@ -189,6 +189,7 @@ void Game::playLevel()
 
         // hide game
         hide();
+        music->setMuted(true);
 
         return ;
     }

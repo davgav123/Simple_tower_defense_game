@@ -64,6 +64,7 @@ public:
     int gold() const;
 
     bool indicator = true;
+    QMediaPlayer *music;
     QGraphicsScene * scene;
     QGraphicsPixmapItem * cursor;
     Tower *tower;
@@ -83,7 +84,6 @@ private:
     Lives * m_lives;
     Score * m_score;
     Gold * m_gold;
-    QMediaPlayer *music;
 
     QTimer * m_spawnTimer;
     int m_enemiesSpawned;
