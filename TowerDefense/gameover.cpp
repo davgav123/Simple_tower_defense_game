@@ -16,7 +16,8 @@ GameOver::GameOver(QWidget *parent) :
     setPalette(palette);
 
     ui->exit->setStyleSheet("QPushButton {background-color: rgb(180, 124, 30); margin: 3px;"
-                          "color: rgb(57, 19, 19); font-weight: bold; font-size: 24px; font-style: italic;}");
+                            "color: rgb(57, 19, 19); font-weight: bold; font-size: 24px; font-style: italic;}");
+
     ui->newGame->setStyleSheet("QPushButton {background-color: rgb(180, 124, 30); margin: 3px;"
                                "color: rgb(57, 19, 19); font-weight: bold; font-size: 24px; font-style: italic;}");
 
@@ -32,6 +33,7 @@ GameOver::~GameOver()
 void GameOver::setText(QString msg, int value)
 {
     setWindowTitle(msg);
+    ui->score->setFont(QFont("sans serif", 20, QFont::StyleItalic, true));
     ui->score->setText(msg + "\nYour score: " + QString::number(value));
 }
 

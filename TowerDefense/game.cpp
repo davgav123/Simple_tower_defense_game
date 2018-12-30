@@ -179,9 +179,6 @@ void Game::playLevel()
 
     // if all of the waves are finished, and there are no enemies, you won!
     if (m_waveNumber >= m_numberOfWaves && m_enemies.empty()) {
-//        qDebug() << m_waveNumber;
-//        qDebug() << m_numberOfWaves;
-
         int result = score() + lives() * gold();
         gameIsOver(result);
 
@@ -462,7 +459,6 @@ void Game::drawEnemyPath(QString pathToRoadImage)
     }
 
     m_polyPath = QPolygon(points);
-//    scene->addPolygon(m_polyPath, QPen(Qt::darkGray), QBrush(QImage(":/images/road_1.jpg")));
     scene->addPolygon(m_polyPath, QPen(Qt::darkGray), QBrush(QImage(":/images/" + pathToRoadImage)));
 }
 

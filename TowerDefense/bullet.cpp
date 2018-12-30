@@ -45,8 +45,6 @@ void Bullet::move()
         if (m_target != nullptr && g->containsEnemy(m_target)) {
             m_target->decreaseHealth(m_damage);
         }
-
-//        qDebug() << "destroying bullet";
         delete this;
     }
 }

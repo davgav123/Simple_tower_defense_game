@@ -78,7 +78,6 @@ qreal Enemy::maxHealth() const
 void Enemy::destroyTheEnemy()
 {
     // remove the enemy from list of the enemies, and then delete it
-//    qDebug() << "enemy destroyed";
     g->scene->removeItem(this);
     g->removeEnemy(this);
     delete this;

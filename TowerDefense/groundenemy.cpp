@@ -45,8 +45,6 @@ void GroundEnemy::move()
 
         // if we reached the end, destroy the enemy
         if (m_currentDestIndex == (m_path.size()-1)) {
-//            qDebug() << "enemy reached the end of the path";
-
             // decrease the numberOfLives and delete the enemy
             g->decreaseLives();
             destroyTheEnemy();
