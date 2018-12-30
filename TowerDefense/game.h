@@ -60,7 +60,7 @@ public:
     void exitGame();
     void mute();
     void createEnemies();
-    void gameIsOver(int result);
+    void gameIsOver(QString msg, int result);
 
     int score() const;
     int lives() const;

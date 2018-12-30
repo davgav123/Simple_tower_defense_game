@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QString>
+#include <QProcess>
 
 namespace Ui {
 class GameOver;

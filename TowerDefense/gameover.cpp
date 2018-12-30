@@ -44,8 +44,10 @@ void GameOver::exitOnClick()
 
 void GameOver::startNewGame()
 {
-    StartWindow *sw = new StartWindow();
-    sw->show();
+    QApplication::quit();
+    QProcess::startDetached(QApplication::arguments()[0], QApplication::arguments());
+//    qApp->quit();
+//    QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
 
     delete this;
 }

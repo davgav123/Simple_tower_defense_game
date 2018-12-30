@@ -63,7 +63,9 @@ void Lives::decrease()
     m_numberOfLives--;
 
     if (m_numberOfLives == 0) {
-        g->gameIsOver(g->score());
+        g->gameIsOver("GAME OVER!", g->score());
+
+        return ;
     }
 
     setPlainText(QString("Lives: ") + QString::number(m_numberOfLives));

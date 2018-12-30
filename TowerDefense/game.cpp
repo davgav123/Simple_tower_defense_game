@@ -180,7 +180,7 @@ void Game::playLevel()
     // if all of the waves are finished, and there are no enemies, you won!
     if (m_waveNumber >= m_numberOfWaves && m_enemies.empty()) {
         int result = score() + lives() * gold();
-        gameIsOver(result);
+        gameIsOver("Congratulations!", result);
 
         return ;
     }
@@ -213,11 +213,11 @@ void Game::createEnemies()
     m_spawnTimer->start(1100);
 }
 
-void Game::gameIsOver(int result)
+void Game::gameIsOver(QString msg, int result)
 {
     GameOver *go = new GameOver();
     // int result = g->score() + g->lives() * g->gold();
-    go->setText("GAME OVER!", result);
+    go->setText(msg, result);
     go->show();
 
     // game is over, delete remaining units
