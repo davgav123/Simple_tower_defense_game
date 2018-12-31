@@ -4,6 +4,12 @@
 #include <QDialog>
 #include <QString>
 #include <QProcess>
+#include <QFile>
+#include <QTextStream>
+#include <QVector>
+#include <QPair>
+#include <QDir>
+#include <algorithm>
 
 namespace Ui {
 class GameOver;
@@ -25,6 +31,9 @@ private slots:
 
 private:
     Ui::GameOver *ui;
+
+    void readScores(QVector<QPair<QString, int>> & scores, QDir path);
+    void writeScores(const QVector<QPair<QString, int>> & scores, QDir path);
 };
 
 #endif // GAMEOVER_H

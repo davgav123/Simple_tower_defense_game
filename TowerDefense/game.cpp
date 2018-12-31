@@ -122,7 +122,7 @@ Game::Game(QString pathToJson, QString pathToBackground, QString pathToRoadImage
     drawEnemyPath(pathToRoadImage);
 
     m_notification = new Notifications();
-    m_notification->setPos(660, 655);
+    m_notification->setPos(600, 655);
     scene->addItem(m_notification);
 }
 
@@ -173,7 +173,7 @@ void Game::playLevel()
 {
     // if there is a wave active, you can't start a new one
     if (m_waveInProgress) {
-        m_notification->setMessageAndDisplay("Current wave isn't destroyed!");
+        m_notification->setMessageAndDisplay("Spawning isn't finished!");
         return ;
     }
 
@@ -202,6 +202,13 @@ void Game::playLevel()
     m_maxNumberOfZombieDragons = m_waves[m_waveNumber].toArray().at(6).toInt();
     createEnemies();
 
+    // notify the user about nember of enemies in the wave
+    int numOfGround = m_maxNumberOfGoblins + m_maxNumberOfCommonKnights +
+            m_maxNumberOfDarkKnights + m_maxNumberOfZombieDinos;
+    int numOfFlying = m_maxNumberOfMoths + m_maxNumberOfDragons + m_maxNumberOfZombieDragons;
+    m_notification->setMessageAndDisplay("Wave No: " + QString::number(m_waveNumber + 1) +
+                                         ", Ground: " + QString::number(numOfGround) +
+                                         ", Flying: " + QString::number(numOfFlying));
     m_waveNumber++;
 }
 
