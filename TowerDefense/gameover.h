@@ -28,12 +28,18 @@ public:
 private slots:
     void exitOnClick();
     void startNewGame();
+    void submitScore();
 
 private:
     Ui::GameOver *ui;
 
-    void readScores(QVector<QPair<QString, int>> & scores, QDir path);
-    void writeScores(const QVector<QPair<QString, int>> & scores, QDir path);
+    QVector<QPair<QString, int>> scores;
+    int score;
+    QDir filePath;
+
+    void readScores();
+    void writeScores();
+    void displayScores();
 };
 
 #endif // GAMEOVER_H
