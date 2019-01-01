@@ -8,7 +8,7 @@ GameOver::GameOver(QWidget *parent) :
     filePath("../TowerDefense/bestScores.txt")
 {
     ui->setupUi(this);
-    this->setFixedSize(410, 600);
+    this->setFixedSize(410, 500);
 
     // this will init scores vector from file
     readScores();
@@ -23,6 +23,8 @@ GameOver::GameOver(QWidget *parent) :
     // setup components
     ui->highScores->setAlignment(Qt::AlignmentFlag::AlignCenter);
     ui->highScores->setReadOnly(true);
+    ui->highScores->setStyleSheet("background-image: url(:/images/scoresBackground.png)");
+    ui->highScores->setFont(QFont("sans serif", 13, QFont::StyleItalic, true));
 
     ui->exit->setStyleSheet("QPushButton {background-color: rgb(180, 124, 30); margin: 3px;"
                             "color: rgb(57, 19, 19); font-weight: bold; font-size: 24px; font-style: italic;}");
@@ -35,8 +37,11 @@ GameOver::GameOver(QWidget *parent) :
 
     ui->nameInput->setAlignment(Qt::AlignmentFlag::AlignCenter);
     ui->nameInput->setReadOnly(true);
+    ui->nameInput->setStyleSheet("background-color: orange");
 
     ui->subScore->setDisabled(true);
+    ui->subScore->setStyleSheet("QPushButton {background-color: rgb(180, 124, 30); margin: 3px;"
+                                "color: rgb(57, 19, 19); font-weight: bold; font-size: 20px; font-style: italic;}");
 
     // add click actions to buttons
     connect(ui->exit, SIGNAL(clicked()), SLOT(exitOnClick()));

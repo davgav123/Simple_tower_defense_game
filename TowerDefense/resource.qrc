@@ -46,6 +46,8 @@
         <file>moth.png</file>
         <file>forestRoad_2.jpg</file>
         <file>forest_1.jpg</file>
+        <file>zombieDinosaurFlippedResized.png</file>
+        <file>scoresBackground.png</file>
     </qresource>
     <qresource prefix="/paths">
         <file>path_1.txt</file>

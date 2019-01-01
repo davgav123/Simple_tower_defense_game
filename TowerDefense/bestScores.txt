@@ -1,5 +1,6 @@
 Vucic 1200
 osoba 700
 DedaMraz 600
+coa 250
 covek 100
-rezultat 100
+
