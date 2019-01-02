@@ -8,9 +8,9 @@ AboutWindow::AboutWindow(QWidget *parent) :
     ui->setupUi(this);
 
     // set names of the tabs
-    ui->info->setTabText(0, "towers");
-    ui->info->setTabText(1, "levels");
-    ui->info->setTabText(2, "enemies");
+    ui->info->setTabText(0, "Towers");
+    ui->info->setTabText(1, "Levels");
+    ui->info->setTabText(2, "Enemies");
 
     // disable writing into text edit widgets
     ui->watchTowerText->setReadOnly(true);
@@ -23,7 +23,7 @@ AboutWindow::AboutWindow(QWidget *parent) :
     ui->level2Waves->setReadOnly(true);
     ui->level3Waves->setReadOnly(true);
 
-    ui->towers->setStyleSheet("background-color: rgb(130, 130, 130);");
+    ui->towers->setStyleSheet("background-image: url(:/images/background.png)");
 }
 
 AboutWindow::~AboutWindow()

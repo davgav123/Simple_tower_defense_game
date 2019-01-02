@@ -48,6 +48,9 @@
         <file>forest_1.jpg</file>
         <file>zombieDinosaurFlippedResized.png</file>
         <file>scoresBackground.png</file>
+        <file>wallStoreGrey.jpg</file>
+        <file>wallStoreFire.jpg</file>
+        <file>wallStore.jpg</file>
     </qresource>
     <qresource prefix="/paths">
         <file>path_1.txt</file>
