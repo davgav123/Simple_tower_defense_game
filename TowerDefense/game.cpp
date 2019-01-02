@@ -85,13 +85,13 @@ Game::Game(QString pathToJson, QString pathToBackground, QString pathToRoadImage
     connect(button, &QPushButton::clicked, this, &Game::playLevel);
 
 //    this button will turn off the application
-    QPushButton *exitButton = new QPushButton(tr("Exit"));
-    exitButton->resize(90,40);
-    exitButton->move(1200,655);
-    exitButton->setStyleSheet("QPushButton {background-color: orange; margin: 3px;"
+    QPushButton *resetButton = new QPushButton(tr("Reset"));
+    resetButton->resize(90,40);
+    resetButton->move(1200,655);
+    resetButton->setStyleSheet("QPushButton {background-color: orange; margin: 3px;"
                           "color: rgb(57, 19, 19); font-weight: bold; font-size: 24px; font-style: italic;}");
-    scene->addWidget(exitButton);
-    connect(exitButton, &QPushButton::clicked, this, &Game::exitGame);
+    scene->addWidget(resetButton);
+    connect(resetButton, &QPushButton::clicked, this, &Game::resetGame);
 
 //    esc key exits application
     QAction *exitKey = new QAction(this);
@@ -646,9 +646,10 @@ bool Game::dropTowerCheck(QMouseEvent *event)
     return false;
 }
 
-void Game::exitGame()
+void Game::resetGame()
 {
     QApplication::quit();
+    QProcess::startDetached(QApplication::arguments()[0], QApplication::arguments());
 }
 
 void Game::mute()

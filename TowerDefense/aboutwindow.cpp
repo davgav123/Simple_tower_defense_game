@@ -11,6 +11,7 @@ AboutWindow::AboutWindow(QWidget *parent) :
     ui->info->setTabText(0, "Towers");
     ui->info->setTabText(1, "Levels");
     ui->info->setTabText(2, "Enemies");
+    ui->info->setTabText(3, "How to play");
 
     // disable writing into text edit widgets
     ui->watchTowerText->setReadOnly(true);
@@ -22,6 +23,14 @@ AboutWindow::AboutWindow(QWidget *parent) :
     ui->level1Waves->setReadOnly(true);
     ui->level2Waves->setReadOnly(true);
     ui->level3Waves->setReadOnly(true);
+
+    ui->goblinEdit->setReadOnly(true);
+    ui->commonKnightEdit->setReadOnly(true);
+    ui->darkKnightEdit->setReadOnly(true);
+    ui->zombieDinoEdit->setReadOnly(true);
+    ui->mothEdit->setReadOnly(true);
+    ui->dragonEdit->setReadOnly(true);
+    ui->zombieDragonEdit->setReadOnly(true);
 
     ui->towers->setStyleSheet("background-image: url(:/images/background.png)");
 }

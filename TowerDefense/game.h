@@ -27,6 +27,7 @@
 #include <QKeyEvent>
 #include <QAction>
 #include <QPolygon>
+#include <QProcess>
 
 class Game: public QGraphicsView
 {
@@ -56,9 +57,8 @@ public:
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
 
-
     void playLevel();
-    void exitGame();
+    void resetGame();
     void mute();
     void createEnemies();
     void gameIsOver(QString msg, int result);
