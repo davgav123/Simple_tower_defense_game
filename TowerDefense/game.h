@@ -88,7 +88,7 @@ private:
     Lives * m_lives;
     Score * m_score;
     Gold * m_gold;
-
+    QPushButton *muteButton;
     QTimer * m_spawnTimer;
     int m_enemiesSpawned;
     int m_maxNumberOfGoblins;

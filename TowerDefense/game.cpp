@@ -111,9 +111,9 @@ Game::Game(QString pathToJson, QString pathToBackground, QString pathToRoadImage
     music->play();
 
 //    mute sound
-    QPushButton *muteButton = new QPushButton(tr("Mute"));
-    muteButton->resize(90,40);
-    muteButton->move(1100,655);
+    muteButton = new QPushButton(tr("Mute"));
+    muteButton->resize(100,40);
+    muteButton->move(1095,655);
     muteButton->setStyleSheet("QPushButton {background-color: orange; margin: 3px;"
                           "color: rgb(57, 19, 19); font-weight: bold; font-size: 24px; font-style: italic;}");
     scene->addWidget(muteButton);
@@ -142,7 +142,7 @@ void Game::initializeLevel(QString path)
     QJsonValue gold = set.value(QString("gold"));
     // TODO: initialize gold ovo posle odkomentarisati
     m_gold = new Gold(gold.toInt());
-//    m_gold = new Gold(2000);
+    // m_gold = new Gold(2000);
     m_gold->setPos(410, 650);
     scene->addItem(m_gold);
 
@@ -164,8 +164,6 @@ void Game::initializeLevel(QString path)
     m_numberOfWaves = m_waves.size();
     m_waveInProgress = false;
 
-//    qDebug() << waves[0].toArray().at(0).toInt();
-    //int size = waves.size();
 }
 
 
@@ -657,10 +655,12 @@ void Game::mute()
 {
     if (music->isMuted()) {
         music->setMuted(false);
+        muteButton->setText("Mute");
         indicator = true;
     }
     else {
         music->setMuted(true);
+        muteButton->setText("Unmute");
         indicator = false;
     }
 }
