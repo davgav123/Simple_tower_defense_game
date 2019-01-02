@@ -7,6 +7,7 @@ extern Game *g;
 
 WatchTowerIcon::WatchTowerIcon(QGraphicsItem *parent) :QGraphicsPixmapItem(parent)
 {
+    setToolTip("Targets ground units");
     setPixmap(QPixmap(":/images/towerStore_1.png"));
 }
 

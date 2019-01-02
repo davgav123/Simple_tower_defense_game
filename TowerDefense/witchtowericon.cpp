@@ -7,6 +7,7 @@ extern Game *g;
 
 WitchTowerIcon::WitchTowerIcon(QGraphicsItem *parent) :QGraphicsPixmapItem(parent)
 {
+    setToolTip("Targets flying units");
     setPixmap(QPixmap(":/images/witchTowerForStore.png"));
 }
 

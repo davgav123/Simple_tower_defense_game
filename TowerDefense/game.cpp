@@ -72,7 +72,6 @@ Game::Game(QString pathToJson, QString pathToBackground, QString pathToRoadImage
     MageTowerIcon *mageTowerIcon = new MageTowerIcon();
     mageTowerIcon->setPos(mageTowerIcon->x(), mageTowerIcon->y()+440);
     scene->addItem(mageTowerIcon);
-
     initializeLevel(pathToJson);
 
     // pressing this button will start new wave
@@ -587,7 +586,11 @@ void Game::mouseMoveEvent(QMouseEvent *event)
 
 void Game::mousePressEvent(QMouseEvent *event)
 {
-    if (tower) {
+    if(event->button()==Qt::RightButton){
+        delete cursor;
+        cursor = nullptr;
+        tower = nullptr;
+    }else if (tower) {
         // we cant bulid in the field that represents store or lives/score/gold
         if (event->x() < 225 || event->x() > 1280 || event->y() > 600) {
             m_notification->setMessageAndDisplay("Can't build there!");

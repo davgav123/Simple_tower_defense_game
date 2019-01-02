@@ -7,6 +7,7 @@ extern Game *g;
 
 MageTowerIcon::MageTowerIcon(QGraphicsItem *parent) :QGraphicsPixmapItem(parent)
 {
+    setToolTip("Targets flying and ground units");
     setPixmap(QPixmap(":/images/mageTowerForStore.png"));
 }
 

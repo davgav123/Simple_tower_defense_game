@@ -7,6 +7,7 @@ extern Game *g;
 
 IceTowerIcon::IceTowerIcon(QGraphicsItem *parent) :QGraphicsPixmapItem(parent)
 {
+    setToolTip("Targets flying units");
     setPixmap(QPixmap(":/images/iceTowerForStore.png"));
 }
 

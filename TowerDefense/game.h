@@ -27,7 +27,6 @@
 #include <QKeyEvent>
 #include <QAction>
 #include <QPolygon>
-
 class Game: public QGraphicsView
 {
     Q_OBJECT
@@ -55,6 +54,7 @@ public:
     void setCursor(QString filename, qreal x, qreal y);
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
+
 
     void playLevel();
     void exitGame();

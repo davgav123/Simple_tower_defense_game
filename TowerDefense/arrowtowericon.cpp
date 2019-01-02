@@ -10,6 +10,7 @@ extern Game *g;
 
 ArrowTowerIcon::ArrowTowerIcon(QGraphicsItem *parent) :QGraphicsPixmapItem(parent)
 {
+    setToolTip("Targets ground units");
     setPixmap(QPixmap(":/images/japaneseTowerStore_2.png"));
 }
 
@@ -30,3 +31,6 @@ void ArrowTowerIcon::mousePressEvent(QGraphicsSceneMouseEvent *event)
                      event->pos().x(), event->pos().y()+106);
     }
 }
+
+
+
