@@ -51,6 +51,13 @@
         <file>wallStoreGrey.jpg</file>
         <file>wallStoreFire.jpg</file>
         <file>wallStore.jpg</file>
+        <file>commonKnight About.resized.png</file>
+        <file>darkKnight.resized.png</file>
+        <file>goblin.resized.png</file>
+        <file>moth.resized.png</file>
+        <file>zombieDinosaur.resized.png</file>
+        <file>zombieDragon.resized.png</file>
+        <file>dragon.resized.png</file>
     </qresource>
     <qresource prefix="/paths">
         <file>path_1.txt</file>
