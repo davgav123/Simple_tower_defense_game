@@ -42,7 +42,8 @@ SOURCES += \
     magetowericon.cpp \
     towers.cpp \
     startwindow.cpp \
-    gameover.cpp
+    gameover.cpp \
+    aboutwindow.cpp
 
 HEADERS += \
     tower.h \
@@ -60,11 +61,13 @@ HEADERS += \
     magetowericon.h \
     towers.h \
     startwindow.h \
-    gameover.h
+    gameover.h \
+    aboutwindow.h
 
 FORMS += \
     startwindow.ui \
-    gameover.ui
+    gameover.ui \
+    aboutwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

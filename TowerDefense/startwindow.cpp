@@ -33,11 +33,15 @@ StartWindow::StartWindow(QWidget *parent) :
     ui->Quit->setStyleSheet("QPushButton {background-color: rgb(180, 124, 30); margin: 3px;"
                             "color: rgb(57, 19, 19); font-weight: bold; font-size: 24px; font-style: italic;}");
 
+    ui->About->setStyleSheet("QPushButton {background-color: rgb(180, 124, 30); margin: 3px;"
+                            "color: rgb(57, 19, 19); font-weight: bold; font-size: 24px; font-style: italic;}");
+
     // connect buttons to functions
     connect(ui->FirstLevel, SIGNAL(clicked()), SLOT(startLevelOne()));
     connect(ui->SecondLevel, SIGNAL(clicked()), SLOT(startLevelTwo()));
     connect(ui->ThirdLevel, SIGNAL(clicked()), SLOT(startLevelThree()));
     connect(ui->Quit, SIGNAL(clicked()), SLOT(quitGame()));
+    connect(ui->About, SIGNAL(clicked()), SLOT(showAboutWindow()));
 
 //    play music
     QMediaPlaylist *playlist = new QMediaPlaylist();
@@ -88,6 +92,12 @@ void StartWindow::startLevelThree()
     g->show();
 
     hide();
+}
+
+void StartWindow::showAboutWindow()
+{
+    AboutWindow *about = new AboutWindow();
+    about->show();
 }
 
 void StartWindow::quitGame()

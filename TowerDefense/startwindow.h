@@ -2,6 +2,7 @@
 #define STARTWINDOW_H
 
 #include "game.h"
+#include "aboutwindow.h"
 #include <QMainWindow>
 #include <QPalette>
 #include <QPixmap>
@@ -26,6 +27,7 @@ private slots:
     void startLevelOne();
     void startLevelTwo();
     void startLevelThree();
+    void showAboutWindow();
     void quitGame();
 
 private:

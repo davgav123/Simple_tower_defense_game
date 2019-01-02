@@ -27,6 +27,7 @@
 #include <QKeyEvent>
 #include <QAction>
 #include <QPolygon>
+
 class Game: public QGraphicsView
 {
     Q_OBJECT
