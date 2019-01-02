@@ -32,7 +32,25 @@ AboutWindow::AboutWindow(QWidget *parent) :
     ui->dragonEdit->setReadOnly(true);
     ui->zombieDragonEdit->setReadOnly(true);
 
-    ui->towers->setStyleSheet("background-image: url(:/images/background.png)");
+    // set backgrounds on tabs
+    ui->towers->setStyleSheet("background-color: rgb(40, 15, 5);");
+    ui->enemies->setStyleSheet("background-color: rgb(40, 15, 5);");
+
+    // set backgrounds on widgets in 'enemies' tab
+    ui->goblinEdit->setStyleSheet("border-image: url(:/images/wallStore.jpg);");
+    ui->commonKnightEdit->setStyleSheet("border-image: url(:/images/wallStore.jpg);");
+    ui->darkKnightEdit->setStyleSheet("border-image: url(:/images/wallStore.jpg);");
+    ui->zombieDinoEdit->setStyleSheet("border-image: url(:/images/wallStore.jpg);");
+    ui->mothEdit->setStyleSheet("background-image: url(:/images/wallStoreGrey.jpg);");
+    ui->dragonEdit->setStyleSheet("background-image: url(:/images/wallStoreGrey.jpg);");
+    ui->zombieDragonEdit->setStyleSheet("background-image: url(:/images/wallStoreGrey.jpg);");
+
+    // set backgrounds on widgets in 'towers' tab
+    ui->watchTowerText->setStyleSheet("background-image: url(:/images/wallStore.jpg);");
+    ui->arrowTowerText->setStyleSheet("background-image: url(:/images/wallStore.jpg);");
+    ui->iceTowerText->setStyleSheet("background-image: url(:/images/wallStoreGrey.jpg);");
+    ui->witchTowerText->setStyleSheet("background-image: url(:/images/wallStoreGrey.jpg);");
+    ui->mageTowerText->setStyleSheet("background-image: url(:/images/wallStoreFire.jpg);");
 }
 
 AboutWindow::~AboutWindow()

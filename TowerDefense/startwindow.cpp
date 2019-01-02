@@ -3,7 +3,8 @@
 
 StartWindow::StartWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::StartWindow)
+    ui(new Ui::StartWindow),
+    m_about(nullptr)
 {
     ui->setupUi(this);
 
@@ -12,8 +13,6 @@ StartWindow::StartWindow(QWidget *parent) :
     this->setFixedSize(900, 550);
 
     // set background
-//    QPixmap backgroundImg(":/images/introMap_3.jpg");
-//    QPixmap backgroundImg(":/images/introMap_1.png");
     QPixmap backgroundImg(":/images/introMap_1_changed.png");
     backgroundImg = backgroundImg.scaled(this->size(), Qt::IgnoreAspectRatio);
     QPalette palette;
@@ -96,8 +95,14 @@ void StartWindow::startLevelThree()
 
 void StartWindow::showAboutWindow()
 {
-    AboutWindow *about = new AboutWindow();
-    about->show();
+    if (m_about != nullptr) {
+//        qDebug() << "deleting about";
+        delete m_about;
+    }
+
+//    qDebug() << "creating new about";
+    m_about = new AboutWindow();
+    m_about->show();
 }
 
 void StartWindow::quitGame()

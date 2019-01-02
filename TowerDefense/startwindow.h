@@ -33,6 +33,8 @@ private slots:
 private:
     Ui::StartWindow *ui;
     QMediaPlayer *music;
+
+    AboutWindow *m_about;
 };
 
 #endif // STARTWINDOW_H
