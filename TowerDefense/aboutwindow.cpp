@@ -33,8 +33,9 @@ AboutWindow::AboutWindow(QWidget *parent) :
     ui->zombieDragonEdit->setReadOnly(true);
 
     // set backgrounds on tabs
-    ui->towers->setStyleSheet("background-color: rgb(40, 15, 5);");
-    ui->enemies->setStyleSheet("background-color: rgb(40, 15, 5);");
+    ui->towers->setStyleSheet("background-color: rgb(75, 75, 70);");
+    ui->enemies->setStyleSheet("background-color: rgb(75, 75, 70);");
+    ui->levels->setStyleSheet("background-image: url(:/images/wallStore.jpg)");
 
     // set backgrounds on widgets in 'enemies' tab
     ui->goblinEdit->setStyleSheet("border-image: url(:/images/wallStore.jpg);");
