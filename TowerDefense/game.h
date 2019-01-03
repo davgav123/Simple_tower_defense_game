@@ -106,6 +106,7 @@ private:
     QVector<QPoint> m_path;
     QPolygon m_polyPath;
 
+
     void initializeLevel(QString path);
     void drawEnemyPath(QString pathToRoadImage);
     bool dropTowerCheck(QMouseEvent *event);

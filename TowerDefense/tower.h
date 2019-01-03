@@ -21,9 +21,11 @@ public:
                QWidget *widget) override;
 
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override;
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *) override;
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *) override;
+
     int price() const;
     int towerSize() const;
-
     void fire();
 
 public slots:
@@ -38,9 +40,10 @@ protected:
     int m_price;
     QMediaPlayer *bulletSound;
 private:
+    bool m_draw_radius = true;
+    QGraphicsEllipseItem * ellipse;
     qreal m_radius;
     int m_towerSize;
-
     QString m_pathToImg;
     QString m_pathToBulletSound;
     QString m_pathToBulletImg;

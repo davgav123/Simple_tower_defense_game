@@ -581,6 +581,7 @@ void Game::mouseMoveEvent(QMouseEvent *event)
     if (cursor) {
         cursor->setPos(event->pos());
     }
+    QGraphicsView::mouseMoveEvent(event);
 }
 
 void Game::mousePressEvent(QMouseEvent *event)
@@ -615,6 +616,7 @@ void Game::mousePressEvent(QMouseEvent *event)
         QGraphicsView::mousePressEvent(event);
     }
 }
+
 
 bool Game::dropTowerCheck(QMouseEvent *event)
 {

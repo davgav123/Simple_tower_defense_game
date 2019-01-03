@@ -14,26 +14,26 @@
 #include <QGraphicsItem>
 #include <QtDebug>
 #include <QLinkedList>
-
+#include <QGraphicsEllipseItem>
 extern Game * g;
 
 Tower::Tower(qreal x, qreal y, int damage, int price, EnemyType type, QString pathToImg, QString pathToSound, QString pathToBulletImg)
     : m_type(type), m_damage(damage), m_price(price), m_radius(100.0)
     , m_towerSize(60), m_pathToImg(pathToImg), m_pathToBulletSound(pathToSound), m_pathToBulletImg(pathToBulletImg)
 {
-     setPos(x, y);
+    setPos(x,y);
+    // initialy there is no target
+    m_target = nullptr;
+    setAcceptHoverEvents(true);
 
-     // initialy there is no target
-     m_target = nullptr;
+    // timer that will allow towers to shoot
+    QTimer * timer = new QTimer();
+    connect(timer, SIGNAL(timeout()), this, SLOT(aquireTarget()));
+    timer->start(1000);
 
-     // timer that will allow towers to shoot
-     QTimer * timer = new QTimer();
-     connect(timer, SIGNAL(timeout()), this, SLOT(aquireTarget()));
-     timer->start(1000);
-
-     // bullet sound
-     bulletSound = new QMediaPlayer();
-     bulletSound->setMedia(QUrl((m_pathToBulletSound)));
+    // bullet sound
+    bulletSound = new QMediaPlayer();
+    bulletSound->setMedia(QUrl((m_pathToBulletSound)));
 }
 
 
@@ -66,9 +66,37 @@ void Tower::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *)
     int gold = this->m_price / 2;
     g->removeTower(this);
     g->increaseGold(gold);
-
+    if(!m_draw_radius){
+        g->scene->removeItem(ellipse);
+    }
     delete this;
 }
+
+
+
+void Tower::hoverEnterEvent(QGraphicsSceneHoverEvent *)
+{
+
+    qDebug() << "Draw radius";
+    if(m_draw_radius){
+        ellipse = new QGraphicsEllipseItem(this->x()-100, this->y()-100, 200, 200);
+
+        g->scene->addItem(ellipse);
+        m_draw_radius = false;
+    }
+}
+
+void Tower::hoverLeaveEvent(QGraphicsSceneHoverEvent *)
+{
+    qDebug() << "Remove radius";
+    if(!m_draw_radius){
+        g->scene->removeItem(ellipse);
+        m_draw_radius = true;
+        delete ellipse;
+    }
+
+}
+
 
 int Tower::price() const
 {
@@ -140,14 +168,5 @@ void Tower::findClosestEnemy()
         }
     }
 }
-
-
-
-
-
-
-
-
-
 
 
