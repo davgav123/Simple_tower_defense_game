@@ -36,6 +36,9 @@ AboutWindow::AboutWindow(QWidget *parent) :
     ui->towers->setStyleSheet("background-color: rgb(75, 75, 70);");
     ui->enemies->setStyleSheet("background-color: rgb(75, 75, 70);");
     ui->levels->setStyleSheet("background-image: url(:/images/wallStore.jpg)");
+    ui->HowToPlay->setStyleSheet("background-image: url(:/images/wallStore.jpg)");
+    //ui->info->setStyleSheet("background-color: rgb(160, 160, 160)");
+    ui->info->setStyleSheet("background-color: rgb(184,134,11);");
 
     // set backgrounds on widgets in 'enemies' tab
     ui->goblinEdit->setStyleSheet("border-image: url(:/images/wallStore.jpg);");
