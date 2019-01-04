@@ -15,6 +15,7 @@
 #include <QtDebug>
 #include <QLinkedList>
 #include <QGraphicsEllipseItem>
+
 extern Game * g;
 
 Tower::Tower(qreal x, qreal y, int damage, int price, EnemyType type, QString pathToImg, QString pathToSound, QString pathToBulletImg)
@@ -76,8 +77,6 @@ void Tower::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *)
 
 void Tower::hoverEnterEvent(QGraphicsSceneHoverEvent *)
 {
-
-    qDebug() << "Draw radius";
     if(m_draw_radius){
         ellipse = new QGraphicsEllipseItem(this->x()-100, this->y()-100, 200, 200);
 
@@ -88,13 +87,11 @@ void Tower::hoverEnterEvent(QGraphicsSceneHoverEvent *)
 
 void Tower::hoverLeaveEvent(QGraphicsSceneHoverEvent *)
 {
-    qDebug() << "Remove radius";
     if(!m_draw_radius){
         g->scene->removeItem(ellipse);
         m_draw_radius = true;
         delete ellipse;
     }
-
 }
 
 
@@ -168,5 +165,3 @@ void Tower::findClosestEnemy()
         }
     }
 }
-
-

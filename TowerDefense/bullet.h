@@ -2,9 +2,14 @@
 #define BULLET_H
 
 #include "enemy.h"
-
+#include "game.h"
+#include <QTimer>
+#include <QPainter>
+#include <QRectF>
+#include <QLineF>
 #include <QObject>
 #include <QGraphicsPixmapItem>
+#include <qmath.h>
 
 class Bullet: public QObject, public QGraphicsPixmapItem {
     Q_OBJECT

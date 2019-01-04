@@ -1,9 +1,10 @@
+david 32540
+...... 8220
 yea 8120
 TDMASTER 1290
 Vucic 1200
 osoba 700
 DedaMraz 600
+TDM 600
 MASTER 430
-coa 250
-covek 100
-TD 0
+NAT 0

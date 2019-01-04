@@ -1,11 +1,4 @@
 #include "bullet.h"
-#include "game.h"
-
-#include <QTimer>
-#include <qmath.h>
-#include <QPainter>
-#include <QRectF>
-#include <QLineF>
 
 extern Game *g;
 

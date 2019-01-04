@@ -1,10 +1,4 @@
 #include "arrowtowericon.h"
-#include "game.h"
-#include "towers.h"
-#include "resources.h"
-#include <QGraphicsPixmapItem>
-#include <QMouseEvent>
-#include <QGraphicsSceneMouseEvent>
 
 extern Game *g;
 
