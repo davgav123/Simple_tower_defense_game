@@ -159,7 +159,7 @@ void Tower::findClosestEnemy()
     qreal minDist = double(INFINITY);
     for (auto i = g->enemiesByType(m_type).cbegin(); i != g->enemiesByType(m_type).cend(); ++i) {
         qreal currentDist = QLineF(pos(), (*i)->pos()).length();
-        if (minDist > currentDist /*&& m_target->enemyType() == m_type*/) {
+        if (minDist > currentDist) {
             minDist = currentDist;
             m_target = std::move(*i);
         }
