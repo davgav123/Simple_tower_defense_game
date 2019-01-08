@@ -32,7 +32,7 @@ void Bullet::move()
     m_currentDist = QLineF(pos(), m_targetPos).length();
 
     // if the distance is increasing, then bullet passed the enemy, so we delete the bullet
-    if (m_previousDist < m_currentDist) {
+    if (m_previousDist <= m_currentDist) {
 
         // if enemy is not destroyed, we destroy it
         if (m_target != nullptr && g->containsEnemy(m_target)) {

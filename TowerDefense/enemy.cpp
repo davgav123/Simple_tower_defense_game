@@ -2,7 +2,6 @@
 #include "game.h"
 
 #include <QRectF>
-#include <QTimer>
 #include <QPainter>
 #include <QPointF>
 #include <QPixmap>
@@ -20,9 +19,9 @@ Enemy::Enemy(qreal speed, qreal maxHealth, int worth, QString currentImage, Enem
     m_currentHealth = m_maxHealth;
 
     // create and start the timer that moves the enemy
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(move()));
-    timer->start(50);
+    m_timer = new QTimer(this);
+    connect(m_timer, SIGNAL(timeout()), this, SLOT(move()));
+    m_timer->start(50);
 }
 
 QRectF Enemy::boundingRect() const
@@ -90,6 +89,7 @@ EnemyType Enemy::enemyType() const
 
 Enemy::~Enemy()
 {
+    delete m_timer;
 }
 
 

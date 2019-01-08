@@ -5,12 +5,12 @@
 GameOver::GameOver(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GameOver),
-    filePath("../TowerDefense/bestScores.txt")
+    m_filePath("../TowerDefense/bestScores.txt")
 {
     ui->setupUi(this);
     this->setFixedSize(410, 500);
 
-    // this will init scores vector from file
+    // this will initialize scores vector from file
     readScores();
 
     // set background
@@ -56,10 +56,10 @@ GameOver::~GameOver()
 
 void GameOver::setText(QString msg, int value)
 {
-    score = value;
+    m_score = value;
     setWindowTitle(msg);
 
-    if (scores.back().second < value || scores.size() < 10) {
+    if (m_scores.back().second < value || m_scores.size() < 10) {
         ui->score->setText(msg + "\nYour score: " + QString::number(value) +
                                    "\nYou are in the top ten!");
         ui->subScore->setDisabled(false);
@@ -86,24 +86,28 @@ void GameOver::startNewGame()
 
 void GameOver::submitScore()
 {
-    qDebug() << "Name and score are submited";
-
     ui->highScores->clear();
     QString input = ui->nameInput->text();
     if (input.size() > 9 || input.size() < 3) {
-        ui->highScores->setText("Name must be between 3 and 8 characters long");
+        ui->highScores->setText("Name must be between 3 and 8 characters long!\nTry again!");
         return ;
     }
 
-    QPair<QString, int> newScore{input, score};
-
-    if (scores.size() < 10) {
-        scores.push_back(newScore);
-    } else {
-        scores.back() = newScore;
+    auto numOfSpaces = input.count(' ');
+    if (numOfSpaces > 0) {
+        ui->highScores->setText("Name cannot contain spaces!\nTry again!");
+        return ;
     }
 
-    std::sort(scores.begin(), scores.end(),
+    QPair<QString, int> newScore{input, m_score};
+
+    if (m_scores.size() < 10) {
+        m_scores.push_back(newScore);
+    } else {
+        m_scores.back() = newScore;
+    }
+
+    std::sort(m_scores.begin(), m_scores.end(),
               [] (QPair<QString, int> x, QPair<QString, int> y) {return x.second > y.second;});
 
     displayScores();
@@ -115,11 +119,11 @@ void GameOver::submitScore()
 
 void GameOver::readScores()
 {
-    QFile file(filePath.absolutePath());
+    QFile file(m_filePath.absolutePath());
     file.open(QIODevice::ReadOnly);
 
     if (! file.isOpen()) {
-        qDebug() << "Opening of the file for reading failed";
+//        qDebug() << "Opening of the file for reading failed";
         return ;
     }
 
@@ -127,7 +131,7 @@ void GameOver::readScores()
 
     QString name;
     int score;
-    // we are keeping just top 10 scores here
+    // we are keeping just the top 10 scores here
     for (int i = 0; i < 10; ++i) {
     // if there are less then ten, we break
         if (input.atEnd())
@@ -140,26 +144,28 @@ void GameOver::readScores()
 
         input >> score;
 
-        scores.push_back({name, score});
+        m_scores.push_back({name, score});
     }
+
     file.close();
 }
 
 void GameOver::writeScores()
 {
-    QFile file(filePath.absolutePath()); // <- ove sam stavio atribut
+    QFile file(m_filePath.absolutePath());
     file.open(QIODevice::WriteOnly);
 
     if (! file.isOpen()) {
-        qDebug() << "Opening for writing Failed";
+//        qDebug() << "Opening for writing Failed";
         ui->highScores->setText("Unable to load scores...");
         return ;
     }
 
     QTextStream output(&file);
-    for (int i = 0; i < scores.size(); ++i) {
-        output << scores[i].first << " " << scores[i].second << endl;
+    for (int i = 0; i < m_scores.size(); ++i) {
+        output << m_scores[i].first << " " << m_scores[i].second << endl;
     }
+
     output.flush();
     file.close();
 }
@@ -167,7 +173,7 @@ void GameOver::writeScores()
 void GameOver::displayScores()
 {
     ui->highScores->clear();
-    for (int i = 0; i < scores.size(); ++i) {
-        ui->highScores->append(scores[i].first + " " + QString::number(scores[i].second));
+    for (int i = 0; i < m_scores.size(); ++i) {
+        ui->highScores->append(m_scores[i].first + " " + QString::number(m_scores[i].second));
     }
 }

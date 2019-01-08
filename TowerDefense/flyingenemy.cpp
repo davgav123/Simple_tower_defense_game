@@ -17,7 +17,7 @@ void FlyingEnemy::move()
 {
     setPos(x(), y() + m_speed);
 
-    //650 is the height of the scene
+    //650 is the height of the map
     if (y() >= 650) {
         g->decreaseLives();
         destroyTheEnemy();

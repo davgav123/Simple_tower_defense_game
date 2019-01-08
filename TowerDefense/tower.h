@@ -6,6 +6,7 @@
 #include <QGraphicsItem>
 #include <QMediaPlayer>
 #include <qmath.h>
+#include <QTimer>
 
 class Tower : public QObject, public QGraphicsItem
 {
@@ -13,6 +14,7 @@ class Tower : public QObject, public QGraphicsItem
 public:
     Tower(qreal x, qreal y, int damage, int price, EnemyType type,
           QString pathToImg, QString pathToSound, QString pathToBulletImg);
+    ~Tower() override;
 
     QRectF boundingRect() const override;
 
@@ -47,6 +49,7 @@ private:
     QString m_pathToImg;
     QString m_pathToBulletSound;
     QString m_pathToBulletImg;
+    QTimer *m_timer;
 
     void findClosestEnemy();
 };

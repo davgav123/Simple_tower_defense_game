@@ -2,7 +2,7 @@
 
 extern Game *g;
 
-ArrowTowerIcon::ArrowTowerIcon(QGraphicsItem *parent) :QGraphicsPixmapItem(parent)
+ArrowTowerIcon::ArrowTowerIcon(QGraphicsItem *parent) : QGraphicsPixmapItem(parent)
 {
     setToolTip("Targets ground units");
     setPixmap(QPixmap(":/images/japaneseTowerStore_2.png"));

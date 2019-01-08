@@ -33,9 +33,9 @@ private slots:
 private:
     Ui::GameOver *ui;
 
-    QVector<QPair<QString, int>> scores;
-    int score;
-    QDir filePath;
+    QVector<QPair<QString, int>> m_scores;
+    int m_score;
+    QDir m_filePath;
 
     void readScores();
     void writeScores();

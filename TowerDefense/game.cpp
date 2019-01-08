@@ -140,9 +140,8 @@ void Game::initializeLevel(QString path)
     //qDebug() << path_to_file.toString();
 
     QJsonValue gold = set.value(QString("gold"));
-    // TODO: initialize gold ovo posle odkomentarisati
-    m_gold = new Gold(gold.toInt());
-    // m_gold = new Gold(2000);
+//    m_gold = new Gold(gold.toInt());
+     m_gold = new Gold(2000);
     m_gold->setPos(410, 650);
     scene->addItem(m_gold);
 

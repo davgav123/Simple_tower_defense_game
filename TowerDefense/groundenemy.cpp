@@ -17,7 +17,7 @@ GroundEnemy::GroundEnemy(QVector<QPoint> path, qreal speed, int maxHealth, int w
 
 void GroundEnemy::move()
 {
-    // if  the xs are same, we move by y
+    // if the xs are same, we move by y
     if (m_currentFrom.x() == m_currentDest.x()) {
         if (m_currentFrom.y() < m_currentDest.y()) {
             setPos(x(), y() + m_speed);

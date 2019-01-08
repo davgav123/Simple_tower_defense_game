@@ -10,7 +10,6 @@
 #include <QFileInfo>
 #include <QLineF>
 #include <QtDebug>
-#include <QTimer>
 #include <QGraphicsItem>
 #include <QtDebug>
 #include <QLinkedList>
@@ -28,15 +27,14 @@ Tower::Tower(qreal x, qreal y, int damage, int price, EnemyType type, QString pa
     setAcceptHoverEvents(true);
 
     // timer that will allow towers to shoot
-    QTimer * timer = new QTimer();
-    connect(timer, SIGNAL(timeout()), this, SLOT(aquireTarget()));
-    timer->start(1000);
+    m_timer = new QTimer();
+    connect(m_timer, SIGNAL(timeout()), this, SLOT(aquireTarget()));
+    m_timer->start(1000);
 
     // bullet sound
     bulletSound = new QMediaPlayer();
     bulletSound->setMedia(QUrl((m_pathToBulletSound)));
 }
-
 
 QRectF Tower::boundingRect() const
 {
@@ -51,7 +49,7 @@ QRectF Tower::boundingRect() const
 
 void Tower::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-    // center of the item is (0, 0), or (400, 400) on the scene
+    // center of the item is (0, 0), or (x, y) on the scene
 
     // draw the radius of the tower
 //    painter->drawEllipse(QPointF(0, 0), m_radius, m_radius);
@@ -63,21 +61,19 @@ void Tower::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
 
 void Tower::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *)
 {
-//    qDebug() << event->pos();
-    int gold = this->m_price / 2;
+    int gold = m_price / 2;
     g->removeTower(this);
     g->increaseGold(gold);
     if(!m_draw_radius){
         g->scene->removeItem(ellipse);
     }
+
     delete this;
 }
 
-
-
 void Tower::hoverEnterEvent(QGraphicsSceneHoverEvent *)
 {
-    if(m_draw_radius){
+    if (m_draw_radius) {
         ellipse = new QGraphicsEllipseItem(this->x()-100, this->y()-100, 200, 200);
 
         g->scene->addItem(ellipse);
@@ -87,13 +83,12 @@ void Tower::hoverEnterEvent(QGraphicsSceneHoverEvent *)
 
 void Tower::hoverLeaveEvent(QGraphicsSceneHoverEvent *)
 {
-    if(!m_draw_radius){
+    if (!m_draw_radius) {
         g->scene->removeItem(ellipse);
         m_draw_radius = true;
         delete ellipse;
     }
 }
-
 
 int Tower::price() const
 {
@@ -136,7 +131,6 @@ void Tower::aquireTarget()
     // there are enemies we can shoot
     if (! g->enemiesByType(m_type).empty()) {
         // if the target is not alive, we choose the new one
-
         if (! g->enemiesByType(m_type).contains(m_target)) {
             findClosestEnemy();
         }
@@ -164,4 +158,9 @@ void Tower::findClosestEnemy()
             m_target = std::move(*i);
         }
     }
+}
+
+Tower::~Tower()
+{
+    delete m_timer;
 }

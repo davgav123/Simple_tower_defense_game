@@ -6,6 +6,7 @@
 #include <QVector>
 #include <QPoint>
 #include <QString>
+#include <QTimer>
 
 enum EnemyType
 {
@@ -51,6 +52,7 @@ protected:
 
     QString m_currentImage;
 
+    QTimer *m_timer;
     EnemyType m_type;
 };
 
