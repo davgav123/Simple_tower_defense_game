@@ -334,23 +334,33 @@ void Game::drawEnemyPath(QString pathToRoadImage)
     QVector<QPoint> points;
     int pathSize = 25;
 
+    // this will be the polygon that on which we cannot place towers
+    // because they will be to close to the actual path enemies take
+    QVector<QPoint> restrictedPoints;
+    int restrictedSize = pathSize + 15;
+
     // points from the right side of the enemy
     for (int i = 0; i < m_path.size(); ++i) {
         QPoint point = m_path[i];
+        QPoint restrictedPoint = m_path[i];
 
         if (i == 0) {
             QPoint nextPoint = m_path[i+1];
             if (nextPoint.y() == point.y()) {
                 point.setY(point.y() + pathSize);
+                restrictedPoint.setY(restrictedPoint.y() + restrictedSize);
             } else if (nextPoint.x() == point.x()) {
                 point.setX(point.x() - pathSize);
+                restrictedPoint.setX(restrictedPoint.x() - restrictedSize);
             }
         } else if (i == m_path.size()-1) {
             QPoint previousPoint = m_path[i-1];
             if (previousPoint.y() == point.y()) {
                 point.setY(point.y() - pathSize);
+                restrictedPoint.setY(restrictedPoint.y() - restrictedSize);
             } else if (previousPoint.x() == point.x()) {
                 point.setX(point.x() - pathSize);
+                restrictedPoint.setX(restrictedPoint.x() - restrictedSize);
             }
         } else {
             QPoint nextPoint = m_path[i+1];
@@ -361,17 +371,29 @@ void Game::drawEnemyPath(QString pathToRoadImage)
                     if (point.y() < nextPoint.y()) {
                         point.setX(point.x() - pathSize);
                         point.setY(point.y() + pathSize);
+
+                        restrictedPoint.setX(restrictedPoint.x() - restrictedSize);
+                        restrictedPoint.setY(restrictedPoint.y() + restrictedSize);
                     } else if (point.y() > nextPoint.y()) {
                         point.setX(point.x() + pathSize);
                         point.setY(point.y() + pathSize);
+
+                        restrictedPoint.setX(restrictedPoint.x() + restrictedSize);
+                        restrictedPoint.setY(restrictedPoint.y() + restrictedSize);
                     }
                 } else {
                     if (point.y() < nextPoint.y()) {
                         point.setX(point.x() - pathSize);
                         point.setY(point.y() - pathSize);
+
+                        restrictedPoint.setX(restrictedPoint.x() - restrictedSize);
+                        restrictedPoint.setY(restrictedPoint.y() - restrictedSize);
                     } else if (point.y() > nextPoint.y()) {
                         point.setX(point.x() + pathSize);
                         point.setY(point.y() - pathSize);
+
+                        restrictedPoint.setX(restrictedPoint.x() + restrictedSize);
+                        restrictedPoint.setY(restrictedPoint.y() - restrictedSize);
                     }
                 }
             } else if (point.x() == previousPoint.x()) {
@@ -379,42 +401,63 @@ void Game::drawEnemyPath(QString pathToRoadImage)
                     if (point.x() < nextPoint.x()) {
                         point.setX(point.x() - pathSize);
                         point.setY(point.y() + pathSize);
+
+                        restrictedPoint.setX(restrictedPoint.x() - restrictedSize);
+                        restrictedPoint.setY(restrictedPoint.y() + restrictedSize);
                     } else if (point.x() > nextPoint.x()) {
                         point.setX(point.x() - pathSize);
                         point.setY(point.y() - pathSize);
+
+                        restrictedPoint.setX(restrictedPoint.x() - restrictedSize);
+                        restrictedPoint.setY(restrictedPoint.y() - restrictedSize);
                     }
                 } else {
                     if (point.x() < nextPoint.x()) {
                         point.setX(point.x() + pathSize);
                         point.setY(point.y() + pathSize);
+
+                        restrictedPoint.setX(restrictedPoint.x() + restrictedSize);
+                        restrictedPoint.setY(restrictedPoint.y() + restrictedSize);
                     } else if (point.x() > nextPoint.x()) {
                         point.setX(point.x() + pathSize);
                         point.setY(point.y() - pathSize);
+
+                        restrictedPoint.setX(restrictedPoint.x() + restrictedSize);
+                        restrictedPoint.setY(restrictedPoint.y() - restrictedSize);
                     }
                 }
             }
         }
 
         points.push_back(point);
+        restrictedPoints.push_back(restrictedPoint);
     }
 
     // points from the left side of the enemy
     for (int i = m_path.size()-1; i >= 0; --i) {
         QPoint point = m_path[i];
+        QPoint restrictedPoint = m_path[i];
 
         if (i == 0) {
             QPoint nextPoint = m_path[i+1];
             if (nextPoint.y() == point.y()) {
                 point.setY(point.y() - pathSize);
+                restrictedPoint.setY(restrictedPoint.y() - restrictedSize);
             } else if (nextPoint.x() == point.x()) {
                 point.setX(point.x() + pathSize);
+
+                restrictedPoint.setX(restrictedPoint.x() + restrictedSize);
             }
         } else if (i == m_path.size()-1) {
             QPoint previousPoint = m_path[i-1];
             if (previousPoint.y() == point.y()) {
                 point.setY(point.y() + pathSize);
+
+                restrictedPoint.setY(restrictedPoint.y() + restrictedSize);
             } else if (previousPoint.x() == point.x()) {
                 point.setX(point.x() + pathSize);
+
+                restrictedPoint.setX(restrictedPoint.x() + restrictedSize);
             }
         } else {
             QPoint nextPoint = m_path[i+1];
@@ -425,17 +468,29 @@ void Game::drawEnemyPath(QString pathToRoadImage)
                     if (point.y() < nextPoint.y()) {
                         point.setX(point.x() + pathSize);
                         point.setY(point.y() - pathSize);
+
+                        restrictedPoint.setX(restrictedPoint.x() + restrictedSize);
+                        restrictedPoint.setY(restrictedPoint.y() - restrictedSize);
                     } else if (point.y() > nextPoint.y()) {
                         point.setX(point.x() - pathSize);
                         point.setY(point.y() - pathSize);
+
+                        restrictedPoint.setX(restrictedPoint.x() - restrictedSize);
+                        restrictedPoint.setY(restrictedPoint.y() - restrictedSize);
                     }
                 } else {
                     if (point.y() < nextPoint.y()) {
                         point.setX(point.x() + pathSize);
                         point.setY(point.y() + pathSize);
+
+                        restrictedPoint.setX(restrictedPoint.x() + restrictedSize);
+                        restrictedPoint.setY(restrictedPoint.y() + restrictedSize);
                     } else if (point.y() > nextPoint.y()) {
                         point.setX(point.x() - pathSize);
                         point.setY(point.y() + pathSize);
+
+                        restrictedPoint.setX(restrictedPoint.x() - restrictedSize);
+                        restrictedPoint.setY(restrictedPoint.y() + restrictedSize);
                     }
                 }
             } else if (point.x() == previousPoint.x()) {
@@ -443,27 +498,45 @@ void Game::drawEnemyPath(QString pathToRoadImage)
                     if (point.x() < nextPoint.x()) {
                         point.setX(point.x() + pathSize);
                         point.setY(point.y() - pathSize);
+
+                        restrictedPoint.setX(restrictedPoint.x() + restrictedSize);
+                        restrictedPoint.setY(restrictedPoint.y() - restrictedSize);
                     } else if (point.x() > nextPoint.x()) {
                         point.setX(point.x() + pathSize);
                         point.setY(point.y() + pathSize);
+
+                        restrictedPoint.setX(restrictedPoint.x() + restrictedSize);
+                        restrictedPoint.setY(restrictedPoint.y() + restrictedSize);
                     }
                 } else {
                     if (point.x() < nextPoint.x()) {
                         point.setX(point.x() - pathSize);
                         point.setY(point.y() - pathSize);
+
+                        restrictedPoint.setX(restrictedPoint.x() - restrictedSize);
+                        restrictedPoint.setY(restrictedPoint.y() - restrictedSize);
                     } else if (point.x() > nextPoint.x()) {
                         point.setX(point.x() - pathSize);
                         point.setY(point.y() + pathSize);
+
+                        restrictedPoint.setX(restrictedPoint.x() - restrictedSize);
+                        restrictedPoint.setY(restrictedPoint.y() + restrictedSize);
                     }
                 }
             }
         }
 
         points.push_back(point);
+        restrictedPoints.push_back(restrictedPoint);
     }
 
+    // this will draw the area inside witch we can't place any towers
+    scene->addPolygon(QPolygon(restrictedPoints), QPen(Qt::red), QBrush(QColor(150, 34, 34)));
+
+    // this is the path enemies will take
     m_polyPath = QPolygon(points);
     scene->addPolygon(m_polyPath, QPen(Qt::darkGray), QBrush(QImage(":/images/" + pathToRoadImage)));
+
 }
 
 void Game::addTower(Tower *t)
