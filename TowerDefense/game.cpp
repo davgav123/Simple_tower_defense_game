@@ -129,7 +129,7 @@ Game::Game(QString pathToJson, QString pathToBackground, QString pathToRoadImage
 void Game::initializeLevel(QString path)
 {
     // read json file
-    QFile json(path/*":/paths/level_1.json"*/);
+    QFile json(path);
     json.open(QIODevice::ReadOnly);
     QString val = json.readAll();
     json.close();
@@ -141,7 +141,7 @@ void Game::initializeLevel(QString path)
 
     QJsonValue gold = set.value(QString("gold"));
 //    m_gold = new Gold(gold.toInt());
-     m_gold = new Gold(2000);
+    m_gold = new Gold(2000);
     m_gold->setPos(410, 650);
     scene->addItem(m_gold);
 
@@ -176,7 +176,7 @@ void Game::playLevel()
 
     // if all of the waves are finished, and there are no enemies, you won!
     if (m_waveNumber >= m_numberOfWaves && m_enemies.empty()) {
-        int result = score() + lives() * gold();
+        int result = score() * lives() + gold();
         gameIsOver("Congratulations!", result);
 
         return ;
@@ -531,7 +531,7 @@ void Game::drawEnemyPath(QString pathToRoadImage)
     }
 
     // this will draw the area inside witch we can't place any towers
-    scene->addPolygon(QPolygon(restrictedPoints), QPen(Qt::red), QBrush(QColor(150, 34, 34)));
+    scene->addPolygon(QPolygon(restrictedPoints), QPen(Qt::red), QBrush(QImage(":/images/wallStoreFire.jpg")));
 
     // this is the path enemies will take
     m_polyPath = QPolygon(points);
